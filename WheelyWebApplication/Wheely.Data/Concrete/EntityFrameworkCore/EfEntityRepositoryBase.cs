@@ -10,11 +10,8 @@ using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.EntityFrameworkCore
 {
-    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-       where TEntity : class, IEntity, new()
-       where TContext : DbContext, new()
+    public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
-
         #region Fields
         private readonly WheelDbContext _context;
         private DbSet<TEntity> _entities;
@@ -35,11 +32,7 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <returns>Entities</returns>
         public IList<TEntity> GetAll(bool disableTracking = true)
         {
-            IQueryable<TEntity> entityTable = Entities;
-
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
-
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.ToList();
         }
 
@@ -51,13 +44,10 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <returns>Entities</returns>
         public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
-            IQueryable<TEntity> entityTable = Entities;
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
             if (filter is not null)
                 entityTable = entityTable.Where(filter);
-
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
 
             return entityTable.ToList();
         }
@@ -70,7 +60,7 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <param name="disableTracking">entity state tracking filter</param>
         public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
         {
-            IQueryable<TEntity> entityTable = Entities;
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
             if (filter is not null)
                 entityTable = entityTable.Where(filter);
@@ -78,10 +68,7 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
             if (orderBy is not null)
                 entityTable = orderBy(entityTable);
 
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
-
-            return entityTable.ToList();
+           return entityTable.ToList();
         }
 
         /// <summary>
@@ -94,16 +81,13 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <returns>Entities</returns>
         public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties)
         {
-            IQueryable<TEntity> entityTable = Entities;
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
             if (filter is not null)
                 entityTable = entityTable.Where(filter);
 
             if (orderBy is not null)
                 entityTable = orderBy(entityTable);
-
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
 
             if (includeProperties is not null)
             {
@@ -122,12 +106,8 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <returns>Entity</returns>
         public TEntity Get(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
-            IQueryable<TEntity> entityTable = Entities;
-
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
-
-            return entityTable.SingleOrDefault(filter);
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
+            return entityTable.FirstOrDefault(filter);
         }
 
         /// <summary>
@@ -139,15 +119,12 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         /// <returns>Entity</returns>
         public TEntity Get(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
         {
-            IQueryable<TEntity> entityTable = Entities;
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
             if (orderBy is not null)
                 entityTable = orderBy(entityTable);
 
-            if (disableTracking)
-                entityTable = entityTable.AsNoTracking();
-
-            return entityTable.SingleOrDefault(filter);
+            return entityTable.FirstOrDefault(filter);
         }
 
         /// <summary>
@@ -158,6 +135,18 @@ namespace Wheely.Data.Concrete.EntityFrameworkCore
         public virtual TEntity GetById(object id)
         {
             return Entities.Find(id);
+        }
+
+        /// <summary>
+        /// Is there by expression filter
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <param name="disableTracking">entity state tracking filter</param>
+        /// <returns></returns>
+        public virtual bool IsThere(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
+        {
+            IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
+            return entityTable.Any(filter);
         }
 
         /// <summary>

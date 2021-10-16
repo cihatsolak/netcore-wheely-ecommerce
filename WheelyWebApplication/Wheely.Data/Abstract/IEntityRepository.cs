@@ -73,6 +73,14 @@ namespace Wheely.Data.Abstract
         TEntity GetById(object id);
 
         /// <summary>
+        /// Is Any by expression filter
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <param name="disableTracking">entity state tracking filter</param>
+        /// <returns></returns>
+        bool IsThere(Expression<Func<TEntity, bool>> filter, bool disableTracking = true);
+
+        /// <summary>
         /// Insert entity
         /// </summary>
         /// <param name="entity">Entity</param>
@@ -122,7 +130,6 @@ namespace Wheely.Data.Abstract
         #endregion
 
         #region Properties
-
         /// <summary>
         /// Gets a table
         /// </summary>
@@ -132,7 +139,6 @@ namespace Wheely.Data.Abstract
         /// Gets a table with "no tracking" enabled (EF feature) Use it only when you load record(s) only for read-only operations
         /// </summary>
         IQueryable<TEntity> TableNoTracking { get; }
-
         #endregion
     }
 }
