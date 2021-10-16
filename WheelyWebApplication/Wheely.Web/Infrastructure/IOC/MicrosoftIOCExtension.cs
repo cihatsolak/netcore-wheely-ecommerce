@@ -18,8 +18,8 @@ namespace Wheely.Web.Infrastructure.IOC
         /// <returns>type of service collection interface</returns>
         public static IServiceCollection AddDefaultServices(this IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ServiceTool.Create(services);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             return services;
         }
