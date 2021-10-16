@@ -11,6 +11,8 @@ namespace Wheely.Data.Concrete.Configurations.Dimensions
             builder.ToTable(nameof(Dimension));
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Size).HasDefaultValue<int>(0).IsRequired();
+
+            builder.HasIndex(p => p.Size).IsUnique();
         }
     }
 }

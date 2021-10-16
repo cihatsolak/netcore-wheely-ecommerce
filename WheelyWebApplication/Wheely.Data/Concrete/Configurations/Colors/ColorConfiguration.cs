@@ -12,6 +12,8 @@ namespace Wheely.Data.Concrete.Configurations.Colors
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Name).HasMaxLength(30).IsRequired();
             builder.Property(p => p.HexCode).HasMaxLength(15).IsRequired();
+
+            builder.HasIndex(p => p.HexCode).IsUnique();
         }
     }
 }

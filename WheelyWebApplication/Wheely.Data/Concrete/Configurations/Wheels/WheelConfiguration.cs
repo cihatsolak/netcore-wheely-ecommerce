@@ -13,6 +13,7 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
             builder.Property(p => p.StarCount).IsRequired().HasDefaultValue<int>(0);
             builder.Property(p => p.Name).HasMaxLength(150).IsRequired();
             builder.Property(p => p.ShortDescription).HasMaxLength(250).IsRequired();
+            builder.Property(p => p.StockCode).HasMaxLength(10).IsRequired();
             builder.Property(p => p.Description).IsRequired();
             builder.Property(p => p.Price).HasColumnType("numeric(18,2)");
             builder.Property(p => p.CampaignPrice).HasColumnType("numeric(18,2)");
