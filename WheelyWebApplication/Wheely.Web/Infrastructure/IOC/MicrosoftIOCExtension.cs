@@ -9,14 +9,14 @@ using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Web.Infrastructure.IOC
 {
-    public static class MicrosoftIOCExtension
+    internal static class MicrosoftIOCExtension
     {
         /// <summary>
         /// Add default services
         /// </summary>
         /// <param name="services">type of service collection interface</param>
         /// <returns>type of service collection interface</returns>
-        public static IServiceCollection AddDefaultServices(this IServiceCollection services)
+        internal static IServiceCollection AddDefaultServices(this IServiceCollection services)
         {
             ServiceTool.Create(services);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -29,7 +29,7 @@ namespace Wheely.Web.Infrastructure.IOC
         /// </summary>
         /// <param name="services">type of service collection interface</param>
         /// <returns>type of service collection interface</returns>
-        public static IServiceCollection AddDbContexts(this IServiceCollection services)
+        internal static IServiceCollection AddDbContexts(this IServiceCollection services)
         {
             services.AddDbContext<WheelDbContext>(contextOptions =>
             {
@@ -48,7 +48,7 @@ namespace Wheely.Web.Infrastructure.IOC
         /// </summary>
         /// <param name="services">type of service collection interface</param>
         /// <returns>type of service collection interface</returns>
-        public static IServiceCollection AddSettings(this IServiceCollection services)
+        internal static IServiceCollection AddSettings(this IServiceCollection services)
         {
             services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSettings)));
 

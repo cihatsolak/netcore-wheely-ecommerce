@@ -10,6 +10,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Smidge" Version="4.0.2" />
   </ItemGroup>
 
@@ -19,6 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Models\Shops\" />
+    <Folder Include="ViewComponents\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

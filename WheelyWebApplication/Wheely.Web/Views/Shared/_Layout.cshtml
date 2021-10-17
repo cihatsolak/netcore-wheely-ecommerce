@@ -1,5 +1,241 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    @await Html.PartialAsync(PartialViewName.Header) 
+</head>
+<body>
+    <div class="preloader">
+        <button class="vs-btn preloaderCls">Cancel Preloader</button>
+        <div class="preloader-inner">
+            <div class="pt-4">
+                <div class="spin text-white"><i class="flaticon-wheel-3"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-search-box d-none d-lg-block">
+        <button class="searchClose border-theme text-theme"><i class="fal fa-times"></i></button>
+        <form action="#"><input type="text" class="border-theme" placeholder="What are you looking for"> <button type="submit"><i class="fal fa-search"></i></button></form>
+    </div>
+    <div class="vs-menu-wrapper">
+        <div class="vs-menu-area text-center">
+            <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
+            <div class="mobile-logo"><a href="index.html"><img src="assets/img/logo-mobile.png" alt="Wheely"></a></div>
+            <form action="#" class="mobile-menu-form"><input type="text" class="form-control" placeholder="Search..."> <button type="submit"><i class="fas fa-search"></i></button></form>
+            <div class="vs-mobile-menu">
+                <ul>
+                    <li class="menu-item-has-children">
+                        <a href="index.html">Home</a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">Home One</a></li>
+                            <li><a href="index-2.html">Home Two</a></li>
+                            <li><a href="index-3.html">Home Three</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="menu-item-has-children">
+                        <a href="service.html">Services</a>
+                        <ul class="sub-menu">
+                            <li><a href="service.html">Services</a></li>
+                            <li><a href="service-details.html">Services Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="blog.html">Blog</a>
+                        <ul class="sub-menu">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="blog-details.html">Blog Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="blog.html">Pages</a>
+                        <ul class="sub-menu">
+                            <li><a href="shop.html">Shop</a></li>
+                            <li><a href="shop-details.html">Shop Details</a></li>
+                            <li><a href="project.html">Projects</a></li>
+                            <li><a href="team.html">Team</a></li>
+                            <li><a href="team-details.html">Team Details</a></li>
+                            <li><a href="cost-calculation.html">Cost Calculation</a></li>
+                            <li><a href="error.html">Error Page</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <header class="header-wrapper header-layout1">
+        <div class="header-top bg-theme d-none d-lg-block">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <ul class="header-info text-white list-unstyled m-0 fs-xs">
+                            <li><i class="far fa-envelope"></i>support@wheel.com</li>
+                            <li><i class="far fa-map-marked"></i>36D Street Brooklyn, New York</li>
+                            <li><i class="far fa-clock"></i>Mon - Fri: 8:00 am - 7:00 pm</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto text-end">
+                        <a href="#" class="h-search-btn style2 searchBoxTggler"><i class="far fa-search"></i>Search...</a>
+                        <div class="header-social d-inline-block"><a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-instagram"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sticky-active py-3 py-lg-0">
+            <div class="container position-relative">
+                <div class="row justify-content-between">
+                    <div class="col-9 col-lg-auto align-self-center">
+                        <div class="header-logo"><a href="index.html"><img src="assets/img/logo.png" alt="Wheely"></a></div>
+                    </div>
+                    <div class="col-3 col-lg-auto col-xxl-6 d-flex justify-content-end">
+                        <nav class="main-menu menu-style1 d-none d-lg-block">
+                            <ul>
+                                <li class="menu-item-has-children">
+                                    <a href="index.html">Home</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="index.html">Home One</a></li>
+                                        <li><a href="index-2.html">Home Two</a></li>
+                                        <li><a href="index-3.html">Home Three</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.html">About</a></li>
+                                <li class="menu-item-has-children">
+                                    <a href="service.html">Services</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="service.html">Services</a></li>
+                                        <li><a href="service-details.html">Services Details</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="blog.html">Blog</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="blog.html">Blog</a></li>
+                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children mega-menu-wrap">
+                                    <a href="#">Pages</a>
+                                    <ul class="mega-menu">
+                                        <li>
+                                            <a href="shop.html">Pagelist 1</a>
+                                            <ul>
+                                                <li><a href="index.html">Home One</a></li>
+                                                <li><a href="index-2.html">Home Two</a></li>
+                                                <li><a href="index-3.html">Home Three</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pagelist 2</a>
+                                            <ul>
+                                                <li><a href="service.html">Services</a></li>
+                                                <li><a href="service-details.html">Services Details</a></li>
+                                                <li><a href="cost-calculation.html">Cost Calculation</a></li>
+                                                <li><a href="project.html">Projects</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pagelist 3</a>
+                                            <ul>
+                                                <li><a href="team.html">Team</a></li>
+                                                <li><a href="team-details.html">Team Details</a></li>
+                                                <li><a href="blog.html">Blog</a></li>
+                                                <li><a href="blog-details.html">Blog Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pagelist 4</a>
+                                            <ul>
+                                                <li><a href="shop.html">Shop</a></li>
+                                                <li><a href="shop-details.html">Shop Details</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="error.html">Error Page</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </nav>
+                        <button class="vs-menu-toggle d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
+                    </div>
+                    <div class="col-xl-auto d-none d-xl-block align-self-center">
+                        <div class="header-btn"><a href="#" class="icon-btn style3 me-3"><i class="far fa-heart"></i> <span class="badge">0</span></a> <a href="#" class="icon-btn style3 me-3"><i class="fal fa-shopping-cart"></i> <span class="badge">9</span></a> <a href="contact.html" class="vs-btn ms-3 d-none d-xl-inline-block">Get a Services<i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-notice d-none d-md-block">
+            <div class="container">
+                <p class="mb-0 fs-xs text-title">Save up to 40% Hurry limited offer!</p>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer-wrapper footer-layout1" data-bg-src="assets/img/bg/bg-10.jpg">
+        <div class="widget-area pt-100 pb-50">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-xl-4">
+                        <div class="widget footer-widget">
+                            <h3 class="widget_title">About Company</h3>
+                            <div class="vs-widget-about">
+                                <p class="widget-about-text mb-25 pe-xl-5">Conveniently integrate proactive resources after flexible total linkage. Globally reintermediate unique value with client-centric interfaces. Holisticly repurposee.</p>
+                                <a href="contact.html" class="vs-btn style6"><i class="far fa-map-marker-alt"></i> View Map</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-4">
+                        <div class="widget footer-widget">
+                            <h3 class="widget_title">Recent Posts</h3>
+                            <div class="recent-post-wrap pt-2">
+                                <div class="thumb-post d-flex align-items-center">
+                                    <div class="media-img mr-20"><a href="blog-details.html"><img src="assets/img/blog/thumb-2-1.jpg" alt="Blog Image"></a></div>
+                                    <div class="media-body">
+                                        <a class="fs-xs" href="blog.html"><i class="fal fa-calendar-alt"></i>21 Mar, 2021</a>
+                                        <h4 class="post-title fs-xs fw-semibold"><a href="blog-details.html">Some claim lorem ipsum thre atens to promote process</a></h4>
+                                    </div>
+                                </div>
+                                <div class="thumb-post d-flex align-items-center">
+                                    <div class="media-img mr-20"><a href="blog-details.html"><img src="assets/img/blog/thumb-2-2.jpg" alt="Blog Image"></a></div>
+                                    <div class="media-body">
+                                        <a class="fs-xs" href="blog.html"><i class="fal fa-calendar-alt"></i>28 Apr, 2021</a>
+                                        <h4 class="post-title fs-xs fw-semibold"><a href="blog-details.html">Cool features in top 10 car sir vices, Most of cus</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-4">
+                        <div class="widget footer-widget">
+                            <h4 class="widget_title">Connect With Us</h4>
+                            <p>Sign Up Now & Get 10% Off.</p>
+                            <form class="newsletter-form"><span class="form-icon"><i class="fal fa-envelope"></i></span> <input class="form-control" type="email" placeholder="Your Email Address" required=""> <button type="submit" class="vs-btn mask-style1">Subscribe</button></form>
+                            <div class="mt-4 pt-2">
+                                <h5 class="text-white mb-0 me-2 d-inline-block">Follow On:</h5>
+                                <div class="footer-social d-inline-block"><a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-behance"></i></a> <a href="#"><i class="fab fa-youtube"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-style1">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12"><button type="button" class="footer-scroll scrollToTop"><i class="far fa-angle-up"></i></button></div>
+                    <div class="col-md-8 col-lg-6 text-center text-md-start">
+                        <p class="py-2 py-md-0 mb-0">Copyright <i class="fal fa-copyright"></i> 2021 <a class="text-white me-1" href="index.html">Wheely.</a>All rights reserved by<a class="text-white ms-1" href="../../../../user/vecuro.html">Vecuro</a>.</p>
+                    </div>
+                    <div class="col-md-4 col-lg-6 text-end d-none d-md-block">
+                        <div class="footer-payment"><img src="assets/img/footer/payment.png" alt="Payment Image"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @await Html.PartialAsync(PartialViewName.Script)
+</body>
+</html>

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wheely.Web.Infrastructure.IOC;
+using Wheely.Web.Infrastructure.Middlewares;
 
 namespace Wheely.Web
 {
@@ -20,6 +21,7 @@ namespace Wheely.Web
         {
             services.AddDefaultServices();
             services.AddDbContexts();
+            services.AddScopedServices();
             services.AddSettings();
         }
 
@@ -39,6 +41,8 @@ namespace Wheely.Web
 
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCustomSmidge();
 
             app.UseEndpoints(endpoints =>
             {

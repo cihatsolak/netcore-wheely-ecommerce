@@ -55,6 +55,9 @@ namespace Wheely.Data.Concrete.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HexCode")
+                        .IsUnique();
+
                     b.ToTable("Color");
                 });
 
@@ -73,7 +76,7 @@ namespace Wheely.Data.Concrete.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
-                        .HasDefaultValue(new DateTime(2021, 10, 16, 23, 8, 54, 317, DateTimeKind.Local).AddTicks(7738));
+                        .HasDefaultValue(new DateTime(2021, 10, 16, 23, 40, 26, 615, DateTimeKind.Local).AddTicks(7765));
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -113,6 +116,9 @@ namespace Wheely.Data.Concrete.Migrations
                         .HasDefaultValue(0);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Size")
+                        .IsUnique();
 
                     b.ToTable("Dimension");
                 });
@@ -170,6 +176,9 @@ namespace Wheely.Data.Concrete.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Tag");
                 });
 
@@ -209,7 +218,9 @@ namespace Wheely.Data.Concrete.Migrations
                         .HasDefaultValue(0);
 
                     b.Property<string>("StockCode")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
 
