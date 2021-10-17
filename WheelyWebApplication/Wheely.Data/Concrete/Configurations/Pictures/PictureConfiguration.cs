@@ -11,6 +11,7 @@ namespace Wheely.Data.Concrete.Configurations.Pictures
             builder.ToTable(nameof(Picture));
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Url).HasMaxLength(200).IsRequired();
+            builder.Property(p => p.Order).IsRequired();
 
             builder.HasOne(p => p.Wheel).WithMany(p => p.Pictures).HasForeignKey(p => p.WheelId);
         }
