@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Service", "Wheely.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wheely.Admin", "Wheely.Admin\Wheely.Admin.csproj", "{54993E76-BC6F-47C5-A3A8-A2F50EBA0EFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Webs", "Webs", "{D607FF17-5F00-4E88-BF66-06304DD0A63B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5DCA9DCC-F20E-4196-9863-2E8CE27941E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +48,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5762AAC4-C84C-431D-BE64-2844E40D108D} = {D607FF17-5F00-4E88-BF66-06304DD0A63B}
+		{45DCDA28-93CE-4FD1-9295-079E71B6E006} = {3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}
+		{8624897B-E0AD-422C-8E2D-26821DDB2EDA} = {3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}
+		{E38DBB46-ADC6-4E8E-9149-80464E1C1164} = {3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}
+		{54993E76-BC6F-47C5-A3A8-A2F50EBA0EFF} = {D607FF17-5F00-4E88-BF66-06304DD0A63B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B262345F-DFC3-49ED-8374-88183C496968}

@@ -5,13 +5,13 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Wheely.Core.Entities.Abstract;
 
-namespace Wheely.Data.Abstract
+namespace Wheely.Data.Abstract.Repositories
 {
     /// <summary>
     /// Represents an entity repository
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public interface IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public partial interface IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
         #region Methods
         /// <summary>

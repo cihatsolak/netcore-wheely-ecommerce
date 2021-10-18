@@ -1,6 +1,6 @@
 ﻿namespace Wheely.Core.Services.Results.Abstract
 {
-    public interface IResult
+    public partial interface IResult
     {
         bool Success { get; }
         string Message { get; }

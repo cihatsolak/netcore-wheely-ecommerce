@@ -1,6 +1,6 @@
 ﻿namespace Wheely.Core.Entities.Abstract
 {
-    public interface IEntity
+    public partial interface IEntity
     {
     }
 }

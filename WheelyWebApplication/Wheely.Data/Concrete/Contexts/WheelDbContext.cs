@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wheely.Core.Entities.Concrete.Wheels;
-using Wheely.Data.Abstract;
+using Wheely.Data.Abstract.Contexts;
 
 namespace Wheely.Data.Concrete.Contexts
 {

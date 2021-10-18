@@ -1,6 +1,6 @@
 ﻿namespace Wheely.Core.Services.Results.Abstract
 {
-    public interface IDataResult<T> : IResult
+    public partial interface IDataResult<T> : IResult
     {
         T Data { get; }
     }

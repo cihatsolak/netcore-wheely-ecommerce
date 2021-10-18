@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Smidge;
 using System;
+using System.Reflection;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Core.Web.Settings.SmidgeSettings;
 using Wheely.Data.Concrete.Contexts;
@@ -20,6 +21,7 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             ServiceTool.Create(services);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }

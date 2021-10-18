@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wheely.Core.Entities.Concrete.Wheels;
 
-namespace Wheely.Data.Abstract
+namespace Wheely.Data.Abstract.Contexts
 {
-    public interface IWheelDbContext
+    public partial interface IWheelDbContext
     {
         DbSet<Wheel> Wheels { get; set; }
     }

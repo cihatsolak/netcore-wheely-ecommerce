@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Wheely.Data.Abstract;
-using Wheely.Data.Concrete.EntityFrameworkCore;
-using Wheely.Service.Categories;
+using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Concrete.Repositories;
 
 namespace Wheely.Admin.Infrastructure.IOC
 {
@@ -15,7 +14,6 @@ namespace Wheely.Admin.Infrastructure.IOC
         public static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
-            services.AddScoped<ICategoryService, CategoryManager>();
 
             return services;
         }

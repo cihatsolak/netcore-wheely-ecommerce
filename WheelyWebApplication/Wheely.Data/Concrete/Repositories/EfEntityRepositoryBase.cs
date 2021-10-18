@@ -5,10 +5,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Wheely.Core.Entities.Abstract;
-using Wheely.Data.Abstract;
+using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Contexts;
 
-namespace Wheely.Data.Concrete.EntityFrameworkCore
+namespace Wheely.Data.Concrete.Repositories
 {
     public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {

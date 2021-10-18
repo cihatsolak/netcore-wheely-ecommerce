@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WheelDetailViewModel
+@{
     ViewData[ViewDataParameter.Title] = ViewTitle.ShopDetail;
 }
 
@@ -24,38 +25,75 @@
                 <div class="col-lg-6 col-xl-6 align-self-center">
                     <div class="product-details mt-n1">
                         <div class="woocommerce-product-rating">
-                            <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5"><span style="width:75%">Rated <strong class="rating">4.00</strong> out of 5 based on <span class="rating">1</span> customer rating</span></div>
+                            <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5">
+                                <span style="width:@(Model.StarCount * 3.78)%">Rated 
+                                <strong class="rating">4.00</strong> out of 5 based on 
+                                <span class="rating">1</span> customer rating</span>
+                            </div>
                             <a href="#" class="woocommerce-review-link">(<span class="count">1</span> customer review)</a>
                         </div>
                         <div class="row">
                             <div class="col-xxl-10">
-                                <h2 class="product-title d-xl-inline-block h3">LX2-Lato synthesize users</h2>
-                                <p class="mb-2">Credibly mesh technically sound results whereas cost effective leadership skills.</p>
+                                <h2 class="product-title d-xl-inline-block h3">@Model.Name</h2>
+                                <p class="mb-2">@Model.ShortDescription</p>
                             </div>
                         </div>
                         <a href="#" class="link-btn add_to_wishlist"><i class="far fa-heart"></i>Add To Wishlist</a>
-                        <div class="input-group mt-4">
-                            <div class="mr-15 fw-bold">Color :</div>
-                            <div class="color-select row gx-0">
-                                <div class="col-auto"><input type="radio" name="colorselect" id="color1" checked="checked"> <label for="color1"><span data-bg-color="#a541f2"></span></label></div>
-                                <div class="col-auto"><input type="radio" name="colorselect" id="color2"> <label for="color2"><span data-bg-color="#ee672c"></span></label></div>
-                                <div class="col-auto"><input type="radio" name="colorselect" id="color3"> <label for="color3"><span data-bg-color="#8ee122"></span></label></div>
-                                <div class="col-auto"><input type="radio" name="colorselect" id="color4"> <label for="color4"><span data-bg-color="#252fb0"></span></label></div>
+
+                        @if (Model?.WheelColorViewModels is not null && Model.WheelColorViewModels.Any())
+                        {
+                            <div class="input-group mt-4">
+                                <div class="mr-15 fw-bold">Color :</div>
+                                <div class="color-select row gx-0">
+                                    @foreach (var color in Model.WheelColorViewModels)
+                                    {
+                                        <div class="col-auto">
+                                            <input type="radio" name="colorselect" id="color@(Model.WheelColorViewModels.IndexOf(color))" @(Model.WheelColorViewModels.IndexOf(color) == 0 ? "checked" : string.Empty)>
+                                            <label for="color1">
+                                                <span data-bg-color="#@(color.HexCode)"></span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                        <div class="input-group mt-4 pt-1">
-                            <div class="mr-15 fw-bold">Wheel Size :</div>
-                            <div class="size-select row gx-2">
-                                <div class="col-auto"><input type="radio" id="size16" name="sizeselect" checked="checked"> <label for="size16">16"</label></div>
-                                <div class="col-auto"><input type="radio" id="size18" name="sizeselect"> <label for="size18">18"</label></div>
-                                <div class="col-auto"><input type="radio" id="size24" name="sizeselect"> <label for="size24">24"</label></div>
+                        }
+
+                        @if (Model?.WheelDimensionViewModels is not null && Model.WheelDimensionViewModels.Any())
+                        {
+                            <div class="input-group mt-4 pt-1">
+                                <div class="mr-15 fw-bold">Wheel Size :</div>
+                                <div class="size-select row gx-2">
+                                    @foreach (var dimension in Model.WheelDimensionViewModels)
+                                    {
+                                        <div class="col-auto">
+                                            <input type="radio" id="size@(dimension.Size)" name="sizeselect" @(Model.WheelDimensionViewModels.IndexOf(dimension) == 0 ? "checked" : string.Empty)>
+                                            <label for="size@(dimension.Size)">@dimension.Size"</label>
+                                        </div>
+
+                                    }
+                                </div>
                             </div>
-                        </div>
+                        }
                         <div class="actions mt-4 pt-1">
-                            <div class="quantity me-4"><input type="number" class="qty-input border-0" value="1" min="1" max="99"> <button class="quantity-minus qut-btn"><i class="far fa-chevron-down"></i></button> <button class="quantity-plus qut-btn"><i class="far fa-chevron-up"></i></button></div>
+                            <div class="quantity me-4">
+                                <input type="number" class="qty-input border-0" value="1" min="1" max="99">
+                                <button class="quantity-minus qut-btn"><i class="far fa-chevron-down"></i></button>
+                                <button class="quantity-plus qut-btn"><i class="far fa-chevron-up"></i></button>
+                            </div>
                             <a href="cart.html" class="vs-btn shadow-none">Add To Cart<i class="fas fa-chevron-right"></i></a>
                         </div>
-                        <div class="product_meta fs-xs mt-3 pt-1"><span>Product By: <span class="sku">Hueiler Inc.LTD</span></span> <span>SKU: <span class="sku">529</span></span> <span>Category: <a href="shop.html">Cleanup</a><a href="shop.html">Repire</a></span> <span>Tag: <a href="shop.html">trendy</a></span></div>
+                        <div class="product_meta fs-xs mt-3 pt-1">
+                            <span>Product By: <span class="sku">@Model.ProducerName</span></span>
+                            <span>SKU: <span class="sku">@Model.StockCode</span></span>
+                            <span>
+                                Category:
+                                @foreach (var categoryName in Model.Categories)
+                                {
+                                    <a href="#">@categoryName</a>
+                                }
+                            </span>
+                            <span>Tag: <a href="shop.html">@string.Join(", ", Model.Tags)</a></span>
+                        </div>
                     </div>
                 </div>
             </div>

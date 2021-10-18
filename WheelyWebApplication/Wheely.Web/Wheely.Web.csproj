@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -19,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Shops\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

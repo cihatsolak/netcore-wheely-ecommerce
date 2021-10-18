@@ -21,7 +21,7 @@ namespace Wheely.Web
         {
             services.AddDefaultServices();
             services.AddDbContexts();
-            services.AddScopedServices();
+            services.AddScopedServices().AddSingletonServices();
             services.AddSettings();
         }
 
