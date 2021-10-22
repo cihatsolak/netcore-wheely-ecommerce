@@ -44,6 +44,12 @@ namespace Wheely.Web
 
             app.UseCustomSmidge();
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
+                await next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
