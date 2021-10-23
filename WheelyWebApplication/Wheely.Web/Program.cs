@@ -23,6 +23,12 @@ namespace Wheely.Web
             })
            .ConfigureWebHostDefaults(webBuilder =>
            {
+               webBuilder.ConfigureKestrel(serverOptions =>
+               {
+                   //Response üzerinden Server Header bilgisi kaldýrýlýr
+                   serverOptions.AddServerHeader = false;
+               });
+
                webBuilder.UseStartup<Startup>();
            });
     }

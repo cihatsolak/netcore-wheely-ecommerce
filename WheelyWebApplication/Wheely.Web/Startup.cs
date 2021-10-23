@@ -42,13 +42,8 @@ namespace Wheely.Web
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseCustomSmidge();
-
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
-                await next();
-            });
+            app.UseSmidgeConfig();
+            app.UseSecurityHeaders();
 
             app.UseEndpoints(endpoints =>
             {

@@ -348,3 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/WheelyWebApplication/Wheely.Web/App_Data/smidge/Cache/PROBOOK/3

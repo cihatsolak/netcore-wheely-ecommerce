@@ -1,0 +1,39 @@
+﻿using Microsoft.AspNetCore.Builder;
+using Smidge;
+using Wheely.Core.Web.Constants;
+using Wheely.Web.Infrastructure.Middlewares.Partials;
+
+namespace Wheely.Web.Infrastructure.Middlewares
+{
+    /// <summary>
+    /// Middleware Extension Methods
+    /// </summary>
+    internal static class MiddlewareExtensions
+    {
+        /// <summary>
+        /// Security header middleware
+        /// </summary>
+        /// <param name="app">type of application builder interface</param>
+        /// <returns>type of application builder interface</returns>
+        internal static IApplicationBuilder UseSecurityHeaders(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<SecurityHeadersMiddleware>();
+        }
+
+        /// <summary>
+        /// Static files configuration with smidge 
+        /// </summary>
+        /// <param name="app">type of application builder interface</param>
+        /// <returns>type of application builder interface</returns>
+        internal static IApplicationBuilder UseSmidgeConfig(this IApplicationBuilder app)
+        {
+            app.UseSmidge(bundle =>
+            {
+                bundle.CreateCss(BundleNames.BaseCssFile, SmidgeFile.CSSFiles);
+                bundle.CreateJs(BundleNames.BaseJSFile, SmidgeFile.JavaScriptFiles);
+            });
+
+            return app;
+        }
+    }
+}
