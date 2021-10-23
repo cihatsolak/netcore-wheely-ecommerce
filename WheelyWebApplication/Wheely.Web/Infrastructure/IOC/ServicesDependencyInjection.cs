@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Wheely.Data.Abstract.Repositories;
-using Wheely.Data.Concrete.Repositories;
+using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;

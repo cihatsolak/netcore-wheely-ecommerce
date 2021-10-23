@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Data", "Wheely.Data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Service", "Wheely.Service\Wheely.Service.csproj", "{E38DBB46-ADC6-4E8E-9149-80464E1C1164}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wheely.Admin", "Wheely.Admin\Wheely.Admin.csproj", "{54993E76-BC6F-47C5-A3A8-A2F50EBA0EFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Admin", "Wheely.Admin\Wheely.Admin.csproj", "{54993E76-BC6F-47C5-A3A8-A2F50EBA0EFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}"
 EndProject

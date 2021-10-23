@@ -5,7 +5,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Contexts;
 
-namespace Wheely.Data.Concrete.Repositories
+namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
     public sealed class WheelRepository : EfEntityRepositoryBase<Wheel>, IWheelRepository
     {

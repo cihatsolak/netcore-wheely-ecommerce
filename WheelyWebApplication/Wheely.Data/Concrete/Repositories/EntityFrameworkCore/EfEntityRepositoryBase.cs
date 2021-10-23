@@ -8,7 +8,7 @@ using Wheely.Core.Entities.Abstract;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Contexts;
 
-namespace Wheely.Data.Concrete.Repositories
+namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
     public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {

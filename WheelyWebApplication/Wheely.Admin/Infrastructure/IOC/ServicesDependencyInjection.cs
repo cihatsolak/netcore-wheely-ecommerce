@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Wheely.Data.Abstract.Repositories;
-using Wheely.Data.Concrete.Repositories;
+using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 
 namespace Wheely.Admin.Infrastructure.IOC
 {
