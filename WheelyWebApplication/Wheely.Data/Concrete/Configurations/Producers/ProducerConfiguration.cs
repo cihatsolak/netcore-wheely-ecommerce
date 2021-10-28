@@ -8,11 +8,22 @@ namespace Wheely.Data.Concrete.Configurations.Producers
     {
         public void Configure(EntityTypeBuilder<Producer> builder)
         {
+            #region Table
             builder.ToTable(nameof(Producer));
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Name).HasMaxLength(200).IsRequired();
+            #endregion
 
+            #region Properties
+            builder.Property(p => p.Name).HasMaxLength(200).IsRequired();
+            #endregion
+
+            #region Indexes
+            builder.HasIndex(p => p.Name);
+            #endregion
+
+            #region Relationships
             builder.HasMany(p => p.Wheels).WithOne(p => p.Producer).HasForeignKey(p => p.ProducerId);
+            #endregion
         }
     }
 }

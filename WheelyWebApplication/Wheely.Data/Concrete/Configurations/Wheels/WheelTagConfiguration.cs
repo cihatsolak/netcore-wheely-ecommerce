@@ -8,10 +8,15 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
     {
         public void Configure(EntityTypeBuilder<WheelTag> builder)
         {
+            #region Table
             builder.ToTable(nameof(WheelTag));
             builder.HasKey(p => new { p.TagId, p.WheelId });
+            #endregion
+
+            #region Relationships
             builder.HasOne(p => p.Tag).WithMany(p => p.WheelTags).HasForeignKey(p => p.TagId);
             builder.HasOne(p => p.Wheel).WithMany(p => p.WheelTags).HasForeignKey(p => p.WheelId);
+            #endregion
         }
     }
 }

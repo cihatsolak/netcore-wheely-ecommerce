@@ -8,8 +8,12 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
     {
         public void Configure(EntityTypeBuilder<Wheel> builder)
         {
+            #region Table
             builder.ToTable(nameof(Wheel));
             builder.HasKey(p => p.Id);
+            #endregion
+
+            #region Properties
             builder.Property(p => p.StarCount).IsRequired().HasDefaultValue<int>(0);
             builder.Property(p => p.Name).HasMaxLength(150).IsRequired();
             builder.Property(p => p.ShortDescription).HasMaxLength(250).IsRequired();
@@ -17,6 +21,16 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
             builder.Property(p => p.Description).IsRequired();
             builder.Property(p => p.Price).HasColumnType("numeric(18,2)");
             builder.Property(p => p.CampaignPrice).HasColumnType("numeric(18,2)");
+            #endregion
+
+            #region Indexes
+            builder.HasIndex(p => p.Name);
+            builder.HasIndex(p => p.Price);
+            #endregion
+
+            #region QueryFilters
+            builder.HasQueryFilter(p => !p.IsDeleted);
+            #endregion
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Wheely.Data.Abstract.Repositories
         TEntity GetById(object id);
 
         /// <summary>
-        /// Is Any by expression filter
+        /// Is there by expression filter
         /// </summary>
         /// <param name="filter">filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>

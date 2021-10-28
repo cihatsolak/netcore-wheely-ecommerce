@@ -15,7 +15,7 @@ namespace Wheely.Core.Entities.Concrete.Wheels
         public string Description { get; set; }
         public decimal Price { get; set; }
         public decimal CampaignPrice { get; set; }
-
+        public bool IsDeleted { get; set; }
 
         public int ProducerId { get; set; }
         public virtual Producer Producer { get; set; }

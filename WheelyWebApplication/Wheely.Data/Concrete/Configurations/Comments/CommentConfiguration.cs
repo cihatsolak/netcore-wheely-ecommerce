@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using Wheely.Core.Entities.Concrete.Comments;
 
 namespace Wheely.Data.Concrete.Configurations.Comments
@@ -9,15 +8,22 @@ namespace Wheely.Data.Concrete.Configurations.Comments
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
+            #region Table
             builder.ToTable(nameof(Comment));
             builder.HasKey(p => p.Id);
+            #endregion
+
+            #region Properties
             builder.Property(p => p.FullName).HasMaxLength(100).IsRequired();
             builder.Property(p => p.Content).HasMaxLength(450).IsRequired();
             builder.Property(p => p.StarCount).HasDefaultValue<int>(0).IsRequired();
             builder.Property(p => p.ImageUrl).HasMaxLength(400).IsRequired();
-            builder.Property(p => p.CreatedDate).HasDefaultValue<DateTime>(DateTime.Now).IsRequired();
+            builder.Property(p => p.CreatedDate).HasDefaultValueSql("getdate()").IsRequired();
+            #endregion
 
+            #region Relationships
             builder.HasOne(p => p.Wheel).WithMany(p => p.Comments).HasForeignKey(p => p.WheelId);
+            #endregion
         }
     }
 }

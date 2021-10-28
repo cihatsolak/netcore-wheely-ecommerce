@@ -8,12 +8,19 @@ namespace Wheely.Data.Concrete.Configurations.Pictures
     {
         public void Configure(EntityTypeBuilder<Picture> builder)
         {
+            #region Table
             builder.ToTable(nameof(Picture));
             builder.HasKey(p => p.Id);
+            #endregion
+
+            #region Properties
             builder.Property(p => p.Url).HasMaxLength(200).IsRequired();
             builder.Property(p => p.Order).IsRequired();
+            #endregion
 
+            #region Relationships
             builder.HasOne(p => p.Wheel).WithMany(p => p.Pictures).HasForeignKey(p => p.WheelId);
+            #endregion
         }
     }
 }

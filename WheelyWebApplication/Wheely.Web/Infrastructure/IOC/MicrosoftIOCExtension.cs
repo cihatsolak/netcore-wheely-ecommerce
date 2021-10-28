@@ -35,6 +35,7 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             services.AddDbContext<WheelDbContext>(contextOptions =>
             {
+                contextOptions.UseLazyLoadingProxies(true);
                 contextOptions.UseNpgsql(ServiceTool.Configuration.GetConnectionString(nameof(WheelDbContext)), sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(typeof(WheelDbContext).Assembly.FullName);
