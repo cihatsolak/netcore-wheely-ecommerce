@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Wheely.Data.Concrete.Contexts;
@@ -9,9 +10,10 @@ using Wheely.Data.Concrete.Contexts;
 namespace Wheely.Data.Concrete.Migrations
 {
     [DbContext(typeof(WheelDbContext))]
-    partial class WheelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211028205721_AddTableIndexes")]
+    partial class AddTableIndexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
