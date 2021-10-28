@@ -6,7 +6,7 @@ namespace Wheely.Web.Infrastructure.Mappers
 {
     public static class LazyAutoMapper
     {
-        private static readonly Lazy<IMapper> _mapper = new(() =>
+        private static readonly Lazy<IMapper> _wheelMapper = new(() =>
         {
             var mapperConfiguration = new MapperConfiguration(configuration =>
             {
@@ -16,6 +16,6 @@ namespace Wheely.Web.Infrastructure.Mappers
             return mapperConfiguration.CreateMapper();
         });
 
-        public static IMapper Mapper => _mapper.Value;
+        public static IMapper Wheel => _wheelMapper.Value;
     }
 }

@@ -9,7 +9,7 @@ namespace Wheely.Web.Factories.ShopFactories
     {
         public WheelDetailViewModel PrepareWheelDetailViewModel(Wheel wheel)
         {
-            var wheelDetailViewModel = LazyAutoMapper.Mapper.Map<WheelDetailViewModel>(wheel);
+            var wheelDetailViewModel = LazyAutoMapper.Wheel.Map<WheelDetailViewModel>(wheel);
 
             wheelDetailViewModel.Categories = wheel.WheelCategories.Select(p => p.Category.Name).ToList();
             wheelDetailViewModel.Tags = wheel.WheelTags.Select(p => p.Tag.Name).ToList();

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Wheely.Web.Infrastructure.Middlewares.Partials
 {
-    public sealed class SecurityHeadersMiddleware
+    internal sealed class SecurityHeadersMiddleware
     {
         #region Fields
         private readonly RequestDelegate _next;
@@ -94,7 +94,7 @@ namespace Wheely.Web.Infrastructure.Middlewares.Partials
             /// </summary>
             context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
 
-            context.Response.Headers.Add("Clear-Site-Data", "cache, cookies, storage");
+            context.Response.Headers.Add("Clear-Site-Data",  "\"cache\", \"cookies\", \"storage\"");
             context.Response.Headers.Add("Cross-Origin-Embedder-Policy", "require-corp");
             context.Response.Headers.Add("Cross-Origin-Opener-Policy", "same-origin");
             context.Response.Headers.Add("Cross-Origin-Resource-Policy", "same-origin");

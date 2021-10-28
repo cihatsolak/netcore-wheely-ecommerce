@@ -2,6 +2,7 @@
 using Smidge;
 using Wheely.Core.Web.Constants;
 using Wheely.Web.Infrastructure.Middlewares.Partials;
+using Wheely.Web.Infrastructure.Routes;
 
 namespace Wheely.Web.Infrastructure.Middlewares
 {
@@ -31,6 +32,21 @@ namespace Wheely.Web.Infrastructure.Middlewares
             {
                 bundle.CreateCss(BundleNames.BaseCssFile, SmidgeFile.CSSFiles);
                 bundle.CreateJs(BundleNames.BaseJSFile, SmidgeFile.JavaScriptFiles);
+            });
+
+            return app;
+        }
+
+        /// <summary>
+        /// Route value transformer
+        /// </summary>
+        /// <param name="app">type of application builder interface</param>
+        /// <returns>type of application builder interface</returns>
+        internal static IApplicationBuilder UseEndpointConfig(this IApplicationBuilder app)
+        {
+            app.UseEndpoints(configure =>
+            {
+                configure.MapDynamicControllerRoute<RouteValueTransformer>("{**FriendlyUrl}");
             });
 
             return app;

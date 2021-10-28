@@ -7,6 +7,7 @@ using System.Reflection;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Core.Web.Settings.SmidgeSettings;
 using Wheely.Data.Concrete.Contexts;
+using Wheely.Web.Infrastructure.Routes;
 
 namespace Wheely.Web.Infrastructure.IOC
 {
@@ -22,6 +23,7 @@ namespace Wheely.Web.Infrastructure.IOC
             ServiceTool.Create(services);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddSingleton<RouteValueTransformer>();
 
             return services;
         }
@@ -58,5 +60,19 @@ namespace Wheely.Web.Infrastructure.IOC
             return services;
         }
 
+        /// <summary>
+        /// Add redis configuration
+        /// </summary>
+        /// <param name="services">type of service collection interface</param>
+        /// <returns>type of service collection interface</returns>
+        internal static IServiceCollection AddRedis(this IServiceCollection services)
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = ServiceTool.Configuration.GetValue<string>("RedisServerSettings:ConnectionString");
+            });
+
+            return services;
+        }
     }
 }

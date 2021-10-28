@@ -21,6 +21,7 @@ namespace Wheely.Web
         {
             services.AddDefaultServices();
             services.AddDbContexts();
+            services.AddRedis();
             services.AddScopedServices().AddSingletonServices();
             services.AddSettings();
         }
@@ -44,13 +45,7 @@ namespace Wheely.Web
 
             app.UseSmidgeConfig();
             app.UseSecurityHeaders();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseEndpointConfig();
         }
     }
 }
