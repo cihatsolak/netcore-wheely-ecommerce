@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
-namespace Wheely.Core.Web.Utilities
+namespace Wheely.Core.Utilities
 {
     public static class UrlExtension
     {

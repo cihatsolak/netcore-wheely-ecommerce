@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Net;
+using Wheely.Core.Utilities;
 using Wheely.Web.Infrastructure.IOC;
 using Wheely.Web.Infrastructure.Middlewares;
 
@@ -28,23 +30,24 @@ namespace Wheely.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHttpsRedirection();
+            app.UseHttpStatusCodeHandler();
+            app.UseSecurityHeaders();
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+               app.UseDeveloperExceptionPage();
             }
             else
             {
+                app.UseExceptionHandler("/Error/InternalServerError");
                 app.UseHsts();
-                app.UseExceptionHandler("/Error");
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
 
             app.UseSmidgeConfig();
-            app.UseSecurityHeaders();
             app.UseEndpointConfig();
         }
     }

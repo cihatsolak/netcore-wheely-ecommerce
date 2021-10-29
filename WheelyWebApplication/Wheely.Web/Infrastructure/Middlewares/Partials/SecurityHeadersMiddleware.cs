@@ -31,20 +31,22 @@ namespace Wheely.Web.Infrastructure.Middlewares.Partials
             /// Burada “self” kendi domaininizi, sonrasında gelen url ise kendi domaininize ek olarak yükleme yapılabilecek kaynak url’ini ifade etmektedir. 
             /// Sadece kendi domaininizdeki script, img veya style vb. dosyaları yüklensin istenirse o zaman sadece self eklemek yeterli olacaktır.
             /// </summary>
-            context.Response.Headers.Add("Content-Security-Policy",
-                                         "default-src 'self'; " +
-                                         "object-src 'none';" +
-                                         "font-src 'self'; " +
-                                         "style-src 'self'; " +
-                                         "child-src 'self';" +
-                                         "frame-src 'self';" +
-                                         "connect-src 'self';" +
-                                         "frame-ancestors 'none';" +
-                                         "upgrade-insecure-requests;" +
-                                         "block-all-mixed-content" +
-                                         "img-src 'self' {your_awesome_url}; " +
-                                         "script-src 'self' https://cdnjs.cloudflare.com; " +
-                                         "style-src 'self' https://www.bootstrapcdn.com");
+            //context.Response.Headers.Add("Content-Security-Policy",
+            //                             "default-src 'self'; " +
+            //                             "object-src 'none';" +
+            //                             "font-src 'self'; " +
+            //                             "style-src 'self'; " +
+            //                             "child-src 'self';" +
+            //                             "frame-src 'self';" +
+            //                             "connect-src 'self';" +
+            //                             "frame-ancestors 'none';" +
+            //                             "upgrade-insecure-requests;" +
+            //                             "block-all-mixed-content" +
+            //                             "img-src 'self' {your_awesome_url}; " +
+            //                             "script-src 'self' https://cdnjs.cloudflare.com; " +
+            //                             "style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com" +
+            //                             "style-src 'self' 'unsafe-hashes' 'sha256-6lbPeCWBEjE++6uHl72kLeOZAnxMuymARwIqKPYVbI8=';" +
+            //                             "style-src 'self' https://www.bootstrapcdn.com");
 
             /// <summary>
             /// Tarayıcılar "Content-Type" başlığı ile belirtişmemiş içerikleri kendileri değerlendirip türünü bulurlar. Buna MIME Type Sniffing denir.

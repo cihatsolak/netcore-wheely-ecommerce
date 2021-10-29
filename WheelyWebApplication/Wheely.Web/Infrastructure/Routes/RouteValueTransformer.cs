@@ -22,7 +22,7 @@ namespace Wheely.Web.Infrastructure.Routes
         #region Methods
         public override ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
         {
-            string url = values["FriendlyUrl"]?.ToString();
+            string url = values["url"]?.ToString();
             if (string.IsNullOrWhiteSpace(url))
             {
                 values["Controller"] = "Home";
