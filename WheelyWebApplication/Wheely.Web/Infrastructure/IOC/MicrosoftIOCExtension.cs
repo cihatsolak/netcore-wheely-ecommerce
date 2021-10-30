@@ -5,6 +5,7 @@ using Smidge;
 using System;
 using System.Reflection;
 using Wheely.Core.DependencyResolvers;
+using Wheely.Core.Web.Settings.RedisServerSettings;
 using Wheely.Core.Web.Settings.SmidgeSettings;
 using Wheely.Data.Concrete.Contexts;
 using Wheely.Web.Infrastructure.Routes;
@@ -69,7 +70,7 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = ServiceTool.Configuration.GetValue<string>("RedisServerSettings:ConnectionString");
+                options.Configuration = ServiceTool.Configuration.GetValue<string>($"{nameof(RedisServerSettings)}:ConnectionString");
             });
 
             return services;
