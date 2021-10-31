@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Wheely.Core.Entities.Concrete.Routes;
+using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
 using Wheely.Data.Abstract.Repositories;
@@ -38,7 +39,7 @@ namespace Wheely.Service.Routes
             }
             else
             {
-                _redisService.Set("routes", routes);
+                _redisService.Set("routes", routes, SlidingExpiration.TenMinute, AbsoluteExpiration.TwoHour);
             }
 
             return new SuccessDataResult<List<RouteValueTransform>>(routes);

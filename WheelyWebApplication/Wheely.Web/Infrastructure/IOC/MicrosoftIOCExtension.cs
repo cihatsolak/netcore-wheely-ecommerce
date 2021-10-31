@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Smidge;
 using System;
 using System.Reflection;
@@ -22,7 +24,12 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddDefaultServices(this IServiceCollection services)
         {
             ServiceTool.Create(services);
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                );
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddSingleton<RouteValueTransformer>();
 
@@ -39,6 +46,7 @@ namespace Wheely.Web.Infrastructure.IOC
             services.AddDbContext<WheelDbContext>(contextOptions =>
             {
                 contextOptions.UseLazyLoadingProxies(true);
+                contextOptions.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
                 contextOptions.UseNpgsql(ServiceTool.Configuration.GetConnectionString(nameof(WheelDbContext)), sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(typeof(WheelDbContext).Assembly.FullName);

@@ -47,17 +47,17 @@ namespace Wheely.Web.Infrastructure.Middlewares
         /// <returns>type of application builder interface</returns>
         internal static IApplicationBuilder UseEndpointConfig(this IApplicationBuilder app)
         {
-            //app.UseEndpoints(configure =>
-            //{
-            //    configure.MapDynamicControllerRoute<RouteValueTransformer>("{**url}");
-            //});
-
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(configure =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                configure.MapDynamicControllerRoute<RouteValueTransformer>("{**slug}");
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //});
 
             return app;
         }

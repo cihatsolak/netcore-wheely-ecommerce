@@ -27,24 +27,24 @@ namespace Wheely.Web.Infrastructure.Routes
         #endregion
 
         #region Methods
-        public override ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
+        public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
         {
-            string url = values["url"]?.ToString();
-            if (string.IsNullOrWhiteSpace(url))
+            string slugUrl = values["slug"]?.ToString();
+            if (string.IsNullOrWhiteSpace(slugUrl))
             {
-                return new ValueTask<RouteValueDictionary>(values);
+                return values;
             }
 
-            var routes = _redisService.Get<List<RouteValueTransform>>("routes");
+            var routes = await _redisService.GetAsync<List<RouteValueTransform>>("routes");
             if (routes is null || !routes.Any())
             {
-                return new ValueTask<RouteValueDictionary>(values);
+                return values;
             }
 
-            var route = routes.FirstOrDefault(p => p.SlugUrl.Equals(url, StringComparison.OrdinalIgnoreCase) || p.CustomUrl.Equals(url, StringComparison.OrdinalIgnoreCase));
+            var route = routes.FirstOrDefault(p => p.SlugUrl.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) || p.CustomUrl?.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) == true);
             if (route is null)
             {
-                return new ValueTask<RouteValueDictionary>(values);
+                return values;
             }
 
             values["Controller"] = route.ControllerName;
@@ -55,7 +55,7 @@ namespace Wheely.Web.Infrastructure.Routes
                 values["id"] = route.EntityId;
             }
 
-            return new ValueTask<RouteValueDictionary>(values);
+            return values;
         }
         #endregion
     }
