@@ -7,6 +7,6 @@ namespace Wheely.Core.Entities.Concrete.Routes
     {
         public string Name { get; set; }
 
-        public virtual ICollection<Route> Routes { get; set; }
+        public virtual ICollection<RouteValueTransform> RouteValueTransforms { get; set; }
     }
 }

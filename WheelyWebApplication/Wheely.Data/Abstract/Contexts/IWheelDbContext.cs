@@ -15,7 +15,7 @@ namespace Wheely.Data.Abstract.Contexts
     {
         DbSet<Wheel> Wheels { get; set; }
         DbSet<Module> Modules { get; set; }
-        DbSet<Route> Routes { get; set; }
+        DbSet<RouteValueTransform> RouteValueTransforms { get; set; }
         DbSet<Producer> Producers { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Color> Colors { get; set; }

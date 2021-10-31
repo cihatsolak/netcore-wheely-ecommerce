@@ -3,7 +3,7 @@ using Wheely.Core.Entities.Abstract;
 
 namespace Wheely.Core.Entities.Concrete.Routes
 {
-    public class Route : BaseEntity
+    public class RouteValueTransform : BaseEntity
     {
         public string ControllerName { get; set; }
         public string ActionName { get; set; }

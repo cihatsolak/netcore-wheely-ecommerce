@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using Wheely.Core.Entities.Concrete.Routes;
 
-namespace Wheely.Data.Concrete.Configurations.Routes
+namespace Wheely.Data.Concrete.Configurations.RouteTransforms
 {
     public class ModuleConfiguration : IEntityTypeConfiguration<Module>
     {

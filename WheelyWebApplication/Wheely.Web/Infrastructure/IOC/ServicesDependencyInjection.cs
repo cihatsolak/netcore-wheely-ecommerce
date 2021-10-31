@@ -3,6 +3,8 @@ using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
 using Wheely.Service.HttpRequest;
+using Wheely.Service.Redis;
+using Wheely.Service.Routes;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;
 
@@ -21,11 +23,13 @@ namespace Wheely.Web.Infrastructure.IOC
             services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
             services.AddScoped<IWheelRepository, WheelRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IRouteRepository, RouteRepository>();
             #endregion
 
             #region Services
             services.AddScoped<IWheelService, WheelManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<IRouteService, RouteManager>();
             #endregion
 
             #region Model Factories
@@ -43,6 +47,7 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddSingletonServices(this IServiceCollection services)
         {
             services.AddSingleton<IRestApiService, RestApiManager>();
+            services.AddSingleton<IRedisService, RedisManager>();
             return services;
         }
     }

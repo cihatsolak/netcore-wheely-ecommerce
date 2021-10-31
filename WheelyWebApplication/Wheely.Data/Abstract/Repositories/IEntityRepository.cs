@@ -19,7 +19,7 @@ namespace Wheely.Data.Abstract.Repositories
         /// </summary>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        IList<TEntity> GetAll(bool disableTracking = true);
+        List<TEntity> GetAll(bool disableTracking = true);
 
         /// <summary>
         /// Get entities by expression fiter
@@ -27,7 +27,7 @@ namespace Wheely.Data.Abstract.Repositories
         /// <param name="filter">expresssion filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true);
+        List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true);
 
         /// <summary>
         /// Get entities by expression fiter with ordering
@@ -36,7 +36,7 @@ namespace Wheely.Data.Abstract.Repositories
         /// <param name="orderBy">orderby filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true);
+        List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true);
 
         /// <summary>
         /// Get entities by expression fiter with ordering
@@ -46,7 +46,7 @@ namespace Wheely.Data.Abstract.Repositories
         /// <param name="includeProperties">include string filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties);
+        List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties);
 
         /// <summary>
         /// Get entity by expression fiter

@@ -2,7 +2,12 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Wheely.Core.Entities.Concrete.Routes;
+using Wheely.Service.Redis;
 
 namespace Wheely.Web.Infrastructure.Routes
 {
@@ -10,12 +15,14 @@ namespace Wheely.Web.Infrastructure.Routes
     {
         #region Fields 
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
+        private readonly IRedisService _redisService;
         #endregion
 
         #region Constructor
-        public RouteValueTransformer(IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
+        public RouteValueTransformer(IActionDescriptorCollectionProvider actionDescriptorCollectionProvider, IRedisService redisService)
         {
             _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
+            _redisService = redisService;
         }
         #endregion
 
@@ -25,10 +32,27 @@ namespace Wheely.Web.Infrastructure.Routes
             string url = values["url"]?.ToString();
             if (string.IsNullOrWhiteSpace(url))
             {
-                values["Controller"] = "Home";
-                values["Action"] = "Index";
-
                 return new ValueTask<RouteValueDictionary>(values);
+            }
+
+            var routes = _redisService.Get<List<RouteValueTransform>>("routes");
+            if (routes is null || !routes.Any())
+            {
+                return new ValueTask<RouteValueDictionary>(values);
+            }
+
+            var route = routes.FirstOrDefault(p => p.SlugUrl.Equals(url, StringComparison.OrdinalIgnoreCase) || p.CustomUrl.Equals(url, StringComparison.OrdinalIgnoreCase));
+            if (route is null)
+            {
+                return new ValueTask<RouteValueDictionary>(values);
+            }
+
+            values["Controller"] = route.ControllerName;
+            values["Action"] = route.ActionName;
+
+            if (route.EntityId > 0)
+            {
+                values["id"] = route.EntityId;
             }
 
             return new ValueTask<RouteValueDictionary>(values);

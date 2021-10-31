@@ -30,7 +30,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         /// </summary>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        public IList<TEntity> GetAll(bool disableTracking = true)
+        public List<TEntity> GetAll(bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.ToList();
@@ -42,7 +42,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         /// <param name="filter">expresssion filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
@@ -58,7 +58,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         /// <param name="filter">expresssion filter</param>
         /// <param name="orderBy">orderby filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
-        public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 
@@ -79,7 +79,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         /// <param name="includeProperties">include string filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns>Entities</returns>
-        public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties)
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
 

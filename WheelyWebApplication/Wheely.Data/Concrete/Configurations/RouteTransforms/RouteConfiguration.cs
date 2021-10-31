@@ -2,14 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wheely.Core.Entities.Concrete.Routes;
 
-namespace Wheely.Data.Concrete.Configurations.Routes
+namespace Wheely.Data.Concrete.Configurations.RouteTransforms
 {
-    public class RouteConfiguration : IEntityTypeConfiguration<Route>
+    public class RouteConfiguration : IEntityTypeConfiguration<RouteValueTransform>
     {
-        public void Configure(EntityTypeBuilder<Route> builder)
+        public void Configure(EntityTypeBuilder<RouteValueTransform> builder)
         {
             #region Table
-            builder.ToTable(nameof(Route));
+            builder.ToTable(nameof(RouteValueTransform));
             builder.HasKey(p => p.Id);
             #endregion
 
@@ -28,7 +28,7 @@ namespace Wheely.Data.Concrete.Configurations.Routes
             #endregion
 
             #region Relationships
-            builder.HasOne(p => p.Module).WithMany(p => p.Routes).HasForeignKey(p => p.ModuleId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(p => p.Module).WithMany(p => p.RouteValueTransforms).HasForeignKey(p => p.ModuleId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region QueryFilters
