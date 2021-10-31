@@ -5,7 +5,7 @@ namespace Wheely.Core.Utilities
 {
     public static class UrlExtension
     {
-        public static string FriendlyUrl(this IUrlHelper helper, string url)
+        public static string SlugUrl(this IUrlHelper helper, string url)
         {
             if (string.IsNullOrWhiteSpace(url)) return string.Empty;
 

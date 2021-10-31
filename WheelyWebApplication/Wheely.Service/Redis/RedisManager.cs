@@ -47,8 +47,7 @@ namespace Wheely.Service.Redis
 
         public async Task<TModel> GetAsync<TModel>(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey))
-                return default;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return default;
 
             string cachedValue = await _distributedCache.GetStringAsync(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
