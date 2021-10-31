@@ -30,6 +30,12 @@ namespace Wheely.Service.Wheels
 
             return new SuccessDataResult<Wheel>(wheel);
         }
+
+        public IResult Update(Wheel wheel)
+        {
+            _wheelRepository.Update(wheel);
+            return new SuccessResult();
+        }
         #endregion
 
         #region Utilities

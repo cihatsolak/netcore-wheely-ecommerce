@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
+using Wheely.Service.Categories;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;
@@ -19,10 +20,12 @@ namespace Wheely.Web.Infrastructure.IOC
             #region Repositories
             services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
             services.AddScoped<IWheelRepository, WheelRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             #endregion
 
             #region Services
             services.AddScoped<IWheelService, WheelManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
             #endregion
 
             #region Model Factories
