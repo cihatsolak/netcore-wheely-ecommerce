@@ -8,6 +8,6 @@ namespace Wheely.Core.Entities.Concrete.Dimensions
     {
         public int Size { get; set; }
 
-        public virtual ICollection<WheelDimension> WheelDimensions { get; set; }
+        public virtual ICollection<Wheel> Wheels { get; set; }
     }
 }

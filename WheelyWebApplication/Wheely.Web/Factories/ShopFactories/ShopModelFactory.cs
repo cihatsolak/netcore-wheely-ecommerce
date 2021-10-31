@@ -11,19 +11,19 @@ namespace Wheely.Web.Factories.ShopFactories
         {
             var wheelDetailViewModel = LazyAutoMapper.Wheel.Map<WheelDetailViewModel>(wheel);
 
-            wheelDetailViewModel.Categories = wheel.WheelCategories.Select(p => p.Category.Name).ToList();
-            wheelDetailViewModel.Tags = wheel.WheelTags.Select(p => p.Tag.Name).ToList();
+            wheelDetailViewModel.Categories = wheel.Categories.Select(p => p.Name).ToList();
+            wheelDetailViewModel.Tags = wheel.Tags.Select(p => p.Name).ToList();
 
-            wheelDetailViewModel.WheelColorViewModels = wheel.WheelColors.Select(item => new WheelColorViewModel
+            wheelDetailViewModel.WheelColorViewModels = wheel.Colors.Select(color => new WheelColorViewModel
             {
-                Id = item.Color.Id,
-                HexCode = item.Color.HexCode
+                Id = color.Id,
+                HexCode = color.HexCode
             }).ToList();
 
-            wheelDetailViewModel.WheelDimensionViewModels = wheel.WheelDimensions.Select(item => new WheelDimensionViewModel
+            wheelDetailViewModel.WheelDimensionViewModels = wheel.Dimensions.Select(dimension => new WheelDimensionViewModel
             {
-                Id = item.Dimension.Id,
-                Size = item.Dimension.Size
+                Id = dimension.Id,
+                Size = dimension.Size
             }).ToList();
 
             return wheelDetailViewModel;

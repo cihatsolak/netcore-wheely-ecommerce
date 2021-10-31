@@ -8,6 +8,6 @@ namespace Wheely.Core.Entities.Concrete.Tags
     {
         public string Name { get; set; }
 
-        public virtual ICollection<WheelTag> WheelTags { get; set; }
+        public virtual ICollection<Wheel> Wheels { get; set; }
     }
 }

@@ -14,12 +14,12 @@ namespace Wheely.Data.Concrete.Configurations.Pictures
             #endregion
 
             #region Properties
-            builder.Property(p => p.Url).HasMaxLength(200).IsRequired();
+            builder.Property(p => p.Path).HasMaxLength(200).IsRequired();
             builder.Property(p => p.Order).IsRequired();
             #endregion
 
             #region Relationships
-            builder.HasOne(p => p.Wheel).WithMany(p => p.Pictures).HasForeignKey(p => p.WheelId);
+            builder.HasOne(p => p.Wheel).WithMany(p => p.Pictures).HasForeignKey(p => p.WheelId).OnDelete(DeleteBehavior.Cascade);
             #endregion
         }
     }

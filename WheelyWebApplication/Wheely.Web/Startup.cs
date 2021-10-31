@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Net;
-using Wheely.Core.Utilities;
 using Wheely.Web.Infrastructure.IOC;
 using Wheely.Web.Infrastructure.Middlewares;
 

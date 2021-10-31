@@ -22,7 +22,7 @@ namespace Wheely.Data.Concrete.Configurations.Producers
             #endregion
 
             #region Relationships
-            builder.HasMany(p => p.Wheels).WithOne(p => p.Producer).HasForeignKey(p => p.ProducerId);
+            builder.HasMany(p => p.Wheels).WithOne(p => p.Producer).HasForeignKey(p => p.ProducerId).OnDelete(DeleteBehavior.Cascade);
             #endregion
         }
     }

@@ -18,11 +18,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         #region Methods
         public Wheel GetWheelWithRelatedTablesById(int id)
         {
-            var wheel = TableNoTracking.Includes("Comments", "Pictures", "Producer")
-                        .Include(p => p.WheelCategories).ThenInclude(p => p.Category)
-                        .Include(p => p.WheelColors).ThenInclude(p => p.Color)
-                        .Include(p => p.WheelDimensions).ThenInclude(p => p.Dimension)
-                        .Include(p => p.WheelTags).ThenInclude(p => p.Tag)
+            var wheel = TableNoTracking.Includes("Comments", "Pictures", "Producer", "Categories", "Colors", "Dimensions", "Tags")
                         .AsSplitQuery()
                         .SingleOrDefault(p => p.Id == id);
 

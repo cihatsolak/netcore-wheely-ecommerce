@@ -31,6 +31,13 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
             #region QueryFilters
             builder.HasQueryFilter(p => !p.IsDeleted);
             #endregion
+
+            #region Relationships
+            builder.HasMany(p => p.Categories).WithMany(p => p.Wheels);
+            builder.HasMany(p => p.Colors).WithMany(p => p.Wheels);
+            builder.HasMany(p => p.Dimensions).WithMany(p => p.Wheels);
+            builder.HasMany(p => p.Tags).WithMany(p => p.Wheels);
+            #endregion
         }
     }
 }

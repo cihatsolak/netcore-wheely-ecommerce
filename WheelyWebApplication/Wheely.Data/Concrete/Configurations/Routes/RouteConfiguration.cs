@@ -28,7 +28,7 @@ namespace Wheely.Data.Concrete.Configurations.Routes
             #endregion
 
             #region Relationships
-            builder.HasOne(p => p.Module).WithMany(p => p.Routes).HasForeignKey(p => p.ModuleId);
+            builder.HasOne(p => p.Module).WithMany(p => p.Routes).HasForeignKey(p => p.ModuleId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region QueryFilters

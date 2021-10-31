@@ -9,6 +9,6 @@ namespace Wheely.Core.Entities.Concrete.Colors
         public string Name { get; set; }
         public string HexCode { get; set; }
 
-        public virtual ICollection<WheelColor> WheelColors { get; set; }
+        public virtual ICollection<Wheel> Wheels { get; set; }
     }
 }

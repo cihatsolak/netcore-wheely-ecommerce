@@ -19,6 +19,66 @@ namespace Wheely.Data.Concrete.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("CategoryWheel", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WheelsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CategoriesId", "WheelsId");
+
+                    b.HasIndex("WheelsId");
+
+                    b.ToTable("CategoryWheel");
+                });
+
+            modelBuilder.Entity("ColorWheel", b =>
+                {
+                    b.Property<int>("ColorsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WheelsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ColorsId", "WheelsId");
+
+                    b.HasIndex("WheelsId");
+
+                    b.ToTable("ColorWheel");
+                });
+
+            modelBuilder.Entity("DimensionWheel", b =>
+                {
+                    b.Property<int>("DimensionsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WheelsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("DimensionsId", "WheelsId");
+
+                    b.HasIndex("WheelsId");
+
+                    b.ToTable("DimensionWheel");
+                });
+
+            modelBuilder.Entity("TagWheel", b =>
+                {
+                    b.Property<int>("TagsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WheelsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TagsId", "WheelsId");
+
+                    b.HasIndex("WheelsId");
+
+                    b.ToTable("TagWheel");
+                });
+
             modelBuilder.Entity("Wheely.Core.Entities.Concrete.Categories.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -78,14 +138,14 @@ namespace Wheely.Data.Concrete.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("getdate()");
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Path")
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("character varying(400)");
@@ -135,7 +195,7 @@ namespace Wheely.Data.Concrete.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Path")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
@@ -318,64 +378,64 @@ namespace Wheely.Data.Concrete.Migrations
                     b.ToTable("Wheel");
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelCategory", b =>
+            modelBuilder.Entity("CategoryWheel", b =>
                 {
-                    b.Property<int>("WheelId")
-                        .HasColumnType("integer");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Categories.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("WheelId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("WheelCategory");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", null)
+                        .WithMany()
+                        .HasForeignKey("WheelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelColor", b =>
+            modelBuilder.Entity("ColorWheel", b =>
                 {
-                    b.Property<int>("ColorId")
-                        .HasColumnType("integer");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Colors.Color", null)
+                        .WithMany()
+                        .HasForeignKey("ColorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("WheelId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ColorId", "WheelId");
-
-                    b.HasIndex("WheelId");
-
-                    b.ToTable("WheelColor");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", null)
+                        .WithMany()
+                        .HasForeignKey("WheelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelDimension", b =>
+            modelBuilder.Entity("DimensionWheel", b =>
                 {
-                    b.Property<int>("DimensionId")
-                        .HasColumnType("integer");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Dimensions.Dimension", null)
+                        .WithMany()
+                        .HasForeignKey("DimensionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("WheelId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("DimensionId", "WheelId");
-
-                    b.HasIndex("WheelId");
-
-                    b.ToTable("WheelDimension");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", null)
+                        .WithMany()
+                        .HasForeignKey("WheelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelTag", b =>
+            modelBuilder.Entity("TagWheel", b =>
                 {
-                    b.Property<int>("TagId")
-                        .HasColumnType("integer");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Tags.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("WheelId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TagId", "WheelId");
-
-                    b.HasIndex("WheelId");
-
-                    b.ToTable("WheelTag");
+                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", null)
+                        .WithMany()
+                        .HasForeignKey("WheelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Wheely.Core.Entities.Concrete.Comments.Comment", b =>
@@ -422,97 +482,6 @@ namespace Wheely.Data.Concrete.Migrations
                     b.Navigation("Producer");
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelCategory", b =>
-                {
-                    b.HasOne("Wheely.Core.Entities.Concrete.Categories.Category", "Category")
-                        .WithMany("WheelCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", "Wheel")
-                        .WithMany("WheelCategories")
-                        .HasForeignKey("WheelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Wheel");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelColor", b =>
-                {
-                    b.HasOne("Wheely.Core.Entities.Concrete.Colors.Color", "Color")
-                        .WithMany("WheelColors")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", "Wheel")
-                        .WithMany("WheelColors")
-                        .HasForeignKey("WheelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Wheel");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelDimension", b =>
-                {
-                    b.HasOne("Wheely.Core.Entities.Concrete.Dimensions.Dimension", "Dimension")
-                        .WithMany("WheelDimensions")
-                        .HasForeignKey("DimensionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", "Wheel")
-                        .WithMany("WheelDimensions")
-                        .HasForeignKey("WheelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dimension");
-
-                    b.Navigation("Wheel");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.WheelTag", b =>
-                {
-                    b.HasOne("Wheely.Core.Entities.Concrete.Tags.Tag", "Tag")
-                        .WithMany("WheelTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Wheely.Core.Entities.Concrete.Wheels.Wheel", "Wheel")
-                        .WithMany("WheelTags")
-                        .HasForeignKey("WheelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tag");
-
-                    b.Navigation("Wheel");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Categories.Category", b =>
-                {
-                    b.Navigation("WheelCategories");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Colors.Color", b =>
-                {
-                    b.Navigation("WheelColors");
-                });
-
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Dimensions.Dimension", b =>
-                {
-                    b.Navigation("WheelDimensions");
-                });
-
             modelBuilder.Entity("Wheely.Core.Entities.Concrete.Producers.Producer", b =>
                 {
                     b.Navigation("Wheels");
@@ -523,24 +492,11 @@ namespace Wheely.Data.Concrete.Migrations
                     b.Navigation("Routes");
                 });
 
-            modelBuilder.Entity("Wheely.Core.Entities.Concrete.Tags.Tag", b =>
-                {
-                    b.Navigation("WheelTags");
-                });
-
             modelBuilder.Entity("Wheely.Core.Entities.Concrete.Wheels.Wheel", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("Pictures");
-
-                    b.Navigation("WheelCategories");
-
-                    b.Navigation("WheelColors");
-
-                    b.Navigation("WheelDimensions");
-
-                    b.Navigation("WheelTags");
                 });
 #pragma warning restore 612, 618
         }

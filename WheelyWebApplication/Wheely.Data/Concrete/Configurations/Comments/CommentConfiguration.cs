@@ -17,12 +17,12 @@ namespace Wheely.Data.Concrete.Configurations.Comments
             builder.Property(p => p.FullName).HasMaxLength(100).IsRequired();
             builder.Property(p => p.Content).HasMaxLength(450).IsRequired();
             builder.Property(p => p.StarCount).HasDefaultValue<int>(0).IsRequired();
-            builder.Property(p => p.ImageUrl).HasMaxLength(400).IsRequired();
-            builder.Property(p => p.CreatedDate).HasDefaultValueSql("getdate()").IsRequired();
+            builder.Property(p => p.Path).HasMaxLength(400).IsRequired();
+            builder.Property(p => p.CreatedDate).HasDefaultValueSql("now()").IsRequired();
             #endregion
 
             #region Relationships
-            builder.HasOne(p => p.Wheel).WithMany(p => p.Comments).HasForeignKey(p => p.WheelId);
+            builder.HasOne(p => p.Wheel).WithMany(p => p.Comments).HasForeignKey(p => p.WheelId).OnDelete(DeleteBehavior.Cascade);
             #endregion
         }
     }

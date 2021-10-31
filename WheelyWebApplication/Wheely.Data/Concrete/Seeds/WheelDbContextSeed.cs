@@ -29,22 +29,7 @@ namespace Wheely.Data.Concrete.Seeds
 
                 if (!wheelDbContext.Wheels.Any())
                 {
-                    var wheel = GetPreConfiguredWheel();
-                    var categories = GetPreConfiguredCategories();
-                    var colors = GetPreConfiguredColors();
-                    var dimensions = GetPreConfiguredDimensions();
-                    var tags = GetPreConfiguredTags();
-                    var comments = GetPreConfiguredComments();
-                    var pictures = GetPreConfiguredPictures();
-
-                    wheelDbContext.Wheels.Add(wheel);
-                    wheelDbContext.Categories.AddRange(categories);
-                    wheelDbContext.Colors.AddRange(colors);
-                    wheelDbContext.Dimensions.AddRange(dimensions);
-                    wheelDbContext.Tags.AddRange(tags);
-                    wheelDbContext.Comments.AddRange(comments);
-                    wheelDbContext.Pictures.AddRange(pictures);
-
+                    wheelDbContext.Wheels.Add(GetPreConfiguredWheel());
                 }
 
                 await wheelDbContext.SaveChangesAsync();
@@ -76,94 +61,80 @@ namespace Wheely.Data.Concrete.Seeds
                 Producer = new Producer
                 {
                     Name = "Hueiler Inc.LTD"
-                }
-            };
-        }
-
-        private static List<Category> GetPreConfiguredCategories()
-        {
-            return new List<Category>
-            {
-                new Category()
-                {
-                    Name = "Cleanup"
                 },
-                new Category()
+                Categories = new List<Category>
                 {
-                    Name = "Repire"
-                }
-            };
-        }
-
-        private static List<Color> GetPreConfiguredColors()
-        {
-            return new List<Color>
-            {
-                new Color()
-                {
-                     Name = "Purple",
-                     HexCode ="A541F2"
+                    new Category()
+                    {
+                        Name = "Cleanup"
+                    },
+                    new Category()
+                    {
+                        Name = "Repire"
+                    }
                 },
-                new Color()
+                Colors = new List<Color>
                 {
-                    Name = "Orange",
-                    HexCode ="E70D3C"
-                }
-            };
-        }
-
-        private static List<Dimension> GetPreConfiguredDimensions()
-        {
-            return new List<Dimension>
-            {
-                new Dimension()
-                {
-                    Size = 16
+                    new Color()
+                    {
+                         Name = "Purple",
+                         HexCode ="A541F2"
+                    },
+                    new Color()
+                    {
+                        Name = "Orange",
+                        HexCode ="E70D3C"
+                    },
+                    new Color()
+                    {
+                        Name = "Green",
+                        HexCode = "8EE122"
+                    },
+                    new Color()
+                    {
+                        Name = "Blue",
+                        HexCode = "252FB0"
+                    }
                 },
-                new Dimension()
+                Dimensions = new List<Dimension>
                 {
-                   Size = 18
+                    new Dimension()
+                    {
+                        Size = 16
+                    },
+                    new Dimension()
+                    {
+                       Size = 18
+                    },
+                    new Dimension()
+                    {
+                       Size = 20
+                    }
                 },
-                new Dimension()
+                Tags = new List<Tag>
                 {
-                   Size = 20
-                }
-            };
-        }
-
-        private static List<Tag> GetPreConfiguredTags()
-        {
-            return new List<Tag>
-            {
-                new Tag()
+                    new Tag()
+                    {
+                        Name = "trendy"
+                    }
+                },
+                Comments = new List<Comment>
                 {
-                    Name = "trendy"
-                }
-            };
-        }
-
-        private static List<Comment> GetPreConfiguredComments()
-        {
-            return new List<Comment>
-            {
-                new Comment
+                    new Comment
+                    {
+                        StarCount = 5,
+                        Content ="Progressively procrastinate mission-critical action items before team building ROI. Interactively provide access to cross functional quality vectors for client-centric catalysts for change.",
+                        FullName = "Mark Jack",
+                        Path = "comment-author-1.jpg"
+                    }
+                },
+                Pictures = new List<Picture>
                 {
-                    StarCount = 5,
-                    Content ="Progressively procrastinate mission-critical action items before team building ROI. Interactively provide access to cross functional quality vectors for client-centric catalysts for change.",
-                    FullName = "Mark Jack",
-                    ImageUrl = "comment-author-1.jpg"
-                }
-            };
-        }
-
-        private static List<Picture> GetPreConfiguredPictures()
-        {
-            return new List<Picture>
-            {
-                new Picture
-                {
-                   Order = 1,
-                   Url = "shop-d-1-1.jpg"
+                    new Picture
+                    {
+                       Order = 1,
+                       Path = "shop-d-1-1.jpg"
+                    }
                 }
             };
         }

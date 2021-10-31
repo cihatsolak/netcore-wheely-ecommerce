@@ -9,7 +9,7 @@ namespace Wheely.Core.Entities.Concrete.Comments
         public string FullName { get; set; }
         public string Content { get; set; }
         public  int StarCount { get; set; }
-        public string ImageUrl { get; set; }
+        public string Path { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public int WheelId { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;
 
@@ -26,8 +25,6 @@ namespace Wheely.Web.Controllers
         [HttpGet]
         public IActionResult Detail()
         {
-            throw new ArgumentNullException();
-
             var result = _wheelService.GetWheelById(1);
             if (!result.Success)
             {

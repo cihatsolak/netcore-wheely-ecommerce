@@ -5,7 +5,7 @@ namespace Wheely.Core.Entities.Concrete.Pictures
 {
     public class Picture : BaseEntity
     {
-        public string Url { get; set; }
+        public string Path { get; set; }
         public int Order { get; set; }
 
         public int WheelId { get; set; }
