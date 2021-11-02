@@ -5,6 +5,7 @@ using Wheely.Service.Categories;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Redis;
 using Wheely.Service.Routes;
+using Wheely.Service.Routes.RouteValueTransforms;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;
 
@@ -48,6 +49,8 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             services.AddSingleton<IRestApiService, RestApiManager>();
             services.AddSingleton<IRedisService, RedisManager>();
+            services.AddSingleton<IRouteValueTransformService, RouteValueTransformManager>();
+
             return services;
         }
     }

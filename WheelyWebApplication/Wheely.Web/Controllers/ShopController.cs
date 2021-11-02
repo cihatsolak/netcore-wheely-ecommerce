@@ -46,8 +46,9 @@ namespace Wheely.Web.Controllers
             return View(wheelDetailViewModel);
         }
 
-        [HttpGet]
-        [Route("/iletisim")]
+        [HttpGet("/iletisim")]
+        //[Route("/iletisim")]
+        //[HttpGet("[controller]/[action]")]
         public IActionResult Test()
         {
             var wheel = _wheelService.GetWheelById(1).Data;

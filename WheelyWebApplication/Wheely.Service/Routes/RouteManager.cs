@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Wheely.Core.Constants;
 using Wheely.Core.Entities.Concrete.Routes;
 using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
@@ -27,7 +28,7 @@ namespace Wheely.Service.Routes
         #region Methods
         public IDataResult<List<RouteValueTransform>> GetRoutes()
         {
-            _redisService.TryGetValue("routes", out List<RouteValueTransform> routes);
+            _redisService.TryGetValue(CacheKeyConstants.Routes, out List<RouteValueTransform> routes);
             if (routes is null || !routes.Any())
             {
                 routes = _routeRepository.GetAll();
@@ -39,7 +40,7 @@ namespace Wheely.Service.Routes
             }
             else
             {
-                _redisService.Set("routes", routes, SlidingExpiration.TenMinute, AbsoluteExpiration.TwoHour);
+                _redisService.Set(CacheKeyConstants.Routes, routes, SlidingExpiration.TenMinute, AbsoluteExpiration.TwoHour);
             }
 
             return new SuccessDataResult<List<RouteValueTransform>>(routes);
