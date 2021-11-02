@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Wheely.Core.Entities.Concrete.Categories;
@@ -11,6 +10,7 @@ using Wheely.Core.Entities.Concrete.Comments;
 using Wheely.Core.Entities.Concrete.Dimensions;
 using Wheely.Core.Entities.Concrete.Pictures;
 using Wheely.Core.Entities.Concrete.Producers;
+using Wheely.Core.Entities.Concrete.Routes;
 using Wheely.Core.Entities.Concrete.Tags;
 using Wheely.Core.Entities.Concrete.Wheels;
 using Wheely.Data.Concrete.Contexts;
@@ -27,9 +27,14 @@ namespace Wheely.Data.Concrete.Seeds
             {
                 wheelDbContext.Database.Migrate();
 
-                if (!wheelDbContext.Wheels.Any())
+                if (!await wheelDbContext.Wheels.AnyAsync())
                 {
-                    wheelDbContext.Wheels.Add(GetPreConfiguredWheel());
+                    await wheelDbContext.Wheels.AddAsync(GetPreConfiguredWheel());
+                }
+
+                if (!await wheelDbContext.RouteValueTransforms.AnyAsync())
+                {
+                    await wheelDbContext.RouteValueTransforms.AddAsync(GetPreConfiguredRouteValueTransform());
                 }
 
                 await wheelDbContext.SaveChangesAsync();
@@ -135,6 +140,23 @@ namespace Wheely.Data.Concrete.Seeds
                        Order = 1,
                        Path = "shop-d-1-1.jpg"
                     }
+                }
+            };
+        }
+
+        private static RouteValueTransform GetPreConfiguredRouteValueTransform()
+        {
+            return new RouteValueTransform
+            {
+                ControllerName = "Shop",
+                ActionName = "Detail",
+                EntityId = 1,
+                SlugUrl = "lx2-latosynthesizeusers",
+                CustomUrl = null,
+                IsDeleted = false,
+                Module = new()
+                {
+                    Name = "Wheel"
                 }
             };
         }
