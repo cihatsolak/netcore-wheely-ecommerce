@@ -28,16 +28,16 @@ namespace Wheely.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHttpStatusCodeHandler();
             app.UseSecurityHeaders();
 
             if (env.IsDevelopment())
             {
-               app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error/InternalServerError");
+                //app.UseStatusCodePagesWithReExecute("/Error/Handle", "?statusCode={0}");
                 app.UseHsts();
             }
 

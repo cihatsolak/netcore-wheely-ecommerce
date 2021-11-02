@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Smidge;
-using System.Net;
-using Wheely.Core.Utilities;
 using Wheely.Core.Web.Constants;
 using Wheely.Web.Infrastructure.Middlewares.Partials;
 using Wheely.Web.Infrastructure.Routes;
@@ -58,30 +55,6 @@ namespace Wheely.Web.Infrastructure.Middlewares
             //        name: "default",
             //        pattern: "{controller=Home}/{action=Index}/{id?}");
             //});
-
-            return app;
-        }
-
-        internal static IApplicationBuilder UseHttpStatusCodeHandler(this IApplicationBuilder app)
-        {
-            app.Use(async (context, next) =>
-            {
-                await next.Invoke();
-
-                if (!context.Request.Path.Value.Equals("/") && !context.Request.Path.Value.Contains('.'))
-                {
-                    if (context.Response.StatusCode == HttpStatusCode.NotFound.ToInt())
-                    {
-                        context.Request.Path = new PathString("/Error/StatusCode404");
-                        await next();
-                    }
-                    //else if (context.Response.StatusCode == HttpStatusCode.InternalServerError.ToInt())
-                    //{
-                    //    context.Request.Path = "/Application/Error";
-                    //    await _next(context);
-                    //}
-                }
-            });
 
             return app;
         }

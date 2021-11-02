@@ -30,10 +30,9 @@ namespace Wheely.Web.Infrastructure.Routes
         public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
         {
             string slugUrl = values["slug"]?.ToString();
-            if (string.IsNullOrWhiteSpace(slugUrl))
-            {
-                return values;
-            }
+
+            if (string.IsNullOrWhiteSpace(slugUrl)) return values;
+            if (slugUrl.Equals("/") || slugUrl.Contains(".")) return values;
 
             var routes = await _redisService.GetAsync<List<RouteValueTransform>>("routes");
             if (routes is null || !routes.Any())
@@ -44,6 +43,10 @@ namespace Wheely.Web.Infrastructure.Routes
             var route = routes.FirstOrDefault(p => p.SlugUrl.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) || p.CustomUrl?.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) == true);
             if (route is null)
             {
+                values["Controller"] = "Error";
+                values["Action"] = "Handle";
+                values["statusCode"] = 404;
+
                 return values;
             }
 

@@ -37,5 +37,10 @@ namespace Wheely.Core.Utilities
         {
             return Convert.ToInt32(value);
         }
+
+        public static TEnum ToEnum<TEnum>(this int value) where TEnum : Enum
+        {
+            return (TEnum)Enum.ToObject(typeof(TEnum), value);
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using Wheely.Core.Utilities;
 
 namespace Wheely.Web.Controllers
 {
@@ -13,13 +15,29 @@ namespace Wheely.Web.Controllers
             var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             //Todo: Log
 
-            return View();
+            return View($"~/Views/Shared/Error/InternalServerError.cshtml");
         }
 
         [HttpGet]
-        public IActionResult StatusCode404()
+        public IActionResult Handle(int statusCode)
         {
-            return View();
+            if (0 > statusCode) return RedirectToAction(nameof(InternalServerError));
+
+            var httpStatusCode = statusCode.ToEnum<HttpStatusCode>();
+            string viewName = string.Empty;
+
+            switch (httpStatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    viewName = "NotFound";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    break;
+                default:
+                    break;
+            }
+
+            return View($"~/Views/Shared/Error/{viewName}.cshtml");
         }
     }
 }
