@@ -1,0 +1,71 @@
+﻿@model ContactModel
+@{
+    ViewData[ViewDataParameter.Title] = ViewTitle.ContactIndex;
+}
+
+@await Html.PartialAsync(PartialViewName.Breadcumb, ViewData[ViewDataParameter.Title])
+
+<section class="vs-contact-wrapper vs-contact-layout1 space-top space-md-bottom">
+    <div class="container">
+        <div class="row gx-60 align-items-center">
+            <div class="col-lg-6">
+                <form asp-action="Send" method="post" class="ajax-contact form-wrap5 bg-smoke mb-30">
+                    <div class="form-title">
+                        <h3 class="mt-n2 fls-n2 mb-0">Bize mesaj gönder</h3>
+                        <p class="text-theme fs-md mb-4">E-posta hesabınız yayımlanmayacak*</p>
+                    </div>
+                    <div class="form-group mb-15">
+                        <input asp-for="FullName" class="form-control border-0 rounded-0"> <i class="fal fa-user"></i>
+                        <span asp-validation-for="FullName"></span>
+                    </div>
+                    <div class="form-group mb-15">
+                        <input asp-for="Email" class="form-control border-0 rounded-0"> <i class="fal fa-envelope"></i>
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-group mb-15">
+                        <textarea asp-for="Message" cols="30" rows="3" class="form-control border-0 rounded-0"></textarea> <i class="fal fa-pencil-alt"></i>
+                        <span asp-validation-for="Message"></span>
+                    </div>
+                    <div class="form-btn pt-15">
+                        <button type="submit" class="vs-btn">
+                            Mesaj gönder<i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <p class="form-messages error mb-0 mt-3"></p>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="contact-information mb-30">
+                    <h2 class="mt-n2">
+                        Size yardım etmek için buradayız! Bir görüşme ayarla.
+                    </h2>
+                    <div class="row">
+                        <div class="col-xxl-10">
+                            <p>Yüksek kaliteli çözümlerle ucuz mimarileri bütünsel olarak devreye sokun. Türünün en iyisi e-ticaret karşısında sinerjik uygulamaları verimli bir şekilde uygulayın, istemci tabanlı portalları onotonek olarak etkinleştirin.</p>
+                        </div>
+                    </div>
+                    <h3 class="h4 pt-2 mb-10">Açılış saatleri</h3>
+                    <table class="contact-info-table">
+                        <tr>
+                            <td>Paz - Cum:</td>
+                            <td>8.00 am - 8.00 pm</td>
+                        </tr>
+                        <tr>
+                            <td>Cumartesi:</td>
+                            <td>9.00 am - 6.00 pm</td>
+                        </tr>
+                        <tr>
+                            <td>Pazar:</td>
+                            <td>9.00 am - 6.00 pm</td>
+                        </tr>
+                    </table>
+                    <h4 class="pt-2 mb-10">Adres</h4>
+                    <p class="fs-md">374 William S Canning Blvd, Fall River MA 2721</p>
+                    <h4 class="pt-2 mb-2">Customer Supports</h4>
+                    <h4 class="h3 font-theme2 mb-0"><a href="tel:880369525423">(880) 3695 25423</a></h4>
+                </div>
+            </div>
+        </div>
+        <div class="ratio ratio-21x9 contact-map mt-70 mb-30"><iframe src="../../../../maps/embed.html?pb=!1m18!1m12!1m3!1d193595.1583088354!2d-74.11976389828038!3d40.697663748695746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1615903229405!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+    </div>
+</section>

@@ -6,7 +6,7 @@ using System;
 using Wheely.Data.Concrete.Contexts;
 using Wheely.Data.Concrete.Seeds;
 
-namespace Wheely.Web.Infrastructure.Extensions
+namespace Wheely.Data.Concrete.Extensions
 {
     public static class MigrationManager
     {

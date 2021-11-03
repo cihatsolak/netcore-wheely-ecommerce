@@ -15,7 +15,8 @@
     /// </summary>
     public static class ViewTitle
     {
-        public const string ShopDetail = "Shop Details";
+        public const string ShopDetail = "Tekerlek Detayı";
+        public const string ContactIndex = "İletişim";
     }
 
     /// <summary>

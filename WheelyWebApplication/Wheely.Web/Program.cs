@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Wheely.Web.Infrastructure.Extensions;
+using Wheely.Data.Concrete.Extensions;
 
 namespace Wheely.Web
 {

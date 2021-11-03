@@ -16,7 +16,7 @@ namespace Wheely.Web.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            //_routeService.GetRoutes();
+            _routeService.GetRoutes();
             return View();
         }
     }
