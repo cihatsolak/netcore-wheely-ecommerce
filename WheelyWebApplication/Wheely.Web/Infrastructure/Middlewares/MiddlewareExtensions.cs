@@ -32,6 +32,7 @@ namespace Wheely.Web.Infrastructure.Middlewares
             {
                 bundle.CreateCss(BundleNames.BaseCssFile, SmidgeFile.CSSFiles);
                 bundle.CreateJs(BundleNames.BaseJSFile, SmidgeFile.JavaScriptFiles);
+                bundle.CreateJs(BundleNames.JqueryValidation, SmidgeFile.JqueryValidationJavascriptFiles);
             });
 
             return app;

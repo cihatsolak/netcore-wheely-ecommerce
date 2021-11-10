@@ -5,9 +5,11 @@
     /// </summary>
     public static class PartialViewName
     {
-        public const string Header = "~/Views/Shared/PartialViews/Layout/_Header.cshtml";
-        public const string Script = "~/Views/Shared/PartialViews/Layout/_Script.cshtml";
-        public const string Breadcumb = "~/Views/Shared/PartialViews/Layout/_Breadcumb.cshtml";
+        public const string HeaderPartial = "~/Views/Shared/PartialViews/Layout/_HeaderPartial.cshtml";
+        public const string ScriptPartial = "~/Views/Shared/PartialViews/Layout/_ScriptPartial.cshtml";
+        public const string BreadcumbPartial = "~/Views/Shared/PartialViews/Layout/_BreadcumbPartial.cshtml";
+        public const string ValidationScriptsPartial = "~/Views/Shared/PartialViews/Validation/_ValidationScriptsPartial.cshtml";
+        public const string ValidationBootstrapPartial = "~/Views/Shared/PartialViews/Validation/_ValidationBootstrapPartial.cshtml";
     }
 
     /// <summary>

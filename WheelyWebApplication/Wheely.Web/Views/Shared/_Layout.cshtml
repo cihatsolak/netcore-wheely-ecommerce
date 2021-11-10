@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html class="no-js" lang="zxx">
 <head>
-    @await Html.PartialAsync(PartialViewName.Header)
+    @await Html.PartialAsync(PartialViewName.HeaderPartial)
 </head>
 <body>
     <div class="preloader">
@@ -236,6 +236,7 @@
             </div>
         </div>
     </footer>
-    @await Html.PartialAsync(PartialViewName.Script)
+    @await Html.PartialAsync(PartialViewName.ScriptPartial)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

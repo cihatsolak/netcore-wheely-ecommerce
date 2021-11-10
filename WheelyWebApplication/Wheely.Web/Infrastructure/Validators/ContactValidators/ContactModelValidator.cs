@@ -14,10 +14,14 @@ namespace Wheely.Web.Infrastructure.Validators.ContactValidators
                 .WithMessage("Lütfen geçerli bir isim giriniz.");
 
             RuleFor(p => p.Email)
+                .NotEmpty()
+                .NotNull()
                 .EmailAddress()
                 .WithMessage("Lütfen geçerli email adresi giriniz.");
 
             RuleFor(p => p.Message)
+                .NotEmpty()
+                .NotNull()
                 .Length(10, 100)
                 .WithMessage("Mesaj alanı minimum 10 maksimum 100 karakter olmalıdır.");
         }

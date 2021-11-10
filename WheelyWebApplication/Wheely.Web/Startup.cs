@@ -28,7 +28,7 @@ namespace Wheely.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSecurityHeaders();
+            //app.UseSecurityHeaders();
 
             if (env.IsDevelopment())
             {

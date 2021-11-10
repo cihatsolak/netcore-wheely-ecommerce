@@ -14,7 +14,8 @@ namespace Wheely.Web.Controllers
         [HttpPost]
         public IActionResult Index(ContactModel contactModel)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) 
+                return View(contactModel);
 
             return LocalRedirect("/iletisim");
         }

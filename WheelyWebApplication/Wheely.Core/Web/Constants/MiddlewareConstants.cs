@@ -9,7 +9,8 @@
             "~/assets/css/app.min.css",
             "~/assets/css/fontawesome.min.css",
             "~/assets/css/style.css",
-            "~assets/css/theme-color1.css"
+            "~assets/css/theme-color1.css",
+            "~assets/css/custom.css"
         };
 
         public static readonly string[] JavaScriptFiles = {
@@ -17,6 +18,12 @@
             "~/assets/js/app.min.js",
             "~/assets/js/vscustom-carousel.min.js",
             "~/assets/js/main.js"
+        };
+
+        public static readonly string[] JqueryValidationJavascriptFiles =
+        {
+            "~/assets/js/jquery-validation/jquery.validate.min.js",
+            "~/assets/js/jquery-validation/jquery.validate.unobtrusive.min.js"
         };
     }
 
@@ -27,5 +34,6 @@
     {
         public const string BaseCssFile = "app-styles";
         public const string BaseJSFile = "app-scripts";
+        public const string JqueryValidation = "app-jquery-validation-scripts";
     }
 }

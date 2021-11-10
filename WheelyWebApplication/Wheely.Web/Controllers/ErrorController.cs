@@ -25,6 +25,7 @@ namespace Wheely.Web.Controllers
 
             var httpStatusCode = statusCode.ToEnum<HttpStatusCode>();
             string viewName = string.Empty;
+            var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
             switch (httpStatusCode)
             {
