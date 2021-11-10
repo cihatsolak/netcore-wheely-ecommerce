@@ -1,40 +1,52 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Wheely.Web.Infrastructure.IOC;
+using Wheely.Web.Infrastructure.Middlewares;
 
 namespace Wheely.Web
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public IConfiguration Configuration { get; set; }
+
+        public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDefaultServices();
+            services.AddDbContexts();
+            services.AddRedis();
+            services.AddScopedServices().AddSingletonServices();
+            services.AddSettings();
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //app.UseSecurityHeaders();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error/InternalServerError");
+                //app.UseStatusCodePagesWithReExecute("/Error/Handle", "?statusCode={0}");
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+            app.UseSmidgeConfig();
+            app.UseEndpointConfig();
         }
     }
 }
