@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Admin", "Wheely.Admi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3A9D856F-DF7C-42FB-85A1-13A9D6541EF1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Webs", "Webs", "{D607FF17-5F00-4E88-BF66-06304DD0A63B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{D607FF17-5F00-4E88-BF66-06304DD0A63B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5DCA9DCC-F20E-4196-9863-2E8CE27941E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wheely.Service.Test", "Wheely.Service.Test\Wheely.Service.Test.csproj", "{9BC9D4DD-333B-4FB1-A3BD-19664761D348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wheely.Service.Test", "Wheely.Service.Test\Wheely.Service.Test.csproj", "{9BC9D4DD-333B-4FB1-A3BD-19664761D348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

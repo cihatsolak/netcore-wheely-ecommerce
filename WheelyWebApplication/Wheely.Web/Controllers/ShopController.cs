@@ -16,19 +16,17 @@ namespace Wheely.Web.Controllers
         private readonly IWheelService _wheelService;
         private readonly ICategoryService _categoryService;
         private readonly IShopModelFactory _shopModelFactory;
-        private readonly IRouteService _routeService;
         #endregion
 
         #region Constructor
         public ShopController(
             IWheelService wheelService,
             ICategoryService categoryService,
-            IShopModelFactory shopModelFactory, IRouteService routeService)
+            IShopModelFactory shopModelFactory)
         {
             _wheelService = wheelService;
             _categoryService = categoryService;
             _shopModelFactory = shopModelFactory;
-            _routeService = routeService;
         }
         #endregion
 
@@ -46,7 +44,7 @@ namespace Wheely.Web.Controllers
             return View(wheelDetailViewModel);
         }
 
-        [HttpGet("/iletisim")]
+        //[HttpGet("/iletisim")]
         //[Route("/iletisim")]
         //[HttpGet("[controller]/[action]")]
         public IActionResult Test()

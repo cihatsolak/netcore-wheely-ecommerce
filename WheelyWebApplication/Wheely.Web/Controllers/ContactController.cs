@@ -12,11 +12,11 @@ namespace Wheely.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Send(ContactModel contactModel)
+        public IActionResult Index(ContactModel contactModel)
         {
             if (!ModelState.IsValid) return View();
 
-            return View();
+            return LocalRedirect("/iletisim");
         }
     }
 }

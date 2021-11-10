@@ -29,20 +29,21 @@ namespace Wheely.Service.Routes
         public IDataResult<List<RouteValueTransform>> GetRoutes()
         {
             _redisService.TryGetValue(CacheKeyConstants.Routes, out List<RouteValueTransform> routes);
+            if (routes is not null && routes.Any())
+            {
+                return new SuccessDataResult<List<RouteValueTransform>>(routes);
+            }
+
             if (routes is null || !routes.Any())
             {
                 routes = _routeRepository.GetAll();
+                if (routes is null || !routes.Any())
+                {
+                    return new ErrorDataResult<List<RouteValueTransform>>();
+                }
             }
 
-            if (routes is null || !routes.Any())
-            {
-                return new ErrorDataResult<List<RouteValueTransform>>();
-            }
-            else
-            {
-                _redisService.Set(CacheKeyConstants.Routes, routes, SlidingExpiration.TenMinute, AbsoluteExpiration.TwoHour);
-            }
-
+            _redisService.Set(CacheKeyConstants.Routes, routes, SlidingExpiration.TenMinute, AbsoluteExpiration.TwoHour);
             return new SuccessDataResult<List<RouteValueTransform>>(routes);
         }
         #endregion

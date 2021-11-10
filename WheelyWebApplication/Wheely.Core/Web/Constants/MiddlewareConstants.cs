@@ -16,7 +16,6 @@
             "~/assets/js/vendor/jquery-1.12.4.min.js",
             "~/assets/js/app.min.js",
             "~/assets/js/vscustom-carousel.min.js",
-            "~/assets/js/ajax-mail.js",
             "~/assets/js/main.js"
         };
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,10 @@ namespace Wheely.Web.Infrastructure.IOC
             ServiceTool.Create(services);
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
+                .AddFluentValidation(configurationExpression =>
+                {
+                    configurationExpression.RegisterValidatorsFromAssemblyContaining<Startup>();
+                })
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 );
