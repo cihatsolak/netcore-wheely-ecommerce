@@ -30,7 +30,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cachedValue))
                 return default;
 
-            value = cachedValue.As<TModel>();
+            value = cachedValue.AsModel<TModel>();
             return true;
         }
 
@@ -42,7 +42,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cachedValue))
                 return default;
 
-            return cachedValue.As<TModel>();
+            return cachedValue.AsModel<TModel>();
         }
 
         public async Task<TModel> GetAsync<TModel>(string cacheKey)
@@ -53,7 +53,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cachedValue))
                 return default;
 
-            return cachedValue.As<TModel>();
+            return cachedValue.AsModel<TModel>();
         }
 
         public void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
+using Wheely.Core.Utilities;
 
 namespace Wheely.Service.HttpRequest
 {
@@ -18,7 +18,7 @@ namespace Wheely.Service.HttpRequest
             if (!httpResponseMessage.IsSuccessStatusCode)
                 return null;
 
-            var result = JsonConvert.DeserializeObject<T>(httpResponseMessage.Content.ReadAsStringAsync().Result);
+            var result = httpResponseMessage.Content.ReadAsStringAsync().Result.AsModel<T>();
             return result;
         }
 
@@ -28,7 +28,7 @@ namespace Wheely.Service.HttpRequest
             if (!httpResponseMessage.IsSuccessStatusCode)
                 return null;
 
-            var result = JsonConvert.DeserializeObject<T>(httpResponseMessage.Content.ReadAsStringAsync().Result);
+            var result = httpResponseMessage.Content.ReadAsStringAsync().Result.AsModel<T>();
             return result;
         }
         #endregion
@@ -38,10 +38,10 @@ namespace Wheely.Service.HttpRequest
         {
             using HttpClient client = new()
             {
-                Timeout = TimeSpan.FromMilliseconds(60000)
+                Timeout = TimeSpan.FromMinutes(1)
             };
-            var strParam = JsonConvert.SerializeObject(parameters);
-            var stringContent = new StringContent(strParam, Encoding.UTF8, MediaTypeNames.Application.Json);
+            var strParam = parameters.ToJsonString();
+            StringContent stringContent = new(strParam, Encoding.UTF8, MediaTypeNames.Application.Json);
 
             client.BaseAddress = new Uri(serviceUrl);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -69,7 +69,7 @@ namespace Wheely.Service.HttpRequest
         {
             using HttpClient client = new()
             {
-                Timeout = TimeSpan.FromMilliseconds(60000),
+                Timeout = TimeSpan.FromMinutes(1),
                 BaseAddress = new Uri(serviceUrl)
             };
             client.DefaultRequestHeaders.Accept.Clear();

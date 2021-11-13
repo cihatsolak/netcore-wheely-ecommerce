@@ -3,7 +3,7 @@ using Wheely.Service.Routes;
 
 namespace Wheely.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IRouteService _routeService;
 

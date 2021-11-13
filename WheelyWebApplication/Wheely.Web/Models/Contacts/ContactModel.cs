@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Wheely.Web.Models.Google;
 
 namespace Wheely.Web.Models.Contacts
 {
-    public class ContactModel
+    public class ContactModel : GoogleCaptchaRequestModel
     {
         [DataType(DataType.Text)]
         [Display(Name = nameof(FullName), Prompt = "Ad ve soyad")]

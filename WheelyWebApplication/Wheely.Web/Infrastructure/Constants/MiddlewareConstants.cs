@@ -1,4 +1,4 @@
-﻿namespace Wheely.Core.Web.Constants
+﻿namespace Wheely.Web.Infrastructure.Constants
 {
     /// <summary>
     /// Style and script files to be bundled by smidge

@@ -4,7 +4,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 
 namespace Wheely.Core.Entities.Concrete.Colors
 {
-    public class Color : BaseEntity
+    public class Color : BaseEntity<int>
     {
         public string Name { get; set; }
         public string HexCode { get; set; }

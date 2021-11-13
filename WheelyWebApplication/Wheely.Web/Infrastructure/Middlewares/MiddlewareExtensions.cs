@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Smidge;
-using Wheely.Core.Web.Constants;
+using Wheely.Web.Infrastructure.Constants;
 using Wheely.Web.Infrastructure.Middlewares.Partials;
 using Wheely.Web.Infrastructure.Routes;
 

@@ -3,15 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Smidge;
 using System;
 using System.Reflection;
 using Wheely.Core.DependencyResolvers;
+using Wheely.Core.Web.Settings.GoogleReCaptchaSettings;
 using Wheely.Core.Web.Settings.RedisServerSettings;
 using Wheely.Core.Web.Settings.SmidgeSettings;
 using Wheely.Data.Concrete.Contexts;
-using Wheely.Web.Infrastructure.Routes;
 
 namespace Wheely.Web.Infrastructure.IOC
 {
@@ -36,7 +37,7 @@ namespace Wheely.Web.Infrastructure.IOC
                 );
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddSingleton<RouteValueTransformer>();
+            services.AddHttpClient();
 
             return services;
         }
@@ -69,7 +70,14 @@ namespace Wheely.Web.Infrastructure.IOC
         /// <returns>type of service collection interface</returns>
         internal static IServiceCollection AddSettings(this IServiceCollection services)
         {
+            #region Configuration Dependencies
             services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSettings)));
+            services.Configure<GoogleReCaptchaSetting>(ServiceTool.Configuration.GetSection(nameof(GoogleReCaptchaSetting)));
+            #endregion
+
+            #region Singleton Service Dependencies
+            services.AddSingleton<IGoogleReCaptchaSetting>(provider => provider.GetRequiredService<IOptions<GoogleReCaptchaSetting>>().Value);
+            #endregion
 
             return services;
         }

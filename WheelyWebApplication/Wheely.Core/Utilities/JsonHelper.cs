@@ -26,7 +26,7 @@ namespace Wheely.Core.Utilities
         /// <typeparam name="TModel">deserialize type</typeparam>
         /// <param name="value">value to deserialize</param>
         /// <returns>type of object</returns>
-        public static TModel As<TModel>(this string value)
+        public static TModel AsModel<TModel>(this string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return default;

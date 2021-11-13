@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Wheely.Core.DependencyResolvers;
 using Wheely.Web.Infrastructure.IOC;
 using Wheely.Web.Infrastructure.Middlewares;
 
@@ -24,6 +25,7 @@ namespace Wheely.Web
             services.AddRedis();
             services.AddScopedServices().AddSingletonServices();
             services.AddSettings();
+            ServiceTool.Create(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

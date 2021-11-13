@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row gx-60 align-items-center">
             <div class="col-lg-6">
-                <form asp-action="Index" method="post" class="ajax-contact form-wrap5 bg-smoke mb-30">
+                <form asp-action="Index" method="post" id="contact" class="ajax-contact form-wrap5 bg-smoke mb-30">
                     <div class="form-title">
                         <h3 class="mt-n2 fls-n2 mb-0">Bize mesaj gönder</h3>
                         <p class="text-theme fs-md mb-4">E-posta hesabınız yayımlanmayacak*</p>
@@ -31,7 +31,8 @@
                             Mesaj gönder<i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-                    <p class="form-messages error mb-0 mt-3"></p>
+                    <div class="form-messages error mb-0 mt-3" asp-validation-summary="All"></div>
+
                 </form>
             </div>
             <div class="col-lg-6">
@@ -75,4 +76,5 @@
 @section Scripts{
     <partial name="@PartialViewName.ValidationScriptsPartial" />
     <partial name="@PartialViewName.ValidationBootstrapPartial" />
+    <partial name="@PartialViewName.ValidationGoogleReCaptchaPartial"/>
 }
