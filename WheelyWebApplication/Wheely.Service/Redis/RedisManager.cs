@@ -2,6 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using Wheely.Core.Enums;
+using Wheely.Core.Services.Results.Abstract;
+using Wheely.Core.Services.Results.Concrete;
 using Wheely.Core.Utilities;
 
 namespace Wheely.Service.Redis
@@ -20,40 +22,40 @@ namespace Wheely.Service.Redis
         #endregion
 
         #region Methods
-        public bool TryGetValue<TModel>(string cacheKey, out TModel value)
+        public IResult TryGetValue<TModel>(string cacheKey, out TModel value)
         {
             value = default;
 
-            if (string.IsNullOrWhiteSpace(cacheKey)) return false;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
 
             string cachedValue = _distributedCache.GetString(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
-                return default;
+                return new ErrorResult(default);
 
             value = cachedValue.AsModel<TModel>();
-            return true;
+            return new ErrorResult();
         }
 
-        public TModel Get<TModel>(string cacheKey)
+        public IDataResult<TModel> Get<TModel>(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return default;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorDataResult<TModel>();
 
             string cachedValue = _distributedCache.GetString(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
-                return default;
+                return new ErrorDataResult<TModel>();
 
-            return cachedValue.AsModel<TModel>();
+            return new SuccessDataResult<TModel>(cachedValue.AsModel<TModel>());
         }
 
-        public async Task<TModel> GetAsync<TModel>(string cacheKey)
+        public async Task<IDataResult<TModel>> GetAsync<TModel>(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return default;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorDataResult<TModel>();
 
             string cachedValue = await _distributedCache.GetStringAsync(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
-                return default;
+                return new ErrorDataResult<TModel>();
 
-            return cachedValue.AsModel<TModel>();
+            return new SuccessDataResult<TModel>(cachedValue.AsModel<TModel>());
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value)
@@ -63,9 +65,9 @@ namespace Wheely.Service.Redis
             await _distributedCache.SetStringAsync(cacheKey.ToLower(), value.ToJsonString());
         }
 
-        public void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
+        public IResult Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
 
             var distributedCacheEntryOptions = new DistributedCacheEntryOptions
             {
@@ -74,6 +76,7 @@ namespace Wheely.Service.Redis
             };
 
             _distributedCache.SetString(cacheKey.ToLower(), value.ToJsonString(), distributedCacheEntryOptions);
+            return new SuccessResult();
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -89,11 +92,12 @@ namespace Wheely.Service.Redis
             await _distributedCache.SetStringAsync(cacheKey.ToLower(), value.ToJsonString(), distributedCacheEntryOptions);
         }
 
-        public void Remove(string cacheKey)
+        public IResult Remove(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
 
             _distributedCache.Remove(cacheKey.ToLower());
+            return new SuccessResult();
         }
 
         public async Task RemoveAsync(string cacheKey)

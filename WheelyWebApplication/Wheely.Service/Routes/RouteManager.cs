@@ -29,19 +29,16 @@ namespace Wheely.Service.Routes
         #region Methods
         public async Task<IDataResult<List<RouteValueTransform>>> GetRoutesAsync()
         {
-            _redisService.TryGetValue(CacheKeyConstants.Routes, out List<RouteValueTransform> routes);
-            if (routes is not null && routes.Any())
+            IResult result = _redisService.TryGetValue(CacheKeyConstants.Routes, out List<RouteValueTransform> routes);
+            if (result.Success)
             {
                 return new SuccessDataResult<List<RouteValueTransform>>(routes);
             }
 
+            routes = await _routeRepository.TableNoTracking.AsNoTracking().ToListAsync();
             if (routes is null || !routes.Any())
             {
-                routes = await _routeRepository.TableNoTracking.AsNoTracking().ToListAsync();
-                if (routes is null || !routes.Any())
-                {
-                    return new ErrorDataResult<List<RouteValueTransform>>();
-                }
+                return new ErrorDataResult<List<RouteValueTransform>>();
             }
 
             await _redisService.SetAsync(CacheKeyConstants.Routes, routes);
