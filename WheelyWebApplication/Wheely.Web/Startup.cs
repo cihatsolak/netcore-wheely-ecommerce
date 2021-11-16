@@ -50,6 +50,8 @@ namespace Wheely.Web
             app.UseStaticFiles();
             app.UseRouting();
 
+            app.UseCookiePolicy();
+
             app.UseSmidgeConfig();
             app.UseEndpointConfig();
         }

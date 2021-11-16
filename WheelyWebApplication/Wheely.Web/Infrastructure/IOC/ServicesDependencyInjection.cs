@@ -2,6 +2,7 @@
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
+using Wheely.Service.Cookies;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Redis;
 using Wheely.Service.Routes;
@@ -49,6 +50,7 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             services.AddSingleton<IRestApiService, RestApiManager>();
             services.AddSingleton<IRedisService, RedisManager>();
+            services.AddSingleton<ICookieService, CookieManager>();
             services.AddSingleton<RouteValueTransformer>();
 
             return services;
