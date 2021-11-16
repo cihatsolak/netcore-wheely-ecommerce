@@ -51,6 +51,14 @@ namespace Wheely.Service.Redis
         Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes);
 
         /// <summary>
+        /// insert data to cache (asynchronous)
+        /// </summary>
+        /// <typeparam name="TModel">data type</typeparam>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="value">data</param>
+        Task SetAsync<TModel>(string cacheKey, TModel value);
+
+        /// <summary>
         /// Delete data from cache (synchronous)
         /// </summary>
         /// <param name="cacheKey">cache key</param>

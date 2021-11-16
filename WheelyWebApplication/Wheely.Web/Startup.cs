@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wheely.Core.DependencyResolvers;
+using Wheely.Service.Routes;
 using Wheely.Web.Infrastructure.IOC;
 using Wheely.Web.Infrastructure.Middlewares;
 
@@ -28,8 +29,10 @@ namespace Wheely.Web
             ServiceTool.Create(services);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRouteService routeService)
         {
+            routeService.GetRoutesAsync().Wait();
+
             //app.UseSecurityHeaders();
 
             if (env.IsDevelopment())

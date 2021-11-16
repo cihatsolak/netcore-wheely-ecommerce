@@ -69,6 +69,13 @@ namespace Wheely.Service.Redis
             _distributedCache.SetString(cacheKey.ToLower(), value.ToJsonString(), distributedCacheEntryOptions);
         }
 
+        public async Task SetAsync<TModel>(string cacheKey, TModel value)
+        {
+            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+
+            await _distributedCache.SetStringAsync(cacheKey.ToLower(), value.ToJsonString());
+        }
+
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
         {
             if (string.IsNullOrWhiteSpace(cacheKey)) return;
