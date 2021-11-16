@@ -21,6 +21,15 @@ namespace Wheely.Core.Utilities
             return PrepareUrl(url);
         }
 
+        public static string SlugUrl(string formatableValue, params string[] keywords)
+        {
+            string url = string.Join("-", keywords);
+
+            if (string.IsNullOrEmpty(url)) return string.Empty;
+
+            return string.Format(formatableValue, PrepareUrl(url));
+        }
+
         private static string PrepareUrl(string url)
         {
             url = url.ToLower();
