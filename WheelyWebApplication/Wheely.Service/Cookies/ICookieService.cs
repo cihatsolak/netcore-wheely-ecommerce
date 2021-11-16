@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using Wheely.Core.Services.Results.Abstract;
 
 namespace Wheely.Service.Cookies
