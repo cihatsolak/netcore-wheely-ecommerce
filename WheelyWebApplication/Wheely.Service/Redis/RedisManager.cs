@@ -26,7 +26,8 @@ namespace Wheely.Service.Redis
         {
             value = default;
 
-            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return new ErrorResult();
 
             string cachedValue = _distributedCache.GetString(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
@@ -38,7 +39,8 @@ namespace Wheely.Service.Redis
 
         public IDataResult<TModel> Get<TModel>(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorDataResult<TModel>();
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return new ErrorDataResult<TModel>();
 
             string cachedValue = _distributedCache.GetString(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
@@ -49,7 +51,8 @@ namespace Wheely.Service.Redis
 
         public async Task<IDataResult<TModel>> GetAsync<TModel>(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorDataResult<TModel>();
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return new ErrorDataResult<TModel>();
 
             string cachedValue = await _distributedCache.GetStringAsync(cacheKey.ToLower());
             if (string.IsNullOrWhiteSpace(cachedValue))
@@ -60,14 +63,16 @@ namespace Wheely.Service.Redis
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return;
 
             await _distributedCache.SetStringAsync(cacheKey.ToLower(), value.ToJsonString());
         }
 
         public IResult Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return new ErrorResult();
 
             var distributedCacheEntryOptions = new DistributedCacheEntryOptions
             {
@@ -81,7 +86,8 @@ namespace Wheely.Service.Redis
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return;
 
             var distributedCacheEntryOptions = new DistributedCacheEntryOptions
             {
@@ -94,7 +100,8 @@ namespace Wheely.Service.Redis
 
         public IResult Remove(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return new ErrorResult();
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return new ErrorResult();
 
             _distributedCache.Remove(cacheKey.ToLower());
             return new SuccessResult();
@@ -102,7 +109,8 @@ namespace Wheely.Service.Redis
 
         public async Task RemoveAsync(string cacheKey)
         {
-            if (string.IsNullOrWhiteSpace(cacheKey)) return;
+            if (string.IsNullOrWhiteSpace(cacheKey)) 
+                return;
 
             await _distributedCache.RemoveAsync(cacheKey.ToLower());
         }

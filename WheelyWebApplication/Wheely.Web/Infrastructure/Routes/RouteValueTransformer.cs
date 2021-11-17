@@ -37,12 +37,10 @@ namespace Wheely.Web.Infrastructure.Routes
             if (!CheckSlugUrl(values, out string slugUrl)) return values;
 
             var routes = await _redisService.GetAsync<List<RouteValueTransform>>(CacheKeyConstants.Routes);
-            if (routes is null || !routes.Any())
-            {
+            if (!routes.Success)
                 return values;
-            }
 
-            var route = routes.FirstOrDefault(p => p.SlugUrl.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) || p.CustomUrl?.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) == true);
+            var route = routes.Data.FirstOrDefault(p => p.SlugUrl.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) || p.CustomUrl?.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) == true);
             if (route is null)
             {
                 return RedirectNotFoundPage(values);
