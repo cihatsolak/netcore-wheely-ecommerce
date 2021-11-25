@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Winton.Extensions.Configuration.Consul;
 
-namespace Wheely.Web.HostBuilders
+namespace Wheely.Web.Setup
 {
     internal static class HostBuilderExtensions
     {
@@ -48,13 +48,13 @@ namespace Wheely.Web.HostBuilders
         {
             hostBuilder.ConfigureAppConfiguration((hostBuilderContext, configurationBuilder) =>
             {
-                string consulHost = hostBuilderContext.Configuration["ConsulHost"];
+                string consulHostAddress = hostBuilderContext.Configuration.GetValue<string>("ConsulServerSettings:ConnectionString");
                 string applicationName = hostBuilderContext.HostingEnvironment.ApplicationName;
                 string environmentName = hostBuilderContext.HostingEnvironment.EnvironmentName;
 
                 void ConsulConfig(ConsulClientConfiguration configuration)
                 {
-                    configuration.Address = new Uri(consulHost);
+                    configuration.Address = new Uri(consulHostAddress);
                 }
 
                 configurationBuilder.AddConsul($"{applicationName}/appsettings.json", source =>
