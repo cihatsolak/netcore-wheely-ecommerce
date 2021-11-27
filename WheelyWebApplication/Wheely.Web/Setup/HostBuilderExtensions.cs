@@ -61,6 +61,11 @@ namespace Wheely.Web.Setup
                 {
                     source.ReloadOnChange = true;
                     source.ConsulConfigurationOptions = ConsulConfig;
+                    source.OnLoadException = consulLoadExceptionContext =>
+                    {
+                        Console.WriteLine(consulLoadExceptionContext.Exception.ToString());
+                        consulLoadExceptionContext.Ignore = true;
+                    };
                 });
 
                 configurationBuilder.AddConsul($"{applicationName}/appsettings.{environmentName}.json", source =>
@@ -68,6 +73,11 @@ namespace Wheely.Web.Setup
                     source.Optional = true;
                     source.ReloadOnChange = true;
                     source.ConsulConfigurationOptions = ConsulConfig;
+                    source.OnLoadException = consulLoadExceptionContext =>
+                    {
+                        Console.WriteLine(consulLoadExceptionContext.Exception.ToString());
+                        consulLoadExceptionContext.Ignore = true;
+                    };
                 });
             });
 
