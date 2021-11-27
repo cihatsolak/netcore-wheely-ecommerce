@@ -66,6 +66,7 @@ namespace Wheely.Web.Setup
                 configurationBuilder.AddConsul($"{applicationName}/appsettings.{environmentName}.json", source =>
                 {
                     source.Optional = true;
+                    source.ReloadOnChange = true;
                     source.ConsulConfigurationOptions = ConsulConfig;
                 });
             });
