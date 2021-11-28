@@ -19,6 +19,7 @@ namespace Wheely.Web
             Host.CreateDefaultBuilder(args)
             .AddHostConfiguration()
             .AddAppConfiguration()
-            .AddWebHostDefaults();
+            .AddWebHostDefaults()
+            .AddDefaultServiceProvider();
     }
 }

@@ -92,14 +92,36 @@ namespace Wheely.Web.Setup
         internal static IHostBuilder AddWebHostDefaults(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureWebHostDefaults(webBuilder =>
-             {
-                 webBuilder.ConfigureKestrel(serverOptions =>
-                 {
-                     serverOptions.AddServerHeader = false; //Response üzerinden Server Header bilgisi kaldırılır
+            {
+                webBuilder.ConfigureKestrel(serverOptions =>
+                {
+                    serverOptions.AddServerHeader = false; //Response üzerinden Server Header bilgisi kaldırılır
                  });
 
-                 webBuilder.UseStartup<Startup>();
-             });
+                webBuilder.UseStartup<Startup>();
+            });
+
+            return hostBuilder;
+        }
+
+        /// <summary>
+        /// Add default service provider
+        /// </summary>
+        /// <param name="hostBuilder">host builder</param>
+        /// <returns>type of host builder interface</returns>
+        internal static IHostBuilder AddDefaultServiceProvider(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.UseDefaultServiceProvider((hostBuilderContext, serviceProviderOptions) =>
+            {
+                if (hostBuilderContext.HostingEnvironment.IsDevelopment() || hostBuilderContext.HostingEnvironment.IsStaging())
+                {
+                    serviceProviderOptions.ValidateScopes = true;
+                }
+                else
+                {
+                    serviceProviderOptions.ValidateScopes = false;
+                }
+            });
 
             return hostBuilder;
         }
