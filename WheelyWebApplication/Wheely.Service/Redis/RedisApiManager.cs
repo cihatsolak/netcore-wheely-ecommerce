@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using StackExchange.Redis;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -6,29 +6,46 @@ using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
 using Wheely.Core.Utilities;
+using Wheely.Core.Web.Settings.RedisServerSettings;
+using Wheely.Service.Consul;
 
 namespace Wheely.Service.Redis
 {
-    public sealed class RedisManager : IRedisService
+    public sealed class RedisApiManager : IRedisService
     {
         #region Fields
-        private readonly IDistributedCache _distributedCache;
+        private ConnectionMultiplexer _connectionMultiplexer;
+        private readonly IDatabase _database;
         private readonly CultureInfo cultureInfo;
+        private readonly RedisServerSettings _redisServerSettings;
         #endregion
 
         #region Constructor
-        public RedisManager(IDistributedCache distributedCache)
+        public RedisApiManager(IConsulService consulService)
         {
-            _distributedCache = distributedCache;
+            var redisServerSettings = consulService.Get<RedisServerSettings>(nameof(RedisServerSettings));
+            if (!redisServerSettings.Succeeded)
+                throw new Exception();
+
+            _database = _connectionMultiplexer.GetDatabase(redisServerSettings.Data.Database);
             cultureInfo = new("en-US");
         }
         #endregion
 
-        #region Methods
-        public void ConnectServerAsync()
+        #region Middleware
+        public async void ConnectServerAsync()
         {
-            throw new NotImplementedException();
+            ConfigurationOptions configurationOptions = new()
+            {
+                EndPoints = { _redisServerSettings.ConnectionString },
+                AbortOnConnectFail = _redisServerSettings.AbortOnConnectFail,
+                AsyncTimeout = _redisServerSettings.AsyncTimeOutMilliSecond,
+                ConnectTimeout = _redisServerSettings.ConnectTimeOutMilliSecond
+            };
+
+            _connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(configurationOptions);
         }
+        #endregion
 
         public IResult TryGetValue<TModel>(string cacheKey, out TModel value)
         {
@@ -37,11 +54,11 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            string cachedValue = _distributedCache.GetString(cacheKey.ToLower(cultureInfo));
-            if (string.IsNullOrWhiteSpace(cachedValue))
+            var redisValue = _database.StringGet(cacheKey.ToLower(cultureInfo));
+            if (!redisValue.HasValue)
                 return new ErrorResult();
 
-            value = cachedValue.AsModel<TModel>();
+            value = ((string)redisValue).AsModel<TModel>();
             return new SuccessResult();
         }
 
@@ -50,11 +67,11 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            string cachedValue = _distributedCache.GetString(cacheKey.ToLower(cultureInfo));
-            if (string.IsNullOrWhiteSpace(cachedValue))
+            var redisValue = _database.StringGet(cacheKey.ToLower(cultureInfo));
+            if (!redisValue.HasValue)
                 return new ErrorDataResult<TModel>();
 
-            return new SuccessDataResult<TModel>(cachedValue.AsModel<TModel>());
+            return new SuccessDataResult<TModel>(((string)redisValue).AsModel<TModel>());
         }
 
         public async Task<IDataResult<TModel>> GetAsync<TModel>(string cacheKey)
@@ -62,11 +79,11 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            string cachedValue = await _distributedCache.GetStringAsync(cacheKey.ToLower(cultureInfo));
-            if (string.IsNullOrWhiteSpace(cachedValue))
+            var redisValue = await _database.StringGetAsync(cacheKey.ToLower(cultureInfo));
+            if (!redisValue.HasValue)
                 return new ErrorDataResult<TModel>();
 
-            return new SuccessDataResult<TModel>(cachedValue.AsModel<TModel>());
+            return new SuccessDataResult<TModel>(redisValue.ToString().AsModel<TModel>());
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value)
@@ -74,7 +91,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            await _distributedCache.SetStringAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
+            await _database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
         }
 
         public void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -82,13 +99,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            var distributedCacheEntryOptions = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = DateTime.Now.AddMinutes(absoluteExpiration.ToInt()),
-                SlidingExpiration = TimeSpan.FromMinutes(slidingExpiration.ToInt())
-            };
-
-            _distributedCache.SetString(cacheKey.ToLower(cultureInfo), value.ToJsonString(), distributedCacheEntryOptions);
+            _database.StringSet(cacheKey.ToLower(cultureInfo), value.ToJsonString());
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -96,13 +107,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            var distributedCacheEntryOptions = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = DateTime.Now.AddMinutes(absoluteExpiration.ToInt()),
-                SlidingExpiration = TimeSpan.FromMinutes(slidingExpiration.ToInt())
-            };
-
-            await _distributedCache.SetStringAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString(), distributedCacheEntryOptions);
+            await _database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
         }
 
         public void Remove(string cacheKey)
@@ -110,7 +115,12 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            _distributedCache.Remove(cacheKey.ToLower(cultureInfo));
+            cacheKey = cacheKey.ToLower(cultureInfo);
+
+            if (_database.KeyExists(cacheKey))
+            {
+                _database.KeyDelete(cacheKey);
+            }
         }
 
         public async Task RemoveAsync(string cacheKey)
@@ -118,8 +128,12 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            await _distributedCache.RemoveAsync(cacheKey.ToLower(cultureInfo));
+            cacheKey = cacheKey.ToLower(cultureInfo);
+
+            if (await _database.KeyExistsAsync(cacheKey))
+            {
+                await _database.KeyDeleteAsync(cacheKey);
+            }
         }
-        #endregion
     }
 }

@@ -7,6 +7,11 @@ namespace Wheely.Service.Redis
     public partial interface IRedisService
     {
         /// <summary>
+        /// Redis database connection
+        /// </summary>
+        void ConnectServerAsync();
+
+        /// <summary>
         /// Returns true and data if cached data exists, false and null otherwise (synchronous)
         /// </summary>
         /// <typeparam name="TModel">class</typeparam>
@@ -39,7 +44,7 @@ namespace Wheely.Service.Redis
         /// <param name="value">data</param>
         /// <param name="slidingExpiration">sliding expiration minute, default: three minute</param>
         /// <param name="absoluteExpiration">absolute expiration minute, default: twenty minute</param>
-        IResult Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes);
+        void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes);
 
         /// <summary>
         /// insert data to cache (asynchronous)
@@ -63,7 +68,7 @@ namespace Wheely.Service.Redis
         /// Delete data from cache (synchronous)
         /// </summary>
         /// <param name="cacheKey">cache key</param>
-        IResult Remove(string cacheKey);
+        void Remove(string cacheKey);
 
         /// <summary>
         /// Delete data from cache (asynchronous) 
