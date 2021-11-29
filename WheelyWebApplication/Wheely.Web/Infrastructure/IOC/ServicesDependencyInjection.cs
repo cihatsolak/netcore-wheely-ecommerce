@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
+using Wheely.Service.Consul;
 using Wheely.Service.Cookies;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Redis;
@@ -53,7 +54,7 @@ namespace Wheely.Web.Infrastructure.IOC
             services.TryAddSingleton<IRedisService, RedisManager>();
             services.TryAddSingleton<ICookieService, CookieManager>();
             services.TryAddSingleton<RouteValueTransformer>();
-
+            services.TryAddSingleton<IConsulService, ConsulManager>();
             return services;
         }
     }
