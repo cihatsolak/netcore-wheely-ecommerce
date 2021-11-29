@@ -2,7 +2,7 @@
 {
     public partial interface IResult
     {
-        bool Success { get; }
+        bool Succeeded { get; }
         string Message { get; }
     }
 }

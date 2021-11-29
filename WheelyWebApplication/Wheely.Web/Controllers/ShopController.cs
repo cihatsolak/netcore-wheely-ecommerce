@@ -32,7 +32,7 @@ namespace Wheely.Web.Controllers
         public IActionResult Detail(int id)
         {
             var result = _wheelService.GetWheelById(1);
-            if (!result.Success)
+            if (!result.Succeeded)
             {
 
             }
@@ -51,7 +51,7 @@ namespace Wheely.Web.Controllers
             List<int> categoryIds = new() { 1, 2 };
 
             var categories = _categoryService.GetCategoriesByCategoryIds(categoryIds);
-            if (categories.Success)
+            if (categories.Succeeded)
             {
                 wheel.Categories.AddRange(categories.Data);
             }

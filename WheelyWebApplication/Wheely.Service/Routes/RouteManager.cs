@@ -30,7 +30,7 @@ namespace Wheely.Service.Routes
         public async Task<IDataResult<List<RouteValueTransform>>> GetRoutesAsync()
         {
             IResult result = _redisService.TryGetValue(CacheKeyConstants.Routes, out List<RouteValueTransform> routes);
-            if (result.Success)
+            if (result.Succeeded)
             {
                 return new SuccessDataResult<List<RouteValueTransform>>(routes);
             }

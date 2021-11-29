@@ -1,20 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
+using Wheely.Core.Services.Results.Abstract;
 
 namespace Wheely.Service.HttpRequest
 {
     public partial interface IRestApiService
     {
         /// <summary>
-        /// Http post request
+        /// Http get request
         /// </summary>
         /// <typeparam name="T">class and new()</typeparam>
+        /// <param name="serviceUrl">service url</param>
+        /// <param name="headersCollection">header collection</param>
+        /// <returns></returns>
+        IDataResult<TModel> GetApiResponse<TModel>(string serviceUrl, NameValueCollection headersCollection = null) where TModel : class, new();
+
+        /// <summary>
+        /// Http get request
+        /// </summary>
+        /// <typeparam name="T">class and new()</typeparam>
+        /// <param name="serviceUrl">service url</param>
+        /// <param name="headersCollection">header collection</param>
+        /// <returns></returns>
+        Task<IDataResult<TModel>> GetApiResponseAsync<TModel>(string serviceUrl, NameValueCollection headersCollection = null) where TModel : class, new();
+
+        /// <summary>
+        /// Http post request
+        /// </summary>
+        /// <typeparam name="TModel">class and new()</typeparam>
         /// <param name="serviceUrl">service url</param>
         /// <param name="parameters">parameters</param>
         /// <param name="headersCollection">header collection</param>
         /// <param name="authToken">authorization token</param>
         /// <returns></returns>
-        T PostApiResponse<T>(string serviceUrl, object parameters, NameValueCollection headersCollection = null, string authToken = null) where T : class, new();
+        IDataResult<TModel> PostApiResponse<TModel>(string serviceUrl, object parameters, NameValueCollection headersCollection = null, string authToken = null) where TModel : class, new();
+
+        /// <summary>
+        /// Http post request
+        /// </summary>
+        /// <typeparam name="TModel">class and new()</typeparam>
+        /// <param name="serviceUrl">service url</param>
+        /// <param name="parameters">parameters</param>
+        /// <param name="headersCollection">header collection</param>
+        /// <param name="authToken">authorization token</param>
+        /// <returns></returns>
+        Task<IDataResult<TModel>> PostApiResponseAsync<TModel>(string serviceUrl, object parameters, NameValueCollection headersCollection = null, string authToken = null) where TModel : class, new();
 
         /// <summary>
         /// Http post request - Form Url Encoded Content
@@ -24,15 +55,16 @@ namespace Wheely.Service.HttpRequest
         /// <param name="keyValuePairs">key value pairs</param>
         /// <param name="authToken">authorization token</param>
         /// <returns></returns>
-        T PostApiResponse<T>(string serviceUrl, IList<KeyValuePair<string, string>> keyValuePairs, string authToken = null) where T : class, new();
+        IDataResult<TModel> PostEncodedApiResponse<TModel>(string serviceUrl, IList<KeyValuePair<string, string>> keyValuePairs, string authToken = null) where TModel : class, new();
 
         /// <summary>
-        /// Http get request
+        /// Http post request - Form Url Encoded Content
         /// </summary>
         /// <typeparam name="T">class and new()</typeparam>
         /// <param name="serviceUrl">service url</param>
-        /// <param name="headersCollection">header collection</param>
+        /// <param name="keyValuePairs">key value pairs</param>
+        /// <param name="authToken">authorization token</param>
         /// <returns></returns>
-        T GetApiResponse<T>(string serviceUrl, NameValueCollection headersCollection = null) where T : class, new();
+        Task<IDataResult<TModel>> PostEncodedApiResponseAsync<TModel>(string serviceUrl, IList<KeyValuePair<string, string>> keyValuePairs, string authToken = null) where TModel : class, new();
     }
 }

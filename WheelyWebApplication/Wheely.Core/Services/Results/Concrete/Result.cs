@@ -7,7 +7,7 @@ namespace Wheely.Core.Services.Results.Concrete
         #region Constructor
         public Result(bool success)
         {
-            Success = success;
+            Succeeded = success;
         }
 
         public Result(bool success, string message) : this(success)
@@ -17,7 +17,7 @@ namespace Wheely.Core.Services.Results.Concrete
         #endregion
 
         #region Properties
-        public bool Success { get; }
+        public bool Succeeded { get; }
         public string Message { get; }
         #endregion
     }
