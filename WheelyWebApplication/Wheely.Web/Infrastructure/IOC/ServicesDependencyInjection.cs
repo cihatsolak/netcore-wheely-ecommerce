@@ -51,8 +51,8 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddSingletonServices(this IServiceCollection services)
         {
             services.TryAddSingleton<IRestApiService, RestApiManager>();
-            //services.TryAddSingleton<IRedisService, RedisManager>();
-            services.TryAddSingleton<IRedisService, RedisApiManager>();
+            services.TryAddSingleton<IRedisService, RedisManager>();
+            //services.TryAddSingleton<IRedisService, RedisApiManager>();
             services.TryAddSingleton<ICookieService, CookieManager>();
             services.TryAddSingleton<RouteValueTransformer>();
             services.TryAddSingleton<IConsulService, ConsulManager>();

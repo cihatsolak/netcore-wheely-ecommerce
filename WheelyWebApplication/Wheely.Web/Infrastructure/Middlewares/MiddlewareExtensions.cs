@@ -70,15 +70,15 @@ namespace Wheely.Web.Infrastructure.Middlewares
         /// </summary>
         internal static void PrepareApplicationsRequirements()
         {
-            IRedisService redisService = ServiceTool.ServiceProvider.GetService<IRedisService>();
-            if (redisService is null)
-                throw new ArgumentNullException(nameof(redisService));
+            //IRedisService redisService = ServiceTool.ServiceProvider.GetService<IRedisService>();
+            //if (redisService is null)
+            //    throw new ArgumentNullException(nameof(redisService));
 
             IRouteService routeService = ServiceTool.ServiceProvider.GetService<IRouteService>();
             if (routeService is null)
                 throw new ArgumentNullException(nameof(routeService));
 
-            redisService.ConnectServerAsync().Wait();
+            //redisService.ConnectServerAsync().Wait();
             routeService.GetRoutesAsync().Wait();
         }
     }
