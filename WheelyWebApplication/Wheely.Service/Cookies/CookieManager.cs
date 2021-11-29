@@ -13,18 +13,18 @@ namespace Wheely.Service.Cookies
         #region Fields
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDataProtector _dataProtector;
-        private readonly ILogger<CookieManager> _basketManager;
+        private readonly ILogger<CookieManager> _logger;
         #endregion
 
         #region Constructor
         public CookieManager(
             IHttpContextAccessor httpContextAccessor,
             IDataProtectionProvider dataProtectionProvider,
-            ILogger<CookieManager> basketManager)
+            ILogger<CookieManager> logger)
         {
             _httpContextAccessor = httpContextAccessor;
             _dataProtector = dataProtectionProvider.CreateProtector(GetType().FullName);
-            _basketManager = basketManager;
+            _logger = logger;
         }
         #endregion
 
@@ -49,7 +49,7 @@ namespace Wheely.Service.Cookies
             }
             catch (Exception exception)
             {
-                _basketManager.LogError("asdasd", exception);
+                _logger.LogError("asdasd", exception);
                 return new ErrorDataResult<TModel>();
             }
         }
@@ -65,7 +65,7 @@ namespace Wheely.Service.Cookies
             }
             catch (Exception exception)
             {
-                _basketManager.LogError("asdasd", exception);
+                _logger.LogError("asdasd", exception);
                 return new ErrorResult();
             }
         }
@@ -89,7 +89,7 @@ namespace Wheely.Service.Cookies
             }
             catch (Exception exception)
             {
-                _basketManager.LogError("asdasd", exception);
+                _logger.LogError("asdasd", exception);
                 return new ErrorDataResult<TModel>();
             }
         }
@@ -105,7 +105,7 @@ namespace Wheely.Service.Cookies
             }
             catch (Exception exception)
             {
-                _basketManager.LogError("asdasd", exception);
+                _logger.LogError("asdasd", exception);
                 return new ErrorResult();
             }
         }
