@@ -24,7 +24,8 @@ namespace Wheely.Web
             services.AddDefaultServices();
             services.AddDbContexts();
             services.AddRedis();
-            services.AddScopedServices().AddSingletonServices();
+            services.AddScopedServices();
+            services.AddSingletonServices();
             services.AddSettings();
             ServiceTool.Create(services);
         }
