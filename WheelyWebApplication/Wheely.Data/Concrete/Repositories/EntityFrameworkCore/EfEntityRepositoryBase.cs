@@ -143,7 +143,7 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         /// <param name="filter">filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns></returns>
-        public virtual bool IsThere(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
+        public virtual bool AnyFilter(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.Any(filter);
