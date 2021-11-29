@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Smidge;
+using Wheely.Core.DependencyResolvers;
+using Wheely.Service.Redis;
 using Wheely.Web.Infrastructure.Constants;
 using Wheely.Web.Infrastructure.Middlewares.Partials;
 using Wheely.Web.Infrastructure.Routes;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using Wheely.Service.Routes;
 
 namespace Wheely.Web.Infrastructure.Middlewares
 {
@@ -58,6 +63,23 @@ namespace Wheely.Web.Infrastructure.Middlewares
             //});
 
             return app;
+        }
+
+        /// <summary>
+        /// Prepare applications requirements
+        /// </summary>
+        internal static void PrepareApplicationsRequirements()
+        {
+            IRedisService redisService = ServiceTool.ServiceProvider.GetService<IRedisService>();
+            if (redisService is null)
+                throw new ArgumentNullException(nameof(redisService));
+
+            IRouteService routeService = ServiceTool.ServiceProvider.GetService<IRouteService>();
+            if (routeService is null)
+                throw new ArgumentNullException(nameof(routeService));
+
+            redisService.ConnectServerAsync().Wait();
+            routeService.GetRoutesAsync().Wait();
         }
     }
 }

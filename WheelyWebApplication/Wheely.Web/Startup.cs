@@ -33,8 +33,7 @@ namespace Wheely.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRouteService routeService, IRedisService redisService)
         {
-            redisService.ConnectServerAsync().Wait();
-            routeService.GetRoutesAsync().Wait();
+            MiddlewareExtensions.PrepareApplicationsRequirements();
 
             //app.UseSecurityHeaders();
 
