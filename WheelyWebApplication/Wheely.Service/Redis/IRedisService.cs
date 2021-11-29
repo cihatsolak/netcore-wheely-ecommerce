@@ -9,7 +9,22 @@ namespace Wheely.Service.Redis
         /// <summary>
         /// Redis database connection
         /// </summary>
-        void ConnectServerAsync();
+        Task ConnectServerAsync();
+
+        /// <summary>
+        /// Increment
+        /// </summary>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="increment">increment value</param>
+        void Increment(string cacheKey, int increment = 1);
+
+        /// <summary>
+        /// Increment
+        /// </summary>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="increment">increment value</param>
+        /// <returns></returns>
+        Task IncrementAsync(string cacheKey, int increment = 1);
 
         /// <summary>
         /// Returns true and data if cached data exists, false and null otherwise (synchronous)

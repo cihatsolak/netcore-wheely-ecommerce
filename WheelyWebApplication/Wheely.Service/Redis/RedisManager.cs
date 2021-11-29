@@ -25,7 +25,16 @@ namespace Wheely.Service.Redis
         #endregion
 
         #region Methods
-        public void ConnectServerAsync()
+        public Task ConnectServerAsync()
+        {
+            throw new NotImplementedException();
+        }
+        public void Increment(string cacheKey, int increment = 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task IncrementAsync(string cacheKey, int increment = 1)
         {
             throw new NotImplementedException();
         }

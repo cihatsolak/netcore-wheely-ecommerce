@@ -7,7 +7,6 @@ using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
 using Wheely.Core.Utilities;
 using Wheely.Core.Web.Settings.RedisServerSettings;
-using Wheely.Service.Consul;
 
 namespace Wheely.Service.Redis
 {
@@ -15,25 +14,21 @@ namespace Wheely.Service.Redis
     {
         #region Fields
         private ConnectionMultiplexer _connectionMultiplexer;
-        private readonly IDatabase _database;
+        private IDatabase _database;
         private readonly CultureInfo cultureInfo;
-        private readonly RedisServerSettings _redisServerSettings;
+        private readonly IRedisServerSettings _redisServerSettings;
         #endregion
 
         #region Constructor
-        public RedisApiManager(IConsulService consulService)
+        public RedisApiManager(IRedisServerSettings redisServerSettings)
         {
-            var redisServerSettings = consulService.Get<RedisServerSettings>(nameof(RedisServerSettings));
-            if (!redisServerSettings.Succeeded)
-                throw new Exception();
-
-            _database = _connectionMultiplexer.GetDatabase(redisServerSettings.Data.Database);
+            _redisServerSettings = redisServerSettings;
             cultureInfo = new("en-US");
         }
         #endregion
 
         #region Middleware
-        public async void ConnectServerAsync()
+        public async Task ConnectServerAsync()
         {
             ConfigurationOptions configurationOptions = new()
             {
@@ -44,8 +39,19 @@ namespace Wheely.Service.Redis
             };
 
             _connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(configurationOptions);
+            _database = _connectionMultiplexer.GetDatabase(_redisServerSettings.Database);
         }
         #endregion
+
+        public void Increment(string cacheKey, int increment = 1)
+        {
+            _database.StringIncrement(cacheKey.ToLower(cultureInfo), increment);
+        }
+
+        public async Task IncrementAsync(string cacheKey, int increment = 1)
+        {
+            await _database.StringIncrementAsync(cacheKey.ToLower(cultureInfo), increment);
+        }
 
         public IResult TryGetValue<TModel>(string cacheKey, out TModel value)
         {
@@ -99,7 +105,10 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            _database.StringSet(cacheKey.ToLower(cultureInfo), value.ToJsonString());
+            cacheKey = cacheKey.ToLower(cultureInfo);
+
+            _database.StringSet(cacheKey, value.ToJsonString());
+            _database.KeyExpire(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -107,7 +116,10 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
+            cacheKey = cacheKey.ToLower(cultureInfo);
+
             await _database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
+            await _database.KeyExpireAsync(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
         }
 
         public void Remove(string cacheKey)
