@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Wheely.Core.Data;
+using Wheely.Data.Concrete.Extensions;
 using Wheely.Service.Categories;
 using Wheely.Service.Wheels;
 using Wheely.Web.Factories.ShopFactories;

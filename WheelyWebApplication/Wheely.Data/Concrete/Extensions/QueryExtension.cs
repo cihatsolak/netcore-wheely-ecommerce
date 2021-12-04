@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wheely.Core.Entities.Abstract;
 
-namespace Wheely.Core.Data
+namespace Wheely.Data.Concrete.Extensions
 {
     public static class QueryExtension
     {
