@@ -35,7 +35,7 @@ namespace Wheely.Service.Routes
                 return new SuccessDataResult<List<RouteValueTransform>>(routes);
             }
 
-            routes = await _routeRepository.TableNoTracking.AsNoTracking().ToListAsync();
+            routes = await _routeRepository.TableNoTracking.ToListAsync();
             if (routes is null || !routes.Any())
             {
                 return new ErrorDataResult<List<RouteValueTransform>>();
