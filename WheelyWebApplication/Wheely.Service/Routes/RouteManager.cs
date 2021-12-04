@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Wheely.Core.Constants;
 using Wheely.Core.Entities.Concrete.Routes;
 using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
 using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Concrete.Extensions;
 using Wheely.Service.Redis;
 
 namespace Wheely.Service.Routes
@@ -36,7 +36,7 @@ namespace Wheely.Service.Routes
             }
 
             routes = await _routeRepository.TableNoTracking.ToListAsync();
-            if (routes is null || !routes.Any())
+            if (routes.IsNullOrNotAny())
             {
                 return new ErrorDataResult<List<RouteValueTransform>>();
             }

@@ -31,83 +31,62 @@ namespace Wheely.Service.Cookies
         #region Methods
         public IDataResult<TModel> Get<TModel>(string key) where TModel : class, new()
         {
-            try
-            {
-                string cookieValue = _httpContextAccessor.HttpContext.Request.Cookies[key];
-                if (string.IsNullOrWhiteSpace(cookieValue))
-                {
-                    return new ErrorDataResult<TModel>();
-                }
-
-                var convertedCookieModel = Decrypt(cookieValue).AsModel<TModel>();
-                if (convertedCookieModel is null)
-                {
-                    throw new ArgumentNullException(nameof(convertedCookieModel), "");
-                }
-
-                return new SuccessDataResult<TModel>(convertedCookieModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("asdasd", exception);
+            string cookieValue = _httpContextAccessor.HttpContext.Request.Cookies[key];
+            if (string.IsNullOrWhiteSpace(cookieValue))
                 return new ErrorDataResult<TModel>();
+
+            var convertedCookieModel = Decrypt(cookieValue).AsModel<TModel>();
+            if (convertedCookieModel is null)
+            {
+                _logger.LogError("", cookieValue);
+                throw new ArgumentNullException(nameof(convertedCookieModel));
             }
+
+            return new SuccessDataResult<TModel>(convertedCookieModel);
         }
 
         public IResult Set<TModel>(string key, TModel value) where TModel : class, new()
         {
-            if (string.IsNullOrWhiteSpace(key) || value is null) return new ErrorResult();
-
-            try
+            if (string.IsNullOrWhiteSpace(key) || value is null)
             {
-                _httpContextAccessor.HttpContext.Response.Cookies.Append(key, Encrypt(value.ToJsonString()));
-                return new SuccessResult();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("asdasd", exception);
+                _logger.LogError("@Value", value);
                 return new ErrorResult();
             }
+
+            _httpContextAccessor.HttpContext.Response.Cookies.Append(key, Encrypt(value.ToJsonString()));
+            return new SuccessResult();
         }
 
         public IResult Set<TModel>(string key, TModel value, DateTime expireDate) where TModel : class, new()
         {
-            if (string.IsNullOrWhiteSpace(key) || value is null || expireDate == DateTime.MinValue) return new ErrorResult();
-
-            try
+            if (string.IsNullOrWhiteSpace(key) || value is null || expireDate == DateTime.MinValue)
             {
-                CookieOptions cookieOptions = new()
-                {
-                    HttpOnly = false,
-                    SameSite = SameSiteMode.Strict,
-                    Secure = true,
-                    Expires = expireDate
-                };
+                _logger.LogError("@Value", value);
+                return new ErrorResult();
+            }
 
-                _httpContextAccessor.HttpContext.Response.Cookies.Append(key, Encrypt(value.ToJsonString()), cookieOptions);
-                return new SuccessResult();
-            }
-            catch (Exception exception)
+            CookieOptions cookieOptions = new()
             {
-                _logger.LogError("asdasd", exception);
-                return new ErrorDataResult<TModel>();
-            }
+                HttpOnly = false,
+                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                Expires = expireDate
+            };
+
+            _httpContextAccessor.HttpContext.Response.Cookies.Append(key, Encrypt(value.ToJsonString()), cookieOptions);
+            return new SuccessResult();
         }
 
         public IResult Remove(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) return new ErrorResult();
-
-            try
+            if (string.IsNullOrWhiteSpace(key))
             {
-                _httpContextAccessor.HttpContext.Response.Cookies.Delete(key);
-                return new SuccessResult();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("asdasd", exception);
+                _logger.LogError("@key", key);
                 return new ErrorResult();
             }
+
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete(key);
+            return new SuccessResult();
         }
         #endregion
 
