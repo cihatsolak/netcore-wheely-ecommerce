@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
+using Wheely.Service.Consul;
 using Wheely.Service.Cookies;
 using Wheely.Service.HttpRequest;
 using Wheely.Service.Redis;
@@ -22,20 +24,20 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
             #region Repositories
-            services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
-            services.AddScoped<IWheelRepository, WheelRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IRouteRepository, RouteRepository>();
+            services.TryAddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
+            services.TryAddScoped<IWheelRepository, WheelRepository>();
+            services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+            services.TryAddScoped<IRouteRepository, RouteRepository>();
             #endregion
 
             #region Services
-            services.AddScoped<IWheelService, WheelManager>();
-            services.AddScoped<ICategoryService, CategoryManager>();
-            services.AddScoped<IRouteService, RouteManager>();
+            services.TryAddScoped<IWheelService, WheelManager>();
+            services.TryAddScoped<ICategoryService, CategoryManager>();
+            services.TryAddScoped<IRouteService, RouteManager>();
             #endregion
 
             #region Model Factories
-            services.AddScoped<IShopModelFactory, ShopModelFactory>();
+            services.TryAddScoped<IShopModelFactory, ShopModelFactory>();
             #endregion
 
             return services;
@@ -48,11 +50,12 @@ namespace Wheely.Web.Infrastructure.IOC
         /// <returns>type of IServiceCollection</returns>
         internal static IServiceCollection AddSingletonServices(this IServiceCollection services)
         {
-            services.AddSingleton<IRestApiService, RestApiManager>();
-            services.AddSingleton<IRedisService, RedisManager>();
-            services.AddSingleton<ICookieService, CookieManager>();
-            services.AddSingleton<RouteValueTransformer>();
-
+            services.TryAddSingleton<IRestApiService, RestApiManager>();
+            services.TryAddSingleton<IRedisService, RedisManager>();
+            //services.TryAddSingleton<IRedisService, RedisApiManager>();
+            services.TryAddSingleton<ICookieService, CookieManager>();
+            services.TryAddSingleton<RouteValueTransformer>();
+            services.TryAddSingleton<IConsulService, ConsulManager>();
             return services;
         }
     }

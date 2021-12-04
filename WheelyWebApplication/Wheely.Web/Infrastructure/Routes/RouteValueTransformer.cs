@@ -37,7 +37,7 @@ namespace Wheely.Web.Infrastructure.Routes
             if (!CheckSlugUrl(values, out string slugUrl)) return values;
 
             var routes = await _redisService.GetAsync<List<RouteValueTransform>>(CacheKeyConstants.Routes);
-            if (!routes.Success)
+            if (!routes.Succeeded)
                 return values;
 
             var route = routes.Data.FirstOrDefault(p => p.SlugUrl.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) || p.CustomUrl?.Equals(slugUrl, StringComparison.OrdinalIgnoreCase) == true);

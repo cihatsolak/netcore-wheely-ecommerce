@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Smidge;
@@ -73,10 +74,12 @@ namespace Wheely.Web.Infrastructure.IOC
             #region Configuration Dependencies
             services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSettings)));
             services.Configure<GoogleReCaptchaSetting>(ServiceTool.Configuration.GetSection(nameof(GoogleReCaptchaSetting)));
+            services.Configure<RedisServerSettings>(ServiceTool.Configuration.GetSection(nameof(RedisServerSettings)));
             #endregion
 
             #region Singleton Service Dependencies
-            services.AddSingleton<IGoogleReCaptchaSetting>(provider => provider.GetRequiredService<IOptions<GoogleReCaptchaSetting>>().Value);
+            services.TryAddSingleton<IGoogleReCaptchaSetting>(provider => provider.GetRequiredService<IOptions<GoogleReCaptchaSetting>>().Value);
+            services.TryAddSingleton<IRedisServerSettings>(provider => provider.GetRequiredService<IOptions<RedisServerSettings>>().Value);
             #endregion
 
             return services;
