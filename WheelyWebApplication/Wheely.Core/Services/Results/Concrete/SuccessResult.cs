@@ -1,6 +1,6 @@
 ﻿namespace Wheely.Core.Services.Results.Concrete
 {
-    public class SuccessResult : Result
+    public sealed class SuccessResult : Result
     {
         public SuccessResult(string message) : base(true, message)
         {
