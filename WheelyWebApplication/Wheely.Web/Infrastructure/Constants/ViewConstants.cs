@@ -1,4 +1,4 @@
-﻿namespace Wheely.Core.Web.Constants
+﻿namespace Wheely.Web.Infrastructure.Constants
 {
     /// <summary>
     /// Partial views names to be used by the web
@@ -10,6 +10,7 @@
         public const string BreadcumbPartial = "~/Views/Shared/PartialViews/Layout/_BreadcumbPartial.cshtml";
         public const string ValidationScriptsPartial = "~/Views/Shared/PartialViews/Validation/_ValidationScriptsPartial.cshtml";
         public const string ValidationBootstrapPartial = "~/Views/Shared/PartialViews/Validation/_ValidationBootstrapPartial.cshtml";
+        public const string ValidationGoogleReCaptchaPartial = "~/Views/Shared/PartialViews/Validation/_ValidationGoogleCaptchaPartial.cshtml";
     }
 
     /// <summary>

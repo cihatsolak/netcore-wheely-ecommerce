@@ -2,23 +2,23 @@
 {
     public static class RouteName
     {
-        public const string Controller = nameof(Controller);
-        public const string Action = nameof(Action);
+        public const string Controller = "Controller";
+        public const string Action = "Action";
     }
 
     public static class RouteParameterName
     {
-        public const string StatusCode = nameof(StatusCode);
-        public const string Id = nameof(Id);
+        public const string StatusCode = "StatusCode";
+        public const string Id = "Id";
     }
 
     public static class ControllerName
     {
-        public const string Error = nameof(Error);
+        public const string Error = "Error";
     }
 
     public static class ActionName
     {
-        public const string Handle = nameof(Handle);
+        public const string Handle = "Handle";
     }
 }

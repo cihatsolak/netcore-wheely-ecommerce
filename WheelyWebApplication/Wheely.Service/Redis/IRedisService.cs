@@ -1,10 +1,31 @@
 ﻿using System.Threading.Tasks;
 using Wheely.Core.Enums;
+using Wheely.Core.Services.Results.Abstract;
 
 namespace Wheely.Service.Redis
 {
     public partial interface IRedisService
     {
+        /// <summary>
+        /// Redis database connection
+        /// </summary>
+        Task ConnectServerAsync();
+
+        /// <summary>
+        /// Increment
+        /// </summary>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="increment">increment value</param>
+        void Increment(string cacheKey, int increment = 1);
+
+        /// <summary>
+        /// Increment
+        /// </summary>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="increment">increment value</param>
+        /// <returns></returns>
+        Task IncrementAsync(string cacheKey, int increment = 1);
+
         /// <summary>
         /// Returns true and data if cached data exists, false and null otherwise (synchronous)
         /// </summary>
@@ -12,7 +33,7 @@ namespace Wheely.Service.Redis
         /// <param name="cacheKey">cache key</param>
         /// <param name="value">object</param>
         /// <returns>type of boolean and object</returns>
-        bool TryGetValue<TModel>(string cacheKey, out TModel value);
+        IResult TryGetValue<TModel>(string cacheKey, out TModel value);
 
         /// <summary>
         /// Get data from cache (synchronous)
@@ -20,7 +41,7 @@ namespace Wheely.Service.Redis
         /// <typeparam name="TModel">data type</typeparam>
         /// <param name="cacheKey">cache key</param>
         /// <returns>type of TModel</returns>
-        TModel Get<TModel>(string cacheKey);
+        IDataResult<TModel> Get<TModel>(string cacheKey);
 
         /// <summary>
         /// Get data from cache (asynchronous) 
@@ -28,7 +49,7 @@ namespace Wheely.Service.Redis
         /// <typeparam name="TModel">data type</typeparam>
         /// <param name="cacheKey">cache key</param>
         /// <returns>type of TModel</returns>
-        Task<TModel> GetAsync<TModel>(string cacheKey);
+        Task<IDataResult<TModel>> GetAsync<TModel>(string cacheKey);
 
         /// <summary>
         /// insert data to cache (synchronous)
@@ -39,6 +60,14 @@ namespace Wheely.Service.Redis
         /// <param name="slidingExpiration">sliding expiration minute, default: three minute</param>
         /// <param name="absoluteExpiration">absolute expiration minute, default: twenty minute</param>
         void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes);
+
+        /// <summary>
+        /// insert data to cache (asynchronous)
+        /// </summary>
+        /// <typeparam name="TModel">data type</typeparam>
+        /// <param name="cacheKey">cache key</param>
+        /// <param name="value">data</param>
+        Task SetAsync<TModel>(string cacheKey, TModel value);
 
         /// <summary>
         /// insert data to cache (asynchronous) 

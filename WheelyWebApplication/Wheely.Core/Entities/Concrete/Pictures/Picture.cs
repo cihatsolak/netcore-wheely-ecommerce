@@ -3,7 +3,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 
 namespace Wheely.Core.Entities.Concrete.Pictures
 {
-    public class Picture : BaseEntity
+    public class Picture : BaseEntity<int>
     {
         public string Path { get; set; }
         public int Order { get; set; }

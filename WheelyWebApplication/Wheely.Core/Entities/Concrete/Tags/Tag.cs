@@ -4,7 +4,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 
 namespace Wheely.Core.Entities.Concrete.Tags
 {
-    public class Tag : BaseEntity
+    public class Tag : BaseEntity<int>
     {
         public string Name { get; set; }
 

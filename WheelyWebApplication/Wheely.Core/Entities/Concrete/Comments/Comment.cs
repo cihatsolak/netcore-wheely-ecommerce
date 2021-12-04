@@ -4,7 +4,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 
 namespace Wheely.Core.Entities.Concrete.Comments
 {
-    public class Comment : BaseEntity
+    public class Comment : BaseEntity<int>
     {
         public string FullName { get; set; }
         public string Content { get; set; }

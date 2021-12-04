@@ -78,7 +78,7 @@ namespace Wheely.Data.Abstract.Repositories
         /// <param name="filter">filter</param>
         /// <param name="disableTracking">entity state tracking filter</param>
         /// <returns></returns>
-        bool IsThere(Expression<Func<TEntity, bool>> filter, bool disableTracking = true);
+        bool AnyFilter(Expression<Func<TEntity, bool>> filter, bool disableTracking = true);
 
         /// <summary>
         /// Insert entity

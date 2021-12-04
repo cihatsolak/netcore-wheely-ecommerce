@@ -1,0 +1,22 @@
+﻿@inject IGoogleReCaptchaSetting GoogleReCaptchaSetting
+
+<script src="@GoogleReCaptchaSetting.SiteKeyAddress"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute("@GoogleReCaptchaSetting.SiteKey", { action: "index" })
+            .then(function (token) {
+                debugger;
+                $('#contact').prepend('<input type="hidden" name="googletoken" value="' + token + '">');
+                $('#contact').prepend("");
+
+
+                    //$.getJSON("/Home/RecaptchaV3Vverify?token=" + token, function (data) {
+                    //    console.log(data);
+                    //});
+
+                    @*$.getJSON("@Url.Page("Index","RecaptchaVerify")&token=" + token, function (data) {
+                        $('#newsletter-form').find("input[type=submit]").prop("disabled", !data);
+                    });*@
+                });
+        });
+</script>

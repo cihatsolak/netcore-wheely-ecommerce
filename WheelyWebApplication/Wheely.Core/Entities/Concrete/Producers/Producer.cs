@@ -4,7 +4,7 @@ using Wheely.Core.Entities.Concrete.Wheels;
 
 namespace Wheely.Core.Entities.Concrete.Producers
 {
-    public class Producer : BaseEntity
+    public class Producer : BaseEntity<int>
     {
         public string Name { get; set; }
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Wheely.Core.Data;
 using Wheely.Core.Entities.Concrete.Wheels;
 using Wheely.Data.Abstract.Repositories;
 using Wheely.Data.Concrete.Contexts;
+using Wheely.Data.Concrete.Extensions;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {

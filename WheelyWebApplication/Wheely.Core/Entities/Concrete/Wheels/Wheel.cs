@@ -10,7 +10,7 @@ using Wheely.Core.Entities.Concrete.Tags;
 
 namespace Wheely.Core.Entities.Concrete.Wheels
 {
-    public class Wheel : BaseEntity
+    public class Wheel : BaseEntity<int>
     {
         public int StarCount { get; set; }
         public string Name { get; set; }

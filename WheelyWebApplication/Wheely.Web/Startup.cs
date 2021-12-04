@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Wheely.Core.DependencyResolvers;
+using Wheely.Service.Redis;
+using Wheely.Service.Routes;
 using Wheely.Web.Infrastructure.IOC;
 using Wheely.Web.Infrastructure.Middlewares;
 
@@ -22,12 +25,16 @@ namespace Wheely.Web
             services.AddDefaultServices();
             services.AddDbContexts();
             services.AddRedis();
-            services.AddScopedServices().AddSingletonServices();
+            services.AddScopedServices();
+            services.AddSingletonServices();
             services.AddSettings();
+            ServiceTool.Create(services);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRouteService routeService, IRedisService redisService)
         {
+            MiddlewareExtensions.PrepareApplicationsRequirements();
+
             //app.UseSecurityHeaders();
 
             if (env.IsDevelopment())
@@ -44,6 +51,8 @@ namespace Wheely.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCookiePolicy();
 
             app.UseSmidgeConfig();
             app.UseEndpointConfig();

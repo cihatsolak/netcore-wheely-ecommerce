@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wheely.Web.Filters;
 using Wheely.Web.Models.Contacts;
 
 namespace Wheely.Web.Controllers
@@ -12,6 +13,7 @@ namespace Wheely.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateGoogleReCaptchaFilter]
         public IActionResult Index(ContactModel contactModel)
         {
             if (!ModelState.IsValid) 
