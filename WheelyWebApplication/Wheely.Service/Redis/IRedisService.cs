@@ -12,6 +12,12 @@ namespace Wheely.Service.Redis
         Task ConnectServerAsync();
 
         /// <summary>
+        /// Clear app cache
+        /// </summary>
+        /// <returns></returns>
+        Task ClearAppCacheAsync();
+
+        /// <summary>
         /// Increment
         /// </summary>
         /// <param name="cacheKey">cache key</param>
@@ -90,5 +96,19 @@ namespace Wheely.Service.Redis
         /// </summary>
         /// <param name="cacheKey">cache key</param>
         Task RemoveAsync(string cacheKey);
+
+        /// <summary>
+        /// Remove keys by search key
+        /// </summary>
+        /// <param name="searchKey">redis key pattern</param>
+        /// <param name="keySearchType">key search type</param>
+        void RemoveKeysBySearchKey(string searchKey, KeySearchType keySearchType);
+
+        /// <summary>
+        /// Remove keys by search key
+        /// </summary>
+        /// <param name="searchKey">redis key pattern</param>
+        /// <returns></returns>
+        Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType);
     }
 }

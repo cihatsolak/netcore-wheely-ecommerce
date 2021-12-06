@@ -23,4 +23,14 @@
         FiveMinute = 5,
         TenMinute = 10
     }
+
+    /// <summary>
+    /// Redis keys search type
+    /// </summary>
+    public enum KeySearchType
+    {
+        EndWith = 1,
+        StartWith = 2,
+        Include = 3
+    }
 }

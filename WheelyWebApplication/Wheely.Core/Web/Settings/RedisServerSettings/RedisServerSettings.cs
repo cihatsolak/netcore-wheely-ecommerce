@@ -7,5 +7,6 @@
         public bool AbortOnConnectFail { get; set; }
         public int AsyncTimeOutMilliSecond { get; set; }
         public int ConnectTimeOutMilliSecond { get; set; }
+        public string SearchKey { get; set; }
     }
 }

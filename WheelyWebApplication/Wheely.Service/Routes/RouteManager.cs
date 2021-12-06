@@ -19,7 +19,9 @@ namespace Wheely.Service.Routes
         #endregion
 
         #region Constructor
-        public RouteManager(IRouteRepository routeRepository, IRedisService redisService)
+        public RouteManager(
+            IRouteRepository routeRepository, 
+            IRedisService redisService)
         {
             _routeRepository = routeRepository;
             _redisService = redisService;

@@ -31,9 +31,12 @@ namespace Wheely.Web
             ServiceTool.Create(services);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRouteService routeService, IRedisService redisService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            MiddlewareExtensions.PrepareApplicationsRequirements();
+            if (env.IsProduction())
+            {
+                app.LearnRoutes();
+            }
 
             //app.UseSecurityHeaders();
 

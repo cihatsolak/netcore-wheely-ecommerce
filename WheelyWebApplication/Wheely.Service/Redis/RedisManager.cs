@@ -34,7 +34,17 @@ namespace Wheely.Service.Redis
             throw new NotImplementedException();
         }
 
+        public Task RemoveAllKeys()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task IncrementAsync(string cacheKey, int increment = 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveKeysBySearchKeyAsync(string searchKey)
         {
             throw new NotImplementedException();
         }
@@ -128,6 +138,21 @@ namespace Wheely.Service.Redis
                 throw new ArgumentNullException(nameof(cacheKey));
 
             await _distributedCache.RemoveAsync(cacheKey.ToLower(cultureInfo));
+        }
+
+        public Task ClearAppCacheAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveKeysBySearchKey(string searchKey, KeySearchType keySearchType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

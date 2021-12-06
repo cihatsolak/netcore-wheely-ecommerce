@@ -22,7 +22,7 @@ namespace Wheely.Service.Wheels
         #region Methods
         public IDataResult<Wheel> GetWheelById(int id)
         {
-            ValidateId(id, nameof(GetWheelById));
+            ValidateId(id);
 
             var wheel = _wheelRepository.GetWheelWithRelatedTablesById(id);
             if (wheel is null)
@@ -39,11 +39,11 @@ namespace Wheely.Service.Wheels
         #endregion
 
         #region Utilities
-        private static void ValidateId(int id, string methodName)
+        private static void ValidateId(int id)
         {
             if (0 >= id)
             {
-                throw new ArgumentException($"id cannot be less than zero: Method Name: {methodName}", nameof(id));
+                throw new ArgumentException($"id cannot be less than zero", nameof(id));
             }
         }
         #endregion

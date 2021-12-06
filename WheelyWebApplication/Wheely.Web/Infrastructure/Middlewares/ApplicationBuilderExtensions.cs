@@ -14,7 +14,7 @@ namespace Wheely.Web.Infrastructure.Middlewares
     /// <summary>
     /// Middleware Extension Methods
     /// </summary>
-    internal static class MiddlewareExtensions
+    internal static class ApplicationBuilderExtensions
     {
         /// <summary>
         /// Security header middleware
@@ -55,31 +55,7 @@ namespace Wheely.Web.Infrastructure.Middlewares
                 endpoints.MapDynamicControllerRoute<RouteValueTransformer>("{**slug}");
             });
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}");
-            //});
-
             return app;
-        }
-
-        /// <summary>
-        /// Prepare applications requirements
-        /// </summary>
-        internal static void PrepareApplicationsRequirements()
-        {
-            //IRedisService redisService = ServiceTool.ServiceProvider.GetService<IRedisService>();
-            //if (redisService is null)
-            //    throw new ArgumentNullException(nameof(redisService));
-
-            IRouteService routeService = ServiceTool.ServiceProvider.GetService<IRouteService>();
-            if (routeService is null)
-                throw new ArgumentNullException(nameof(routeService));
-
-            //redisService.ConnectServerAsync().Wait();
-            routeService.GetRoutesAsync().Wait();
         }
     }
 }

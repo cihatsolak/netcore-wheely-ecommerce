@@ -1,6 +1,7 @@
 ﻿using StackExchange.Redis;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
@@ -10,7 +11,7 @@ using Wheely.Core.Web.Settings.RedisServerSettings;
 
 namespace Wheely.Service.Redis
 {
-    public sealed class RedisApiManager : IRedisService
+    public partial class RedisApiManager : IRedisService
     {
         #region Fields
         private ConnectionMultiplexer _connectionMultiplexer;
@@ -27,39 +28,28 @@ namespace Wheely.Service.Redis
         }
         #endregion
 
-        #region Middleware
-        public async Task ConnectServerAsync()
-        {
-            ConfigurationOptions configurationOptions = new()
-            {
-                EndPoints = { _redisServerSettings.ConnectionString },
-                AbortOnConnectFail = _redisServerSettings.AbortOnConnectFail,
-                AsyncTimeout = _redisServerSettings.AsyncTimeOutMilliSecond,
-                ConnectTimeout = _redisServerSettings.ConnectTimeOutMilliSecond
-            };
-
-            _connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(configurationOptions);
-            _database = _connectionMultiplexer.GetDatabase(_redisServerSettings.Database);
-        }
-        #endregion
-
         public void Increment(string cacheKey, int increment = 1)
         {
+            if (string.IsNullOrWhiteSpace(cacheKey))
+                throw new ArgumentNullException(nameof(cacheKey));
+
             _database.StringIncrement(cacheKey.ToLower(cultureInfo), increment);
         }
 
         public async Task IncrementAsync(string cacheKey, int increment = 1)
         {
+            if (string.IsNullOrWhiteSpace(cacheKey))
+                throw new ArgumentNullException(nameof(cacheKey));
+
             await _database.StringIncrementAsync(cacheKey.ToLower(cultureInfo), increment);
         }
 
         public IResult TryGetValue<TModel>(string cacheKey, out TModel value)
         {
-            value = default;
-
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
+            value = default;
             var redisValue = _database.StringGet(cacheKey.ToLower(cultureInfo));
             if (!redisValue.HasValue)
                 return new ErrorResult();
@@ -146,6 +136,44 @@ namespace Wheely.Service.Redis
             {
                 await _database.KeyDeleteAsync(cacheKey);
             }
+        }
+
+        public void RemoveKeysBySearchKey(string searchKey, KeySearchType keySearchType)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+                throw new ArgumentNullException(nameof(searchKey));
+
+            IServer server = _connectionMultiplexer.GetServer(_redisServerSettings.ConnectionString);
+
+            searchKey = keySearchType switch
+            {
+                KeySearchType.EndWith => $"*{searchKey}",
+                KeySearchType.StartWith => $"{searchKey}*",
+                KeySearchType.Include => $"*{searchKey}*",
+                _ => $"*{searchKey}*",
+            };
+
+            var redisKeys = server.Keys(_redisServerSettings.Database, searchKey).ToArray();
+            _database.KeyDelete(redisKeys);
+        }
+
+        public async Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+                throw new ArgumentNullException(nameof(searchKey));
+
+            IServer server = _connectionMultiplexer.GetServer(_redisServerSettings.ConnectionString);
+
+            searchKey = keySearchType switch
+            {
+                KeySearchType.EndWith => $"*{searchKey}",
+                KeySearchType.StartWith => $"{searchKey}*",
+                KeySearchType.Include => $"*{searchKey}*",
+                _ => $"*{searchKey}*",
+            };
+
+            var redisKeys = server.Keys(_redisServerSettings.Database, searchKey).ToArray();
+            await _database.KeyDeleteAsync(redisKeys);
         }
     }
 }
