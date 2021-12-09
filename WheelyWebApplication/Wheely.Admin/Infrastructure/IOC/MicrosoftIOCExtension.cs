@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Smidge;
 using System;
 using Wheely.Core.DependencyResolvers;
-using Wheely.Core.Web.Settings.SmidgeSettings;
+using Wheely.Core.Web.Settings;
 using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Admin.Infrastructure.IOC
@@ -50,7 +50,7 @@ namespace Wheely.Admin.Infrastructure.IOC
         /// <returns>type of service collection interface</returns>
         public static IServiceCollection AddSettings(this IServiceCollection services)
         {
-            services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSettings)));
+            services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSetting)));
 
             return services;
         }

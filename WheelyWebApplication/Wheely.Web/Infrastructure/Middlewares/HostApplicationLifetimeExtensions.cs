@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Service.Redis;
@@ -26,27 +25,25 @@ namespace Wheely.Web.Infrastructure.Middlewares
         /// <returns>type of application builder interface</returns>
         internal static IApplicationBuilder LearnRoutes(this IApplicationBuilder app)
         {
-            RedisService = ServiceTool.ServiceProvider.GetService<IRedisService>();
-            RouteService = ServiceTool.ServiceProvider.GetService<IRouteService>();
-
-            if (RedisService is null)
+            try
             {
-                //logger.LogCritical("Redis bağlantısı kurulamadı @redisService", redisService);
-                throw new ArgumentNullException(nameof(RedisService));
+                RedisService = ServiceTool.ServiceProvider.GetRequiredService<IRedisService>();
+                RouteService = ServiceTool.ServiceProvider.GetRequiredService<IRouteService>();
+
+                var hostApplicationLifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
+
+                hostApplicationLifetime.ApplicationStarted.Register(OnStarted);
+                hostApplicationLifetime.ApplicationStopping.Register(OnStopping);
+                hostApplicationLifetime.ApplicationStopped.Register(OnStopped);
             }
-
-
-            if (RouteService is null)
+            catch (Exception ex)
             {
-                //logger.LogCritical("Redis bağlantısı kurulamadı @redisService", redisService);
-                throw new ArgumentNullException(nameof(RouteService));
+                //_logger.log();
             }
-
-            var hostApplicationLifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
-
-            hostApplicationLifetime.ApplicationStarted.Register(OnStarted);
-            hostApplicationLifetime.ApplicationStopping.Register(OnStopping);
-            hostApplicationLifetime.ApplicationStopped.Register(OnStopped);
+            finally
+            {
+                
+            }
 
             return app;
         }
@@ -54,7 +51,7 @@ namespace Wheely.Web.Infrastructure.Middlewares
         #region Host Application Life Time
         private static void OnStarted()
         {
-            RedisService.ConnectServerAsync().Wait();
+            RedisService.ConnectServer().Wait();
             RouteService.GetRoutesAsync().Wait();
         }
 

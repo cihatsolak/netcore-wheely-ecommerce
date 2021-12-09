@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
 
 namespace Wheely.Service.Redis
 {
-    public partial interface IRedisService
+    public partial interface IRedisService : IDisposable
     {
         /// <summary>
         /// Redis database connection
         /// </summary>
-        Task ConnectServerAsync();
+        void ConnectServer();
 
         /// <summary>
         /// Clear app cache

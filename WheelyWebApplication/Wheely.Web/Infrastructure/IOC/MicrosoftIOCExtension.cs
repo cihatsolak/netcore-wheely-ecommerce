@@ -10,9 +10,8 @@ using Smidge;
 using System;
 using System.Reflection;
 using Wheely.Core.DependencyResolvers;
-using Wheely.Core.Web.Settings.GoogleReCaptchaSettings;
-using Wheely.Core.Web.Settings.RedisServerSettings;
-using Wheely.Core.Web.Settings.SmidgeSettings;
+using Wheely.Core.Web.Settings;
+using Wheely.Core.Web.Settings.HttpClientSettings;
 using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Web.Infrastructure.IOC
@@ -72,14 +71,16 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddSettings(this IServiceCollection services)
         {
             #region Configuration Dependencies
-            services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSettings)));
+            services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSetting)));
             services.Configure<GoogleReCaptchaSetting>(ServiceTool.Configuration.GetSection(nameof(GoogleReCaptchaSetting)));
-            services.Configure<RedisServerSettings>(ServiceTool.Configuration.GetSection(nameof(RedisServerSettings)));
+            services.Configure<RedisServerSetting>(ServiceTool.Configuration.GetSection(nameof(RedisServerSetting)));
+            services.Configure<HttpClientSettings>(ServiceTool.Configuration.GetSection(nameof(HttpClientSettings)));
             #endregion
 
             #region Singleton Service Dependencies
             services.TryAddSingleton<IGoogleReCaptchaSetting>(provider => provider.GetRequiredService<IOptions<GoogleReCaptchaSetting>>().Value);
-            services.TryAddSingleton<IRedisServerSettings>(provider => provider.GetRequiredService<IOptions<RedisServerSettings>>().Value);
+            services.TryAddSingleton<IRedisServerSetting>(provider => provider.GetRequiredService<IOptions<RedisServerSetting>>().Value);
+            services.TryAddSingleton<IHttpClientSettings>(provider => provider.GetRequiredService<IOptions<HttpClientSettings>>().Value);
             #endregion
 
             return services;
@@ -94,7 +95,7 @@ namespace Wheely.Web.Infrastructure.IOC
         {
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = ServiceTool.Configuration.GetValue<string>($"{nameof(RedisServerSettings)}:ConnectionString");
+                options.Configuration = ServiceTool.Configuration.GetValue<string>($"{nameof(RedisServerSetting)}:ConnectionString");
             });
 
             return services;

@@ -46,8 +46,8 @@ namespace Wheely.Web.Infrastructure.IOC
         /// <summary>
         /// Dependency injection for services layer singleton services type
         /// </summary>
-        /// <param name="services">type of IServiceCollection</param>
-        /// <returns>type of IServiceCollection</returns>
+        /// <param name="services">type of service collection interface</param>
+        /// <returns>type of service collection interface</returns>
         internal static IServiceCollection AddSingletonServices(this IServiceCollection services)
         {
             services.TryAddSingleton<IRestApiService, RestApiManager>();

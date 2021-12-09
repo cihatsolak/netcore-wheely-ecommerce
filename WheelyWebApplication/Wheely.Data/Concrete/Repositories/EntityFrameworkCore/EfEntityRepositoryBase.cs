@@ -158,15 +158,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            try
-            {
-                Entities.Add(entity);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.Add(entity);
+            SaveChanges();
         }
 
         /// <summary>
@@ -178,15 +171,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            try
-            {
-                await Entities.AddAsync(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            await Entities.AddAsync(entity);
+            await SaveChangesAsync();
         }
 
         /// <summary>
@@ -198,15 +184,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
-            try
-            {
-                Entities.AddRange(entities);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.AddRange(entities);
+            SaveChanges();
         }
 
         /// <summary>
@@ -218,15 +197,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
-            try
-            {
-                await Entities.AddRangeAsync(entities);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            await Entities.AddRangeAsync(entities);
+            await SaveChangesAsync();
         }
 
         /// <summary>
@@ -238,15 +210,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            try
-            {
-                Entities.Update(entity);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.Update(entity);
+            SaveChanges();
         }
 
         /// <summary>
@@ -258,15 +223,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
-            try
-            {
-                Entities.UpdateRange(entities);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.UpdateRange(entities);
+            SaveChanges();
         }
 
         /// <summary>
@@ -278,15 +236,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            try
-            {
-                Entities.Remove(entity);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.Remove(entity);
+            SaveChanges();
         }
 
         /// <summary>
@@ -298,15 +249,8 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
-            try
-            {
-                Entities.RemoveRange(entities);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
+            Entities.RemoveRange(entities);
+            SaveChanges();
         }
         #endregion
 
@@ -377,6 +321,29 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             }
         }
 
+        protected virtual void SaveChanges()
+        {
+            try
+            {
+               _context.SaveChanges();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
+            }
+        }
+
+        protected virtual async Task SaveChangesAsync()
+        {
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
+            }
+        }
         #endregion
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Core.Utilities;
-using Wheely.Core.Web.Settings.GoogleReCaptchaSettings;
+using Wheely.Core.Web.Settings;
 using Wheely.Web.Models.Google;
 
 namespace Wheely.Web.Filters

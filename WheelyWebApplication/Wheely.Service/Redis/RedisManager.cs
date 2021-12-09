@@ -25,7 +25,7 @@ namespace Wheely.Service.Redis
         #endregion
 
         #region Methods
-        public Task ConnectServerAsync()
+        public Task ConnectServer()
         {
             throw new NotImplementedException();
         }
@@ -151,6 +151,11 @@ namespace Wheely.Service.Redis
         }
 
         public Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
         {
             throw new NotImplementedException();
         }

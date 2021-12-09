@@ -20,6 +20,7 @@ namespace Wheely.Data.Concrete.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Wheel>().IsMemoryOptimized();
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
 

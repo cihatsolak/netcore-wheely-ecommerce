@@ -7,23 +7,23 @@ using Wheely.Core.Enums;
 using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
 using Wheely.Core.Utilities;
-using Wheely.Core.Web.Settings.RedisServerSettings;
+using Wheely.Core.Web.Settings;
 
 namespace Wheely.Service.Redis
 {
-    public partial class RedisApiManager : IRedisService
+    public partial class RedisApiManager : IRedisService 
     {
         #region Fields
-        private ConnectionMultiplexer _connectionMultiplexer;
-        private IDatabase _database;
+        private static ConnectionMultiplexer _connectionMultiplexer;
+        private static readonly object _multiplexerLock = new();
         private readonly CultureInfo cultureInfo;
-        private readonly IRedisServerSettings _redisServerSettings;
+        private readonly IRedisServerSetting _redisServerSetting;
         #endregion
 
         #region Constructor
-        public RedisApiManager(IRedisServerSettings redisServerSettings)
+        public RedisApiManager(IRedisServerSetting redisServerSetting)
         {
-            _redisServerSettings = redisServerSettings;
+            _redisServerSetting = redisServerSetting;
             cultureInfo = new("en-US");
         }
         #endregion
@@ -33,7 +33,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            _database.StringIncrement(cacheKey.ToLower(cultureInfo), increment);
+            Database.StringIncrement(cacheKey.ToLower(cultureInfo), increment);
         }
 
         public async Task IncrementAsync(string cacheKey, int increment = 1)
@@ -41,7 +41,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            await _database.StringIncrementAsync(cacheKey.ToLower(cultureInfo), increment);
+            await Database.StringIncrementAsync(cacheKey.ToLower(cultureInfo), increment);
         }
 
         public IResult TryGetValue<TModel>(string cacheKey, out TModel value)
@@ -50,7 +50,7 @@ namespace Wheely.Service.Redis
                 throw new ArgumentNullException(nameof(cacheKey));
 
             value = default;
-            var redisValue = _database.StringGet(cacheKey.ToLower(cultureInfo));
+            var redisValue = Database.StringGet(cacheKey.ToLower(cultureInfo));
             if (!redisValue.HasValue)
                 return new ErrorResult();
 
@@ -63,7 +63,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            var redisValue = _database.StringGet(cacheKey.ToLower(cultureInfo));
+            var redisValue = Database.StringGet(cacheKey.ToLower(cultureInfo));
             if (!redisValue.HasValue)
                 return new ErrorDataResult<TModel>();
 
@@ -75,7 +75,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            var redisValue = await _database.StringGetAsync(cacheKey.ToLower(cultureInfo));
+            var redisValue = await Database.StringGetAsync(cacheKey.ToLower(cultureInfo));
             if (!redisValue.HasValue)
                 return new ErrorDataResult<TModel>();
 
@@ -87,7 +87,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
 
-            await _database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
+            await Database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
         }
 
         public void Set<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -97,8 +97,8 @@ namespace Wheely.Service.Redis
 
             cacheKey = cacheKey.ToLower(cultureInfo);
 
-            _database.StringSet(cacheKey, value.ToJsonString());
-            _database.KeyExpire(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
+            Database.StringSet(cacheKey, value.ToJsonString());
+            Database.KeyExpire(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
         }
 
         public async Task SetAsync<TModel>(string cacheKey, TModel value, SlidingExpiration slidingExpiration = SlidingExpiration.ThreeMinute, AbsoluteExpiration absoluteExpiration = AbsoluteExpiration.TwentyMinutes)
@@ -108,8 +108,8 @@ namespace Wheely.Service.Redis
 
             cacheKey = cacheKey.ToLower(cultureInfo);
 
-            await _database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
-            await _database.KeyExpireAsync(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
+            await Database.StringSetAsync(cacheKey.ToLower(cultureInfo), value.ToJsonString());
+            await Database.KeyExpireAsync(cacheKey, DateTime.Now.AddMinutes(absoluteExpiration.ToInt()));
         }
 
         public void Remove(string cacheKey)
@@ -119,9 +119,9 @@ namespace Wheely.Service.Redis
 
             cacheKey = cacheKey.ToLower(cultureInfo);
 
-            if (_database.KeyExists(cacheKey))
+            if (Database.KeyExists(cacheKey))
             {
-                _database.KeyDelete(cacheKey);
+                Database.KeyDelete(cacheKey);
             }
         }
 
@@ -132,9 +132,9 @@ namespace Wheely.Service.Redis
 
             cacheKey = cacheKey.ToLower(cultureInfo);
 
-            if (await _database.KeyExistsAsync(cacheKey))
+            if (await Database.KeyExistsAsync(cacheKey))
             {
-                await _database.KeyDeleteAsync(cacheKey);
+                await Database.KeyDeleteAsync(cacheKey);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(searchKey))
                 throw new ArgumentNullException(nameof(searchKey));
 
-            IServer server = _connectionMultiplexer.GetServer(_redisServerSettings.ConnectionString);
+            IServer server = _connectionMultiplexer.GetServer(_redisServerSetting.ConnectionString);
 
             searchKey = keySearchType switch
             {
@@ -153,8 +153,8 @@ namespace Wheely.Service.Redis
                 _ => $"*{searchKey}*",
             };
 
-            var redisKeys = server.Keys(_redisServerSettings.Database, searchKey).ToArray();
-            _database.KeyDelete(redisKeys);
+            var redisKeys = server.Keys(_redisServerSetting.Database, searchKey).ToArray();
+            Database.KeyDelete(redisKeys);
         }
 
         public async Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType)
@@ -162,7 +162,7 @@ namespace Wheely.Service.Redis
             if (string.IsNullOrWhiteSpace(searchKey))
                 throw new ArgumentNullException(nameof(searchKey));
 
-            IServer server = _connectionMultiplexer.GetServer(_redisServerSettings.ConnectionString);
+            IServer server = _connectionMultiplexer.GetServer(_redisServerSetting.ConnectionString);
 
             searchKey = keySearchType switch
             {
@@ -172,8 +172,13 @@ namespace Wheely.Service.Redis
                 _ => $"*{searchKey}*",
             };
 
-            var redisKeys = server.Keys(_redisServerSettings.Database, searchKey).ToArray();
-            await _database.KeyDeleteAsync(redisKeys);
+            var redisKeys = server.Keys(_redisServerSetting.Database, searchKey).ToArray();
+            await Database.KeyDeleteAsync(redisKeys);
+        }
+
+        public void Dispose()
+        {
+            _connectionMultiplexer?.Dispose();
         }
     }
 }

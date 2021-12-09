@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Wheely.Core.Utilities
@@ -7,7 +8,8 @@ namespace Wheely.Core.Utilities
     {
         public static string SlugUrl(this IUrlHelper helper, string url)
         {
-            if (string.IsNullOrWhiteSpace(url)) return string.Empty;
+            if (string.IsNullOrWhiteSpace(url))
+                throw new ArgumentNullException(nameof(url));
 
             return PrepareUrl(url);
         }
@@ -16,7 +18,8 @@ namespace Wheely.Core.Utilities
         {
             string url = string.Join("-", keywords);
 
-            if (string.IsNullOrEmpty(url)) return string.Empty;
+            if (string.IsNullOrWhiteSpace(url))
+                throw new ArgumentNullException(nameof(url));
 
             return PrepareUrl(url);
         }
@@ -25,7 +28,8 @@ namespace Wheely.Core.Utilities
         {
             string url = string.Join("-", keywords);
 
-            if (string.IsNullOrEmpty(url)) return string.Empty;
+            if (string.IsNullOrWhiteSpace(url))
+                throw new ArgumentNullException(nameof(url));
 
             return string.Format(formatableValue, PrepareUrl(url));
         }

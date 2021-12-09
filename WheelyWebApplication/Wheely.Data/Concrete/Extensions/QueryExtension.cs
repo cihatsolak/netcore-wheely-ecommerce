@@ -14,12 +14,13 @@ namespace Wheely.Data.Concrete.Extensions
         /// <param name="context">dbContext</param>
         /// <param name="includeProperties">include properties</param>
         /// <returns>Constructed query with include properties</returns>
-        public static IQueryable<T> Includes<T>(this IQueryable<T> query, params string[] includeProperties) where T : class, IEntity
+        public static IQueryable<T> Includes<T>(this IQueryable<T> query, params string[] includeProperties) where T : class, IEntity, new()
         {
-            foreach (string include in includeProperties)
-                query = query.Include(include);
+            if (query.IsNullOrNotAny())
+                return query;
 
-            return query;
+            
+            return includeProperties.Aggregate(query, EntityFrameworkQueryableExtensions.Include); ;
         }
 
         /// <summary>

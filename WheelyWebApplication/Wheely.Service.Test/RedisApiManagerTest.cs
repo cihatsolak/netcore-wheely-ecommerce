@@ -1,10 +1,5 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wheely.Core.Web.Settings.RedisServerSettings;
+using Wheely.Core.Web.Settings;
 using Wheely.Service.Redis;
 using Xunit;
 
@@ -12,13 +7,13 @@ namespace Wheely.Service.Test
 {
     public sealed class RedisApiManagerTest : BaseTestManager
     {
-        public Mock<IRedisServerSettings> IRedisServerSettingsMock { get; set; }
+        public Mock<IRedisServerSetting> IRedisServerSettingMock { get; set; }
         public RedisApiManager RedisApiManager { get; set; }
 
         public RedisApiManagerTest()
         {
-            IRedisServerSettingsMock = new Mock<IRedisServerSettings>();
-            RedisApiManager = new RedisApiManager(IRedisServerSettingsMock.Object);
+            IRedisServerSettingMock = new Mock<IRedisServerSetting>();
+            RedisApiManager = new RedisApiManager(IRedisServerSettingMock.Object);
         }
 
         [Theory]
