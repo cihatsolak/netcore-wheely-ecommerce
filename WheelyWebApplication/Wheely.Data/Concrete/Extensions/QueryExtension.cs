@@ -20,7 +20,7 @@ namespace Wheely.Data.Concrete.Extensions
                 return query;
 
             
-            return includeProperties.Aggregate(query, EntityFrameworkQueryableExtensions.Include); ;
+            return includeProperties.Aggregate(query, EntityFrameworkQueryableExtensions.Include);
         }
 
         /// <summary>

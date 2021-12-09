@@ -83,49 +83,55 @@ namespace Wheely.Data.Abstract.Repositories
         /// <summary>
         /// Insert entity
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">entity</param>
         void Insert(TEntity entity);
 
         /// <summary>
         /// Insert entities
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">entity</param>
         Task InsertAsync(TEntity entity);
 
         /// <summary>
         /// Insert entities
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">entities</param>
         void InsertRange(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Insert entities
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">entities</param>
         Task InsertRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Update entity
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">entity</param>
         void Update(TEntity entity);
 
         /// <summary>
         /// Update entities
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">entity</param>
         void UpdateRange(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        ///  Delete entity
+        /// </summary>
+        /// <param name="id">primary key</param>
+        void Delete(int id);
 
         /// <summary>
         /// Delete entity
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">entity</param>
         void Delete(TEntity entity);
 
         /// <summary>
         /// Delete entities
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">entities</param>
         void DeleteRange(IEnumerable<TEntity> entities);
         #endregion
 

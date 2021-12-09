@@ -25,23 +25,12 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Get entities
-        /// </summary>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns>Entities</returns>
         public virtual List<TEntity> GetAll(bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.ToList();
         }
 
-        /// <summary>
-        /// Get entities by expression fiter
-        /// </summary>
-        /// <param name="filter">expresssion filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns>Entities</returns>
         public virtual List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
@@ -52,12 +41,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             return entityTable.ToList();
         }
 
-        /// <summary>
-        /// Get entities by expression fiter with ordering
-        /// </summary>
-        /// <param name="filter">expresssion filter</param>
-        /// <param name="orderBy">orderby filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
         public virtual List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
@@ -71,14 +54,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
            return entityTable.ToList();
         }
 
-        /// <summary>
-        /// Get entities by expression fiter with ordering
-        /// </summary>
-        /// <param name="filter">expresssion filter</param>
-        /// <param name="orderBy">orderby filter</param>
-        /// <param name="includeProperties">include string filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns>Entities</returns>
         public virtual List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true, params string[] includeProperties)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
@@ -98,25 +73,12 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             return entityTable.ToList();
         }
 
-        /// <summary>
-        /// Get entity by expression fiter
-        /// </summary>
-        /// <param name="filter">expresssion filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns>Entity</returns>
         public virtual TEntity Get(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.FirstOrDefault(filter);
         }
 
-        /// <summary>
-        /// Get entity by expression fiter
-        /// </summary>
-        /// <param name="filter">expresssion filter</param>
-        /// <param name="orderBy">orderby filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns>Entity</returns>
         public virtual TEntity Get(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
@@ -127,32 +89,17 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             return entityTable.FirstOrDefault(filter);
         }
 
-        /// <summary>
-        /// Get entity by identifier
-        /// </summary>
-        /// <param name="id">Identifier</param>
-        /// <returns>Entity</returns>
         public virtual TEntity GetById(object id)
         {
             return Entities.Find(id);
         }
 
-        /// <summary>
-        /// Is there by expression filter
-        /// </summary>
-        /// <param name="filter">filter</param>
-        /// <param name="disableTracking">entity state tracking filter</param>
-        /// <returns></returns>
         public virtual bool AnyFilter(Expression<Func<TEntity, bool>> filter, bool disableTracking = true)
         {
             IQueryable<TEntity> entityTable = disableTracking ? TableNoTracking : Table;
             return entityTable.Any(filter);
         }
 
-        /// <summary>
-        /// Insert entity
-        /// </summary>
-        /// <param name="entity">Entity</param>
         public virtual void Insert(TEntity entity)
         {
             if (entity is null)
@@ -162,10 +109,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             SaveChanges();
         }
 
-        /// <summary>
-        /// Insert entity
-        /// </summary>
-        /// <param name="entity">Entity</param>
         public virtual async Task InsertAsync(TEntity entity)
         {
             if (entity is null)
@@ -175,10 +118,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             await SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Insert entities
-        /// </summary>
-        /// <param name="entities">Entities</param>
         public virtual void InsertRange(IEnumerable<TEntity> entities)
         {
             if (entities is null)
@@ -188,10 +127,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             SaveChanges();
         }
 
-        /// <summary>
-        /// Insert entities
-        /// </summary>
-        /// <param name="entities">Entities</param>
         public virtual async Task InsertRangeAsync(IEnumerable<TEntity> entities)
         {
             if (entities is null)
@@ -201,10 +136,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             await SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Update entity
-        /// </summary>
-        /// <param name="entity">Entity</param>
         public virtual void Update(TEntity entity)
         {
             if (entity is null)
@@ -214,16 +145,22 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
             SaveChanges();
         }
 
-        /// <summary>
-        /// Update entities
-        /// </summary>
-        /// <param name="entities">Entities</param>
         public virtual void UpdateRange(IEnumerable<TEntity> entities)
         {
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
             Entities.UpdateRange(entities);
+            SaveChanges();
+        }
+
+        /// <summary>
+        ///  Delete entity
+        /// </summary>
+        /// <param name="id">primary key</param>
+        public virtual void Delete(int id)
+        {
+            Delete(GetById(id));
             SaveChanges();
         }
 
