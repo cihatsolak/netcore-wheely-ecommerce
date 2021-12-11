@@ -38,6 +38,10 @@ namespace Wheely.Data.Concrete.Configurations.Wheels
             builder.HasMany(p => p.Dimensions).WithMany(p => p.Wheels);
             builder.HasMany(p => p.Tags).WithMany(p => p.Wheels);
             #endregion
+
+            #region Optimized
+            //builder.IsMemoryOptimized();
+            #endregion
         }
     }
 }

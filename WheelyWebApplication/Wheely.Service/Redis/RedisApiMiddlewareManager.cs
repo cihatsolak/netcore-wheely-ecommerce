@@ -50,5 +50,10 @@ namespace Wheely.Service.Redis
                 return ConnectionMultiplexer.GetDatabase(1);
             }
         }
+
+        public void Dispose()
+        {
+            _connectionMultiplexer?.Dispose();
+        }
     }
 }

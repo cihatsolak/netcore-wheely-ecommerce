@@ -175,10 +175,5 @@ namespace Wheely.Service.Redis
             var redisKeys = server.Keys(_redisServerSetting.Database, searchKey).ToArray();
             await Database.KeyDeleteAsync(redisKeys);
         }
-
-        public void Dispose()
-        {
-            _connectionMultiplexer?.Dispose();
-        }
     }
 }
