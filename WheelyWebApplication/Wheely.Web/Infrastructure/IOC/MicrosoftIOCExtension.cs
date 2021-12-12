@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -51,11 +52,14 @@ namespace Wheely.Web.Infrastructure.IOC
         /// <returns>type of service collection interface</returns>
         internal static IServiceCollection AddDbContexts(this IServiceCollection services)
         {
+            IHostEnvironment hostEnvironment = ServiceTool.ServiceProvider.GetRequiredService<IHostEnvironment>();
+
             services.AddDbContextPool<WheelDbContext>(contextOptions =>
             {
                 contextOptions.UseLazyLoadingProxies(true);
                 contextOptions.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
                 contextOptions.LogTo(Log.Logger.Warning, LogLevel.Warning);
+                contextOptions.EnableSensitiveDataLogging(hostEnvironment.IsDevelopment());
                 contextOptions.UseLoggerFactory(LoggerFactory.Create(builder =>
                 {
                     builder.AddConsole();
@@ -64,7 +68,7 @@ namespace Wheely.Web.Infrastructure.IOC
                 contextOptions.UseNpgsql(ServiceTool.Configuration.GetConnectionString(nameof(WheelDbContext)), sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(typeof(WheelDbContext).Assembly.FullName);
-                    sqlOptions.CommandTimeout(Convert.ToInt16(TimeSpan.FromMinutes(1).TotalSeconds));
+                    sqlOptions.CommandTimeout(Convert.ToInt16(TimeSpan.FromSeconds(40)));
                     sqlOptions.EnableRetryOnFailure();
                 });
             });
