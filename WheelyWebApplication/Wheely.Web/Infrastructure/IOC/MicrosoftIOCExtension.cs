@@ -95,7 +95,7 @@ namespace Wheely.Web.Infrastructure.IOC
             services.TryAddSingleton<IRedisServerSetting>(provider => provider.GetRequiredService<IOptions<RedisServerSetting>>().Value);
             services.TryAddSingleton<IHttpClientSettings>(provider => provider.GetRequiredService<IOptions<HttpClientSettings>>().Value);
             #endregion
-
+            ServiceTool.Create(services);
             return services;
         }
 

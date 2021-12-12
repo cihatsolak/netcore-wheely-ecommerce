@@ -11,20 +11,22 @@ using Wheely.Core.Web.Settings;
 
 namespace Wheely.Service.Redis
 {
-    public partial class RedisApiManager : IRedisService 
+    public sealed class RedisApiManager : IRedisService 
     {
         #region Fields
-        private static ConnectionMultiplexer _connectionMultiplexer;
-        private static readonly object _multiplexerLock = new();
         private readonly CultureInfo cultureInfo;
+        private readonly IConnectionMultiplexer _connectionMultiplexer;
         private readonly IRedisServerSetting _redisServerSetting;
         #endregion
 
         #region Constructor
-        public RedisApiManager(IRedisServerSetting redisServerSetting)
+        public RedisApiManager(
+            IConnectionMultiplexer connectionMultiplexer, 
+            IRedisServerSetting redisServerSetting)
         {
-            _redisServerSetting = redisServerSetting;
             cultureInfo = new("en-US");
+            _connectionMultiplexer = connectionMultiplexer;
+            _redisServerSetting = redisServerSetting;
         }
         #endregion
 
@@ -174,6 +176,21 @@ namespace Wheely.Service.Redis
 
             var redisKeys = server.Keys(_redisServerSetting.Database, searchKey).ToArray();
             await Database.KeyDeleteAsync(redisKeys);
+        }
+
+        public async Task ClearAppCacheAsync()
+        {
+            IServer server = _connectionMultiplexer.GetServer(_redisServerSetting.ConnectionString);
+            var redisKeys = server.Keys(_redisServerSetting.Database);
+            await Database.KeyDeleteAsync(redisKeys.ToArray());
+        }
+
+        private IDatabase Database
+        {
+            get
+            {
+                return _connectionMultiplexer.GetDatabase(1);
+            }
         }
     }
 }

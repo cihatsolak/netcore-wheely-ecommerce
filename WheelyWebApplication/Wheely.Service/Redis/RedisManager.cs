@@ -159,11 +159,6 @@ namespace Wheely.Service.Redis
         {
             throw new NotImplementedException();
         }
-
-        void IRedisService.ConnectServer()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }

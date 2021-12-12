@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using StackExchange.Redis;
+using Wheely.Core.DependencyResolvers;
+using Wheely.Core.Web.Settings;
 using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
@@ -53,6 +56,16 @@ namespace Wheely.Web.Infrastructure.IOC
             services.TryAddSingleton<IRestApiService, RestApiManager>();
             //services.TryAddSingleton<IRedisService, RedisManager>();
             services.TryAddSingleton<IRedisService, RedisApiManager>();
+
+            var redisServerSettingsw = ServiceTool.ServiceProvider.GetRequiredService<IRedisServerSetting>();
+            services.TryAddSingleton<IConnectionMultiplexer>(provider => ConnectionMultiplexer.Connect(new ConfigurationOptions
+            {
+                EndPoints = { redisServerSettingsw.ConnectionString },
+                AbortOnConnectFail = redisServerSettingsw.AbortOnConnectFail,
+                AsyncTimeout = redisServerSettingsw.AsyncTimeOutMilliSecond,
+                ConnectTimeout = redisServerSettingsw.ConnectTimeOutMilliSecond
+            }));
+
             services.TryAddSingleton<ICookieService, CookieManager>();
             services.TryAddSingleton<RouteValueTransformer>();
             services.TryAddSingleton<IConsulService, ConsulManager>();

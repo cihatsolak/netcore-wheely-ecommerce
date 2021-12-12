@@ -5,19 +5,8 @@ using Wheely.Core.Services.Results.Abstract;
 
 namespace Wheely.Service.Redis
 {
-    public partial interface IRedisService : IDisposable
+    public partial interface IRedisService
     {
-        /// <summary>
-        /// Redis database connection
-        /// </summary>
-        void ConnectServer();
-
-        /// <summary>
-        /// Clear app cache
-        /// </summary>
-        /// <returns></returns>
-        Task ClearAppCacheAsync();
-
         /// <summary>
         /// Increment
         /// </summary>
@@ -111,5 +100,11 @@ namespace Wheely.Service.Redis
         /// <param name="searchKey">redis key pattern</param>
         /// <returns></returns>
         Task RemoveKeysBySearchKeyAsync(string searchKey, KeySearchType keySearchType);
+
+        /// <summary>
+        /// Clear app cache
+        /// </summary>
+        /// <returns></returns>
+        Task ClearAppCacheAsync();
     }
 }
