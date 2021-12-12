@@ -2,7 +2,7 @@
 using System;
 using Wheely.Core.Entities.Concrete.Wheels;
 using Wheely.Core.Services.Results.Concrete;
-using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Service.Wheels;
 using Xunit;
 

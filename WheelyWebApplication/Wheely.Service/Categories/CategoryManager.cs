@@ -3,7 +3,7 @@ using System.Linq;
 using Wheely.Core.Entities.Concrete.Categories;
 using Wheely.Core.Services.Results.Abstract;
 using Wheely.Core.Services.Results.Concrete;
-using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Data.Concrete.Extensions;
 
 namespace Wheely.Service.Categories

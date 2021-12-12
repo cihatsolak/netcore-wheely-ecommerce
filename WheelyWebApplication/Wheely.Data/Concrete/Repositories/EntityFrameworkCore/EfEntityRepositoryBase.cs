@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Wheely.Core.Entities.Abstract;
-using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore

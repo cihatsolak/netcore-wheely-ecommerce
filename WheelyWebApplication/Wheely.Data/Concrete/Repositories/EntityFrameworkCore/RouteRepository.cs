@@ -1,5 +1,5 @@
 ﻿using Wheely.Core.Entities.Concrete.Routes;
-using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore

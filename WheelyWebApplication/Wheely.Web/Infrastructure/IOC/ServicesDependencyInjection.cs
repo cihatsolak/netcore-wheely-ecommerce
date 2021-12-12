@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Wheely.Data.Abstract.Repositories;
+using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
 using Wheely.Service.Categories;
 using Wheely.Service.Consul;
