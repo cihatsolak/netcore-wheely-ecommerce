@@ -26,6 +26,7 @@ namespace Wheely.Web
             services.AddRedis();
             services.AddScopedServices();
             services.AddSingletonServices();
+            services.AddHttpClients();
             ServiceTool.Create(services);
         }
 

@@ -14,7 +14,6 @@ using System;
 using System.Reflection;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Core.Web.Settings;
-using Wheely.Core.Web.Settings.HttpClientSettings;
 using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Web.Infrastructure.IOC
@@ -87,13 +86,15 @@ namespace Wheely.Web.Infrastructure.IOC
             services.AddSmidge(ServiceTool.Configuration.GetSection(nameof(SmidgeSetting)));
             services.Configure<GoogleReCaptchaSetting>(ServiceTool.Configuration.GetSection(nameof(GoogleReCaptchaSetting)));
             services.Configure<RedisServerSetting>(ServiceTool.Configuration.GetSection(nameof(RedisServerSetting)));
-            services.Configure<HttpClientSettings>(ServiceTool.Configuration.GetSection(nameof(HttpClientSettings)));
+            services.Configure<NotiflowClientSetting>(ServiceTool.Configuration.GetSection(nameof(NotiflowClientSetting)));
+            services.Configure<TurkuazClientSetting>(ServiceTool.Configuration.GetSection(nameof(TurkuazClientSetting)));
             #endregion
 
             #region Singleton Service Dependencies
             services.TryAddSingleton<IGoogleReCaptchaSetting>(provider => provider.GetRequiredService<IOptions<GoogleReCaptchaSetting>>().Value);
             services.TryAddSingleton<IRedisServerSetting>(provider => provider.GetRequiredService<IOptions<RedisServerSetting>>().Value);
-            services.TryAddSingleton<IHttpClientSettings>(provider => provider.GetRequiredService<IOptions<HttpClientSettings>>().Value);
+            services.TryAddSingleton<INotiflowClientSetting>(provider => provider.GetRequiredService<IOptions<NotiflowClientSetting>>().Value);
+            services.TryAddSingleton<ITurkuazClientSetting>(provider => provider.GetRequiredService<IOptions<TurkuazClientSetting>>().Value);
             #endregion
             ServiceTool.Create(services);
             return services;
