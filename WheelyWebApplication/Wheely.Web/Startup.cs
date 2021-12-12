@@ -21,11 +21,11 @@ namespace Wheely.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDefaultServices();
+            services.AddSettings();
             services.AddDbContexts();
             services.AddRedis();
             services.AddScopedServices();
             services.AddSingletonServices();
-            services.AddSettings();
             ServiceTool.Create(services);
         }
 

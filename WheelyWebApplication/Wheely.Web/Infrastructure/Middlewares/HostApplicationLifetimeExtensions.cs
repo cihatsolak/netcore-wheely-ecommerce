@@ -51,7 +51,6 @@ namespace Wheely.Web.Infrastructure.Middlewares
         #region Host Application Life Time
         private static void OnStarted()
         {
-            RedisService.ConnectServer();
             RouteService.GetRoutesAsync().Wait();
         }
 
