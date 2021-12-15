@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,7 +12,8 @@ namespace Wheely.Data.Abstract.Repositories.EntityFrameworkCore
     /// Represents an entity repository
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public partial interface IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public partial interface IEntityRepository<TEntity, TContext> where TEntity : class, IEntity, new()
+                                                                  where TContext : DbContext
     {
         #region Methods
         /// <summary>

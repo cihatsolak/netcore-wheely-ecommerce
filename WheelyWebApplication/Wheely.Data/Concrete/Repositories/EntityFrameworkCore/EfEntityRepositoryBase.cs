@@ -6,21 +6,21 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Wheely.Core.Entities.Abstract;
 using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
-using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
-    public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity, TContext> where TEntity : class, IEntity, new()
+        where TContext : DbContext  
     {
         #region Fields
-        private readonly WheelDbContext _context;
+        private readonly TContext _context;
         private DbSet<TEntity> _entities;
         #endregion
 
         #region Constructors
-        public EfEntityRepositoryBase(WheelDbContext wheelDbContext)
+        public EfEntityRepositoryBase(TContext context)
         {
-            _context = wheelDbContext;
+            _context = context;
         }
         #endregion
 
@@ -106,7 +106,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entity));
 
             Entities.Add(entity);
-            SaveChanges();
         }
 
         public virtual async Task InsertAsync(TEntity entity)
@@ -115,7 +114,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entity));
 
             await Entities.AddAsync(entity);
-            await SaveChangesAsync();
         }
 
         public virtual void InsertRange(IEnumerable<TEntity> entities)
@@ -124,7 +122,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entities));
 
             Entities.AddRange(entities);
-            SaveChanges();
         }
 
         public virtual async Task InsertRangeAsync(IEnumerable<TEntity> entities)
@@ -133,7 +130,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entities));
 
             await Entities.AddRangeAsync(entities);
-            await SaveChangesAsync();
         }
 
         public virtual void Update(TEntity entity)
@@ -142,7 +138,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entity));
 
             Entities.Update(entity);
-            SaveChanges();
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities)
@@ -151,7 +146,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entities));
 
             Entities.UpdateRange(entities);
-            SaveChanges();
         }
 
         /// <summary>
@@ -161,7 +155,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
         public virtual void Delete(int id)
         {
             Delete(GetById(id));
-            SaveChanges();
         }
 
         /// <summary>
@@ -174,7 +167,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entity));
 
             Entities.Remove(entity);
-            SaveChanges();
         }
 
         /// <summary>
@@ -187,7 +179,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(entities));
 
             Entities.RemoveRange(entities);
-            SaveChanges();
         }
         #endregion
 
@@ -213,72 +204,6 @@ namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
                     _entities = _context.Set<TEntity>();
 
                 return _entities;
-            }
-        }
-        #endregion
-
-        #region Utilities
-
-        /// <summary>
-        /// Rollback of entity changes and return full error message
-        /// </summary>
-        /// <param name="exception">Exception</param>
-        /// <returns>Error message</returns>
-        protected string GetFullErrorTextAndRollbackEntityChanges(DbUpdateException exception)
-        {
-            //rollback entity changes
-            if (_context is DbContext dbContext)
-            {
-                var entries = dbContext.ChangeTracker.Entries()
-                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified).ToList();
-
-                entries.ForEach(entry =>
-                {
-                    try
-                    {
-                        entry.State = EntityState.Unchanged;
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        // ignored
-                    }
-                });
-            }
-
-            try
-            {
-                _context.SaveChanges();
-                return exception.ToString();
-            }
-            catch (Exception ex)
-            {
-                //if after the rollback of changes the context is still not saving,
-                //return the full text of the exception that occurred when saving
-                return ex.ToString();
-            }
-        }
-
-        protected virtual void SaveChanges()
-        {
-            try
-            {
-               _context.SaveChanges();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
-            }
-        }
-
-        protected virtual async Task SaveChangesAsync()
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
             }
         }
         #endregion

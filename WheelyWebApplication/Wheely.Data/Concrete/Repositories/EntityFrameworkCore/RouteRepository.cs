@@ -4,7 +4,7 @@ using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
-    public sealed class RouteRepository : EfEntityRepositoryBase<RouteValueTransform>, IRouteRepository
+    public sealed class RouteRepository : EfEntityRepositoryBase<RouteValueTransform, WheelDbContext>, IRouteRepository
     {
         #region Constructor
         public RouteRepository(WheelDbContext wheelDbContext) : base(wheelDbContext)

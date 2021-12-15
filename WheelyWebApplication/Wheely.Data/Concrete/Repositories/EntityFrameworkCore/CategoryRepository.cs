@@ -4,7 +4,7 @@ using Wheely.Data.Concrete.Contexts;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
-    public sealed class CategoryRepository : EfEntityRepositoryBase<Category>, ICategoryRepository
+    public sealed class CategoryRepository : EfEntityRepositoryBase<Category, WheelDbContext>, ICategoryRepository
     {
         #region Constructor
         public CategoryRepository(WheelDbContext wheelDbContext) : base(wheelDbContext)

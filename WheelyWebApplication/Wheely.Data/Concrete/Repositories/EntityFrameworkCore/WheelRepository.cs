@@ -7,7 +7,7 @@ using Wheely.Data.Concrete.Extensions;
 
 namespace Wheely.Data.Concrete.Repositories.EntityFrameworkCore
 {
-    public sealed class WheelRepository : EfEntityRepositoryBase<Wheel>, IWheelRepository
+    public sealed class WheelRepository : EfEntityRepositoryBase<Wheel, WheelDbContext>, IWheelRepository
     {
         #region Constructor
         public WheelRepository(WheelDbContext wheelDbContext) : base(wheelDbContext)

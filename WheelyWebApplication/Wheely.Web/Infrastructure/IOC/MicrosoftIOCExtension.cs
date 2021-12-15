@@ -67,7 +67,7 @@ namespace Wheely.Web.Infrastructure.IOC
                 contextOptions.UseNpgsql(ServiceTool.Configuration.GetConnectionString(nameof(WheelDbContext)), sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(typeof(WheelDbContext).Assembly.FullName);
-                    sqlOptions.CommandTimeout(Convert.ToInt16(TimeSpan.FromSeconds(40)));
+                    sqlOptions.CommandTimeout(Convert.ToInt16(TimeSpan.FromSeconds(60).TotalSeconds));
                     sqlOptions.EnableRetryOnFailure();
                 });
             });

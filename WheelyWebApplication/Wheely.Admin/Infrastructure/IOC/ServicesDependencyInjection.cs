@@ -13,7 +13,7 @@ namespace Wheely.Admin.Infrastructure.IOC
         /// <returns>type of IServiceCollection</returns>
         public static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
+            services.AddScoped(typeof(IEntityRepository<,>), typeof(EfEntityRepositoryBase<,>));
 
             return services;
         }

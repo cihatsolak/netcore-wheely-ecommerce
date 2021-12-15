@@ -4,7 +4,9 @@ using StackExchange.Redis;
 using Wheely.Core.DependencyResolvers;
 using Wheely.Core.Web.Settings;
 using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
+using Wheely.Data.Abstract.Repositories.UnitOfWorks;
 using Wheely.Data.Concrete.Repositories.EntityFrameworkCore;
+using Wheely.Data.Concrete.UnitOfWorks;
 using Wheely.Service.Categories;
 using Wheely.Service.Consul;
 using Wheely.Service.Cookies;
@@ -27,7 +29,9 @@ namespace Wheely.Web.Infrastructure.IOC
         internal static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
             #region Repositories
-            services.TryAddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
+            services.TryAddScoped(typeof(IEntityRepository<,>), typeof(EfEntityRepositoryBase<,>));
+            services.TryAddScoped(typeof(IBaseUnitOfWork<>), typeof(BaseUnitOfWork<>));
+            services.TryAddScoped<IUnitOfWork, UnitOfWork>();
             services.TryAddScoped<IWheelRepository, WheelRepository>();
             services.TryAddScoped<ICategoryRepository, CategoryRepository>();
             services.TryAddScoped<IRouteRepository, RouteRepository>();
