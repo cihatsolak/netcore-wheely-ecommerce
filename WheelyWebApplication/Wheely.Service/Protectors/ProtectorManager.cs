@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using System;
+using Wheely.Core.Services.Results.Abstract;
+using Wheely.Core.Services.Results.Concrete;
 
 namespace Wheely.Service.Protectors
 {
@@ -20,7 +22,7 @@ namespace Wheely.Service.Protectors
         #endregion
 
         #region Methods
-        public string Encrypt(string input)
+        public IDataResult<string> Encrypt(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input));
@@ -28,10 +30,10 @@ namespace Wheely.Service.Protectors
             var protector = _dataProtectionProvider.CreateProtector(_purpose ?? GetType().FullName);
             ArgumentNullException.ThrowIfNull(protector);
 
-            return protector.Protect(input);
+            return new SuccessDataResult<string>(protector.Protect(input), null);
         }
 
-        public string Encrypt(string input, string purpose)
+        public IDataResult<string> Encrypt(string input, string purpose)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input));
@@ -42,10 +44,10 @@ namespace Wheely.Service.Protectors
             var protector = _dataProtectionProvider.CreateProtector(purpose);
             ArgumentNullException.ThrowIfNull(protector);
 
-            return protector.Protect(input);
+            return new SuccessDataResult<string>(protector.Protect(input), null);
         }
 
-        public string Decrypt(string input)
+        public IDataResult<string> Decrypt(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input));
@@ -53,10 +55,10 @@ namespace Wheely.Service.Protectors
             var protector = _dataProtectionProvider.CreateProtector(_purpose ?? GetType().FullName);
             ArgumentNullException.ThrowIfNull(protector);
 
-            return protector.Unprotect(input);
+            return new SuccessDataResult<string>(protector.Unprotect(input), null);
         }
 
-        public string Decrypt(string input, string purpose)
+        public IDataResult<string> Decrypt(string input, string purpose)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input));
@@ -67,7 +69,7 @@ namespace Wheely.Service.Protectors
             var protector = _dataProtectionProvider.CreateProtector(purpose);
             ArgumentNullException.ThrowIfNull(protector);
 
-            return protector.Unprotect(input);
+            return new SuccessDataResult<string>(protector.Unprotect(input), null);
         }
         #endregion
     }
