@@ -11,6 +11,7 @@ using Wheely.Service.Categories;
 using Wheely.Service.Consul;
 using Wheely.Service.Cookies;
 using Wheely.Service.HttpRequest;
+using Wheely.Service.Protectors;
 using Wheely.Service.Redis;
 using Wheely.Service.Routes;
 using Wheely.Service.Wheels;
@@ -43,10 +44,6 @@ namespace Wheely.Web.Infrastructure.IOC
             services.TryAddScoped<IRouteService, RouteManager>();
             #endregion
 
-            #region Model Factories
-            services.TryAddScoped<IShopModelFactory, ShopModelFactory>();
-            #endregion
-
             return services;
         }
 
@@ -73,6 +70,15 @@ namespace Wheely.Web.Infrastructure.IOC
             services.TryAddSingleton<ICookieService, CookieManager>();
             services.TryAddSingleton<RouteValueTransformer>();
             services.TryAddSingleton<IConsulService, ConsulManager>();
+            services.TryAddSingleton<IProtectorService, ProtectorManager>();
+
+            return services;
+        }
+
+        internal static IServiceCollection AddModelFactoryServices(this IServiceCollection services)
+        {
+            services.TryAddSingleton<IShopModelFactory, ShopModelFactory>();
+
             return services;
         }
     }

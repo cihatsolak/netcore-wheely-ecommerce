@@ -1,4 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Serilog;
 using Smidge;
+using StackExchange.Redis;
 using System;
 using System.Reflection;
 using Wheely.Core.DependencyResolvers;
@@ -111,6 +114,26 @@ namespace Wheely.Web.Infrastructure.IOC
             {
                 options.Configuration = ServiceTool.Configuration.GetValue<string>($"{nameof(RedisServerSetting)}:ConnectionString");
             });
+
+            return services;
+        }
+
+        /// <summary>
+        /// Dependency injection for data protection
+        /// </summary>
+        /// <param name="services">type of IServiceCollection</param>
+        /// <returns>type of IServiceCollection</returns>
+        internal static IServiceCollection AddProtection(this IServiceCollection services)
+        {
+            var webHostEnvironment = ServiceTool.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+            var connectionMultiplexer = ServiceTool.ServiceProvider.GetRequiredService<IConnectionMultiplexer>();
+
+            var applicationName = string.Concat(webHostEnvironment.ApplicationName, ".", webHostEnvironment.EnvironmentName).ToLower();
+            var redisKey = string.Concat(webHostEnvironment.ApplicationName, ".", webHostEnvironment.EnvironmentName, ".", "dataprotection.keys").ToLower();
+
+            services.AddDataProtection()
+                .SetApplicationName(applicationName)
+                .PersistKeysToStackExchangeRedis(connectionMultiplexer, redisKey);
 
             return services;
         }
