@@ -1,16 +1,4 @@
-﻿using Microsoft.Net.Http.Headers;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Core.Utilities;
-
-namespace Wheely.Service.HttpRequest
+﻿namespace Wheely.Service.HttpRequest
 {
     public sealed class RestApiManager : IRestApiService
     {

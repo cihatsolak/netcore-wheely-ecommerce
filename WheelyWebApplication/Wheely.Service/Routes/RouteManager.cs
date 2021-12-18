@@ -1,15 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Wheely.Core.Constants;
-using Wheely.Core.Entities.Concrete.Routes;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
-using Wheely.Data.Concrete.Extensions;
-using Wheely.Service.Redis;
-
-namespace Wheely.Service.Routes
+﻿namespace Wheely.Service.Routes
 {
     public sealed class RouteManager : IRouteService
     {

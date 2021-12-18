@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Threading.Tasks;
-using Wheely.Core.Services.Results.Abstract;
-
-namespace Wheely.Service.HttpRequest
+﻿namespace Wheely.Service.HttpRequest
 {
     public partial interface IRestApiService
     {

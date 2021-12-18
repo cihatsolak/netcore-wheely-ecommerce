@@ -1,7 +1,4 @@
-﻿using System;
-using Wheely.Core.Services.Results.Abstract;
-
-namespace Wheely.Service.Cookies
+﻿namespace Wheely.Service.Cookies
 {
     public partial interface ICookieService
     {

@@ -1,15 +1,4 @@
-﻿using StackExchange.Redis;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Wheely.Core.Enums;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Core.Utilities;
-using Wheely.Core.Web.Settings;
-
-namespace Wheely.Service.Redis
+﻿namespace Wheely.Service.Redis
 {
     public sealed class RedisApiManager : IRedisService 
     {

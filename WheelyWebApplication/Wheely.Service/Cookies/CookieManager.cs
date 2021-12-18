@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Core.Utilities;
-
-namespace Wheely.Service.Cookies
+﻿namespace Wheely.Service.Cookies
 {
     public sealed class CookieManager : ICookieService
     {

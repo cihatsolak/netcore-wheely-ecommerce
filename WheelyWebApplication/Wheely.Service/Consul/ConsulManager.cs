@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Core.Web.Settings;
-
-namespace Wheely.Service.Consul
+﻿namespace Wheely.Service.Consul
 {
     public sealed class ConsulManager : IConsulService
     {

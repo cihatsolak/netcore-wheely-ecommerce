@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using System;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-
-namespace Wheely.Service.Protectors
+﻿namespace Wheely.Service.Protectors
 {
     public sealed class ProtectorManager : IProtectorService
     {

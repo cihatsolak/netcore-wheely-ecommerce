@@ -1,7 +1,4 @@
-﻿using System;
-using Wheely.Core.Services.Results.Abstract;
-
-namespace Wheely.Service.Protectors
+﻿namespace Wheely.Service.Protectors
 {
     public partial interface IProtectorService
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using Wheely.Core.Entities.Concrete.Wheels;
-using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Services.Results.Concrete;
-using Wheely.Data.Abstract.Repositories.EntityFrameworkCore;
-
-namespace Wheely.Service.Wheels
+﻿namespace Wheely.Service.Wheels
 {
     public sealed class WheelManager : IWheelService
     {

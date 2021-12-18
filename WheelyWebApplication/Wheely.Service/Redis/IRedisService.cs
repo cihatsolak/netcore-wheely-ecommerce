@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Wheely.Core.Enums;
-using Wheely.Core.Services.Results.Abstract;
-
-namespace Wheely.Service.Redis
+﻿namespace Wheely.Service.Redis
 {
     public partial interface IRedisService
     {

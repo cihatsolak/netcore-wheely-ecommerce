@@ -1,7 +1,4 @@
-﻿using Wheely.Core.Services.Results.Abstract;
-using Wheely.Core.Web.Settings;
-
-namespace Wheely.Service.Consul
+﻿namespace Wheely.Service.Consul
 {
     public partial interface IConsulService
     {
