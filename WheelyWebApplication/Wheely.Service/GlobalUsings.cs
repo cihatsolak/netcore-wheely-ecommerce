@@ -26,3 +26,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Wheely.Core.Constants;
 global using Wheely.Service.Redis;
 global using Wheely.Core.Entities.Concrete.Wheels;
+global using Wheely.Service.Protectors;
