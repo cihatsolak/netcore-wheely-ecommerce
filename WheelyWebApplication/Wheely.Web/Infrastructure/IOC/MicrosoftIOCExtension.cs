@@ -60,6 +60,7 @@ namespace Wheely.Web.Infrastructure.IOC
             {
                 contextOptions.UseLazyLoadingProxies(true);
                 contextOptions.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
+                contextOptions.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.PossibleIncorrectRequiredNavigationWithQueryFilterInteractionWarning));
                 contextOptions.LogTo(Log.Logger.Warning, LogLevel.Warning);
                 contextOptions.EnableSensitiveDataLogging(hostEnvironment.IsDevelopment());
                 contextOptions.UseLoggerFactory(LoggerFactory.Create(builder =>
