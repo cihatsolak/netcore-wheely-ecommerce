@@ -1,1 +1,1 @@
-# netcore-wheely-ecommerce
+# Wheely E-commerce
